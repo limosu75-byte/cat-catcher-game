@@ -3,379 +3,802 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>咪咪捕捉计划</title>
+<title>咪咪捕捉计划 · V2</title>
 
 <style>
-  :root {
-    --bg1: #fff7ef;
-    --bg2: #ffe7d6;
-    --ink: #2a211d;
-    --accent: #ff7a59;
-    --accent2: #ffb36b;
-    --card: rgba(255,255,255,.78);
-  }
+:root{
+  --bg1:#fff7ef;
+  --bg2:#ffe6d6;
+  --ink:#251d19;
+  --muted:#7a6b63;
+  --accent:#ff7b59;
+  --accent2:#ffb26b;
+  --glass:rgba(255,255,255,.78);
+}
 
-  * {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-  }
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 
-  html, body {
-    margin: 0;
-    height: 100%;
-    font-family:
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      "PingFang SC",
-      sans-serif;
-    color: var(--ink);
-  }
+html,
+body{
+  margin:0;
+  height:100%;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "PingFang SC",
+    sans-serif;
 
-  body {
-    overflow: hidden;
-    background:
-      radial-gradient(circle at 18% 18%, rgba(255,255,255,.9), transparent 24%),
-      radial-gradient(circle at 80% 8%, rgba(255,255,255,.7), transparent 20%),
-      linear-gradient(160deg, var(--bg1), var(--bg2));
-  }
+  color:var(--ink);
+}
 
-  #app {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding:
-      env(safe-area-inset-top)
-      14px
-      env(safe-area-inset-bottom);
-  }
+body{
+  overflow:hidden;
 
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 2px 8px;
-    gap: 10px;
-  }
+  background:
+    radial-gradient(
+      circle at 18% 8%,
+      rgba(255,255,255,.95),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 90% 8%,
+      rgba(255,255,255,.8),
+      transparent 18%
+    ),
+    linear-gradient(
+      160deg,
+      var(--bg1),
+      var(--bg2)
+    );
+}
 
-  .title {
-    font-weight: 900;
-    font-size: 22px;
-  }
+#app{
+  height:100%;
 
-  .sub {
-    font-size: 12px;
-    opacity: .65;
-    margin-top: 2px;
-  }
+  display:flex;
+  flex-direction:column;
 
-  .pill {
-    background: var(--card);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,.7);
-    box-shadow: 0 8px 24px rgba(106,65,42,.08);
-    border-radius: 18px;
-    padding: 9px 12px;
-    font-weight: 800;
-    white-space: nowrap;
-  }
+  gap:8px;
 
-  #arena {
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    border-radius: 28px;
+  padding:
+    max(env(safe-area-inset-top),10px)
+    12px
+    max(env(safe-area-inset-bottom),8px);
+}
 
-    background:
-      linear-gradient(
-        rgba(255,255,255,.24),
-        rgba(255,255,255,.12)
-      ),
-      repeating-linear-gradient(
-        90deg,
-        rgba(255,255,255,.16) 0 1px,
-        transparent 1px 42px
-      ),
-      repeating-linear-gradient(
-        0deg,
-        rgba(255,255,255,.12) 0 1px,
-        transparent 1px 42px
-      );
+header{
+  display:grid;
 
-    border: 1px solid rgba(255,255,255,.75);
+  grid-template-columns:
+    1fr auto;
 
+  gap:10px;
+
+  align-items:center;
+}
+
+.title{
+  font-size:21px;
+  font-weight:950;
+}
+
+.sub{
+  font-size:12px;
+
+  color:var(--muted);
+
+  margin-top:2px;
+}
+
+.stats{
+  display:grid;
+
+  grid-template-columns:
+    auto auto;
+
+  gap:6px;
+}
+
+.pill{
+  background:
+    var(--glass);
+
+  border:
+    1px solid rgba(255,255,255,.95);
+
+  border-radius:
+    18px;
+
+  padding:
+    8px 10px;
+
+  box-shadow:
+    0 8px 24px rgba(110,67,42,.08);
+
+  font-weight:
+    900;
+
+  text-align:
+    center;
+
+  min-width:
+    74px;
+
+  backdrop-filter:
+    blur(10px);
+}
+
+.pill small{
+  display:block;
+
+  font-size:
+    10px;
+
+  color:
+    var(--muted);
+
+  font-weight:
+    700;
+
+  margin-bottom:
+    1px;
+}
+
+.bar{
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  min-height:
+    34px;
+}
+
+.combo{
+  flex:1;
+
+  background:
+    rgba(255,255,255,.58);
+
+  border:
+    1px solid rgba(255,255,255,.8);
+
+  border-radius:
+    16px;
+
+  padding:
+    7px 10px;
+
+  font-size:
+    12px;
+
+  font-weight:
+    850;
+
+  overflow:
+    hidden;
+
+  position:
+    relative;
+}
+
+.combo .fill{
+  position:absolute;
+
+  inset:
+    0 auto 0 0;
+
+  width:
+    0%;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255,123,89,.16),
+      rgba(255,187,107,.28)
+    );
+
+  transition:
+    width .12s linear;
+}
+
+.combo span{
+  position:
+    relative;
+
+  z-index:
+    1;
+}
+
+.record{
+  font-size:
+    12px;
+
+  color:
+    var(--muted);
+
+  white-space:
+    nowrap;
+
+  font-weight:
+    800;
+}
+
+#arena{
+  position:
+    relative;
+
+  flex:
+    1;
+
+  min-height:
+    0;
+
+  overflow:
+    hidden;
+
+  border-radius:
+    28px;
+
+  border:
+    1px solid rgba(255,255,255,.9);
+
+  box-shadow:
+    0 18px 55px rgba(103,61,36,.13);
+
+  background:
+    linear-gradient(
+      rgba(255,255,255,.26),
+      rgba(255,255,255,.12)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.16) 0 1px,
+      transparent 1px 46px
+    ),
+    repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,.12) 0 1px,
+      transparent 1px 46px
+    );
+}
+
+#arena.fever{
+  animation:
+    feverPulse .7s ease-in-out infinite alternate;
+}
+
+@keyframes feverPulse{
+
+  from{
     box-shadow:
-      inset 0 0 0 1px rgba(255,255,255,.2),
-      0 20px 60px rgba(121,72,44,.12);
+      0 18px 55px rgba(103,61,36,.13);
   }
 
-  .cat {
-    position: absolute;
-    display: grid;
-    place-items: center;
-    cursor: pointer;
-    user-select: none;
-
-    width: 72px;
-    height: 72px;
-
-    border-radius: 24px;
-
-    background: rgba(255,255,255,.86);
-
+  to{
     box-shadow:
-      0 12px 26px rgba(91,53,35,.16);
+      0 18px 70px rgba(255,122,89,.35),
+      inset 0 0 0 2px rgba(255,157,86,.24);
+  }
 
-    border:
-      1px solid rgba(255,255,255,.95);
+}
 
+.target{
+  position:
+    absolute;
+
+  width:
+    76px;
+
+  height:
+    76px;
+
+  border-radius:
+    24px;
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  transform:
+    translate(-50%,-50%)
+    scale(.45);
+
+  opacity:
+    0;
+
+  user-select:
+    none;
+
+  cursor:
+    pointer;
+
+  border:
+    1px solid rgba(255,255,255,.95);
+
+  background:
+    rgba(255,255,255,.88);
+
+  box-shadow:
+    0 12px 28px rgba(81,48,31,.16);
+
+  animation:
+    pop .16s ease-out forwards;
+
+  will-change:
+    transform,
+    left,
+    top;
+}
+
+.target .emoji{
+  font-size:
+    38px;
+
+  line-height:
+    1;
+}
+
+.target .tag{
+  position:
+    absolute;
+
+  bottom:
+    -8px;
+
+  left:
+    50%;
+
+  transform:
+    translateX(-50%);
+
+  font-size:
+    10px;
+
+  font-weight:
+    900;
+
+  background:
+    rgba(42,33,29,.86);
+
+  color:
+    white;
+
+  padding:
+    3px 7px;
+
+  border-radius:
+    999px;
+
+  white-space:
+    nowrap;
+}
+
+.target.rare{
+  width:
+    84px;
+
+  height:
+    84px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff8df,
+      #ffd884
+    );
+
+  box-shadow:
+    0 0 0 3px rgba(255,197,78,.25),
+    0 12px 30px rgba(148,93,24,.22);
+}
+
+.target.robot{
+  background:
+    linear-gradient(
+      145deg,
+      #eef4ff,
+      #dae6ff
+    );
+}
+
+.target.power{
+  background:
+    linear-gradient(
+      145deg,
+      #fff0f7,
+      #ffd7ea
+    );
+}
+
+@keyframes pop{
+
+  to{
     transform:
-      translate(-50%, -50%)
-      scale(.5);
+      translate(-50%,-50%)
+      scale(1);
 
-    opacity: 0;
-
-    animation:
-      pop .18s ease-out forwards;
-
-    font-size: 42px;
+    opacity:
+      1;
   }
 
-  .cat.rare {
-    width: 82px;
-    height: 82px;
+}
 
-    background:
-      linear-gradient(
-        145deg,
-        #fff4d6,
-        #ffd57c
-      );
+@keyframes hit{
 
-    box-shadow:
-      0 0 0 3px rgba(255,196,79,.28),
-      0 12px 30px rgba(150,96,28,.22);
-  }
-
-  .cat.bad {
-    background:
-      linear-gradient(
-        145deg,
-        #eef4ff,
-        #d8e5ff
-      );
-  }
-
-  @keyframes pop {
-    to {
-      transform:
-        translate(-50%, -50%)
-        scale(1);
-      opacity: 1;
-    }
-  }
-
-  @keyframes bonk {
-    50% {
-      transform:
-        translate(-50%, -50%)
-        scale(1.2)
-        rotate(-8deg);
-    }
-
-    100% {
-      transform:
-        translate(-50%, -50%)
-        scale(.1);
-      opacity: 0;
-    }
-  }
-
-  .float {
-    position: absolute;
-    pointer-events: none;
-    font-weight: 900;
-    font-size: 18px;
-
+  45%{
     transform:
-      translate(-50%, -50%);
-
-    animation:
-      floatUp .65s ease-out forwards;
-
-    text-shadow:
-      0 2px 0 rgba(255,255,255,.8);
+      translate(-50%,-50%)
+      scale(1.22)
+      rotate(-8deg);
   }
 
-  @keyframes floatUp {
-    to {
-      transform:
-        translate(-50%, -110px);
-      opacity: 0;
-    }
-  }
-
-  #startCard {
-    position: absolute;
-    inset: 0;
-
-    display: grid;
-    place-items: center;
-
-    padding: 28px;
-
-    background:
-      linear-gradient(
-        rgba(255,247,239,.3),
-        rgba(255,235,219,.42)
-      );
-
-    backdrop-filter: blur(5px);
-
-    z-index: 5;
-  }
-
-  .panel {
-    width: min(92%, 430px);
-
-    padding: 26px;
-
-    border-radius: 28px;
-
-    text-align: center;
-
-    background:
-      rgba(255,255,255,.88);
-
-    border:
-      1px solid white;
-
-    box-shadow:
-      0 20px 60px rgba(109,69,43,.16);
-  }
-
-  .bigcat {
-    font-size: 78px;
-    line-height: 1;
-  }
-
-  h1 {
-    font-size: 26px;
-    margin: 14px 0 6px;
-  }
-
-  .desc {
-    opacity: .68;
-    line-height: 1.65;
-    font-size: 14px;
-
-    margin:
-      0 auto 18px;
-
-    max-width: 320px;
-  }
-
-  button {
-    border: 0;
-
-    border-radius: 18px;
-
-    padding:
-      13px 20px;
-
-    font-weight: 900;
-    font-size: 16px;
-
-    color: white;
-
-    background:
-      linear-gradient(
-        135deg,
-        var(--accent),
-        var(--accent2)
-      );
-
-    box-shadow:
-      0 10px 24px rgba(255,122,89,.28);
-  }
-
-  footer {
-    padding:
-      10px 4px 4px;
-
-    text-align: center;
-
-    font-size: 12px;
-
-    opacity: .58;
-  }
-
-  #message {
-    position: absolute;
-
-    left: 50%;
-    top: 18px;
-
+  100%{
     transform:
-      translateX(-50%);
-
-    background:
-      rgba(42,33,29,.84);
-
-    color:
-      white;
-
-    padding:
-      9px 13px;
-
-    border-radius:
-      999px;
-
-    font-size:
-      13px;
-
-    font-weight:
-      800;
+      translate(-50%,-50%)
+      scale(.1);
 
     opacity:
       0;
-
-    transition:
-      .2s;
-
-    z-index:
-      4;
-
-    white-space:
-      nowrap;
   }
 
-  #message.show {
-    opacity: 1;
+}
+
+.float{
+  position:
+    absolute;
+
+  transform:
+    translate(-50%,-50%);
+
+  font-size:
+    17px;
+
+  font-weight:
+    950;
+
+  pointer-events:
+    none;
+
+  z-index:
+    4;
+
+  animation:
+    floatUp .7s ease-out forwards;
+
+  text-shadow:
+    0 2px 0 rgba(255,255,255,.95);
+}
+
+@keyframes floatUp{
+
+  to{
+    transform:
+      translate(-50%,-115px)
+      scale(1.08);
+
+    opacity:
+      0;
   }
 
-  .shake {
-    animation:
-      shake .22s linear;
+}
+
+#toast{
+  position:
+    absolute;
+
+  z-index:
+    6;
+
+  left:
+    50%;
+
+  top:
+    15px;
+
+  transform:
+    translateX(-50%);
+
+  background:
+    rgba(37,29,25,.88);
+
+  color:
+    white;
+
+  padding:
+    9px 13px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    12px;
+
+  font-weight:
+    900;
+
+  opacity:
+    0;
+
+  transition:
+    .18s;
+
+  white-space:
+    nowrap;
+
+  max-width:
+    90%;
+
+  overflow:
+    hidden;
+
+  text-overflow:
+    ellipsis;
+}
+
+#toast.show{
+  opacity:
+    1;
+}
+
+#overlay{
+  position:
+    absolute;
+
+  inset:
+    0;
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  padding:
+    24px;
+
+  z-index:
+    8;
+
+  background:
+    linear-gradient(
+      rgba(255,247,239,.25),
+      rgba(255,235,219,.42)
+    );
+
+  backdrop-filter:
+    blur(5px);
+}
+
+.panel{
+  width:
+    min(94%,440px);
+
+  text-align:
+    center;
+
+  background:
+    rgba(255,255,255,.9);
+
+  border:
+    1px solid white;
+
+  border-radius:
+    30px;
+
+  padding:
+    26px 22px;
+
+  box-shadow:
+    0 20px 60px rgba(109,69,43,.17);
+}
+
+.hero{
+  font-size:
+    72px;
+
+  line-height:
+    1;
+}
+
+.panel h1{
+  font-size:
+    25px;
+
+  margin:
+    12px 0 6px;
+}
+
+.panel p{
+  font-size:
+    14px;
+
+  line-height:
+    1.65;
+
+  color:
+    var(--muted);
+
+  margin:
+    0 auto 16px;
+
+  max-width:
+    330px;
+}
+
+.rules{
+  display:
+    grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:
+    8px;
+
+  text-align:
+    left;
+
+  margin:
+    14px 0 18px;
+}
+
+.rule{
+  border-radius:
+    16px;
+
+  background:
+    rgba(255,245,236,.75);
+
+  padding:
+    10px 11px;
+
+  font-size:
+    12px;
+
+  line-height:
+    1.45;
+
+  font-weight:
+    750;
+}
+
+button{
+  border:
+    0;
+
+  border-radius:
+    18px;
+
+  padding:
+    13px 22px;
+
+  font-size:
+    16px;
+
+  font-weight:
+    950;
+
+  color:
+    white;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--accent),
+      var(--accent2)
+    );
+
+  box-shadow:
+    0 11px 25px rgba(255,122,89,.27);
+}
+
+#collection{
+  display:
+    flex;
+
+  gap:
+    6px;
+
+  overflow:
+    auto;
+
+  scrollbar-width:
+    none;
+
+  padding:
+    2px 1px 0;
+
+  min-height:
+    34px;
+}
+
+#collection::-webkit-scrollbar{
+  display:
+    none;
+}
+
+.badge{
+  flex:
+    0 0 auto;
+
+  font-size:
+    11px;
+
+  font-weight:
+    850;
+
+  color:
+    #554841;
+
+  background:
+    rgba(255,255,255,.66);
+
+  border:
+    1px solid rgba(255,255,255,.85);
+
+  padding:
+    7px 9px;
+
+  border-radius:
+    999px;
+
+  opacity:
+    .42;
+}
+
+.badge.got{
+  opacity:
+    1;
+
+  background:
+    rgba(255,241,194,.9);
+}
+
+footer{
+  text-align:
+    center;
+
+  font-size:
+    11px;
+
+  color:
+    var(--muted);
+
+  padding-top:
+    1px;
+}
+
+.shake{
+  animation:
+    shake .22s linear;
+}
+
+@keyframes shake{
+
+  25%{
+    transform:
+      translateX(-4px);
   }
 
-  @keyframes shake {
-    25% {
-      transform:
-        translateX(-4px);
-    }
-
-    50% {
-      transform:
-        translateX(4px);
-    }
-
-    75% {
-      transform:
-        translateX(-3px);
-    }
+  50%{
+    transform:
+      translateX(4px);
   }
+
+  75%{
+    transform:
+      translateX(-3px);
+  }
+
+}
 </style>
 </head>
 
@@ -383,70 +806,155 @@
 
 <div id="app">
 
-  <header>
+<header>
 
-    <div>
+  <div>
 
-      <div class="title">
-        咪咪捕捉计划 😶👉🐈
-      </div>
+    <div class="title">
+      咪咪捕捉计划 V2 😶👉🐈
+    </div>
 
-      <div class="sub">
-        30 秒。看到咪咪就点，别点到扫地机器人。
-      </div>
+    <div class="sub">
+      35 秒。连击越高，分越疯。别打扫地机器人。
+    </div>
 
+  </div>
+
+  <div class="stats">
+
+    <div class="pill">
+      <small>分数</small>
+      <span id="score">0</span>
     </div>
 
     <div class="pill">
-      <span id="score">0</span>
-      分 ·
-      <span id="time">30</span>s
+      <small>时间</small>
+      <span id="time">35</span>s
     </div>
 
-  </header>
+  </div>
+
+</header>
 
 
-  <main id="arena">
+<div class="bar">
 
-    <div id="message"></div>
+  <div class="combo">
 
-    <div id="startCard">
+    <div
+      class="fill"
+      id="comboFill">
+    </div>
 
-      <div class="panel">
+    <span id="comboText">
+      Combo ×0
+    </span>
 
-        <div class="bigcat">
-          🐈
+  </div>
+
+  <div class="record">
+    最高
+    <span id="highScore">0</span>
+  </div>
+
+</div>
+
+
+<main id="arena">
+
+  <div id="toast"></div>
+
+  <div id="overlay">
+
+    <div class="panel">
+
+      <div class="hero">
+        🐈‍⬛
+      </div>
+
+      <h1 id="panelTitle">
+        这次认真抓咪咪
+      </h1>
+
+      <p id="panelDesc">
+        普通猫只是开胃菜。稀有猫会跑，连击高了还会进入“猫猫暴走”。
+      </p>
+
+
+      <div class="rules">
+
+        <div class="rule">
+          🐈 普通咪咪
+          <br>
+          基础 +1
         </div>
 
-        <h1 id="cardTitle">
-          准备抓咪咪了吗
-        </h1>
+        <div class="rule">
+          🏜️ 沙丘猫
+          <br>
+          基础 +4
+        </div>
 
-        <p class="desc" id="cardDesc">
+        <div class="rule">
+          🐆 锈斑豹猫
+          <br>
+          基础 +6
+        </div>
 
-          普通咪咪 +1，豹纹米米 +5。<br>
-
-          偶尔会混进 🤖，
-          点到它要扣 3 分。<br>
-
-          手机上直接点就能玩。
-
-        </p>
-
-        <button id="startBtn">
-          开始抓猫
-        </button>
+        <div class="rule">
+          🤖 扫地机器人
+          <br>
+          -4，连击清零
+        </div>
 
       </div>
 
+
+      <button id="startBtn">
+        开始 V2
+      </button>
+
     </div>
 
-  </main>
+  </div>
+
+</main>
 
 
-  <footer>
-    纯 HTML / CSS / JS · 没有后端 · 没有猫受到伤害
-  </footer>
+<div id="collection">
+
+  <div
+    class="badge"
+    data-cat="sand">
+    🏜️ 沙丘猫
+  </div>
+
+  <div
+    class="badge"
+    data-cat="rusty">
+    🐆 锈斑豹猫
+  </div>
+
+  <div
+    class="badge"
+    data-cat="aby">
+    🐈 阿比西尼亚
+  </div>
+
+  <div
+    class="badge"
+    data-cat="black">
+    🐈‍⬛ 黑咪
+  </div>
+
+</div>
+
+
+<footer>
+  单文件 HTML / CSS / JS ·
+  最高分会保存在你的浏览器里 ·
+  依然没有猫受到伤害
+</footer>
 
 </div>
 
@@ -455,549 +963,1314 @@
 
 (() => {
 
-  const arena =
-    document.getElementById("arena");
-
-  const scoreEl =
-    document.getElementById("score");
-
-  const timeEl =
-    document.getElementById("time");
-
-  const startCard =
-    document.getElementById("startCard");
-
-  const startBtn =
-    document.getElementById("startBtn");
-
-  const cardTitle =
-    document.getElementById("cardTitle");
-
-  const cardDesc =
-    document.getElementById("cardDesc");
-
-  const message =
-    document.getElementById("message");
+const arena =
+  document.getElementById(
+    "arena"
+  );
 
 
-  const normalCats = [
-    "🐈",
-    "🐈‍⬛",
-    "😺",
-    "😸",
-    "😼",
-    "😽"
-  ];
+const scoreEl =
+  document.getElementById(
+    "score"
+  );
 
 
-  let score = 0;
-
-  let timeLeft = 30;
-
-  let running = false;
-
-  let timer = null;
-
-  let spawner = null;
-
-  let active =
-    new Set();
+const timeEl =
+  document.getElementById(
+    "time"
+  );
 
 
-  function toast(text) {
+const highScoreEl =
+  document.getElementById(
+    "highScore"
+  );
 
-    message.textContent =
-      text;
 
-    message.classList.add(
-      "show"
+const comboText =
+  document.getElementById(
+    "comboText"
+  );
+
+
+const comboFill =
+  document.getElementById(
+    "comboFill"
+  );
+
+
+const toastEl =
+  document.getElementById(
+    "toast"
+  );
+
+
+const overlay =
+  document.getElementById(
+    "overlay"
+  );
+
+
+const panelTitle =
+  document.getElementById(
+    "panelTitle"
+  );
+
+
+const panelDesc =
+  document.getElementById(
+    "panelDesc"
+  );
+
+
+const startBtn =
+  document.getElementById(
+    "startBtn"
+  );
+
+
+
+const catalog = {
+
+  normal:{
+    emoji:"🐈",
+    name:"咪咪",
+    points:1,
+    rare:false,
+    speed:.35,
+    life:1500
+  },
+
+  black:{
+    emoji:"🐈‍⬛",
+    name:"黑咪",
+    points:2,
+    rare:false,
+    speed:.55,
+    life:1350,
+    collect:"black"
+  },
+
+  aby:{
+    emoji:"🐈",
+    name:"阿比西尼亚",
+    points:3,
+    rare:true,
+    speed:.8,
+    life:1200,
+    collect:"aby"
+  },
+
+  sand:{
+    emoji:"🏜️",
+    name:"沙丘猫",
+    points:4,
+    rare:true,
+    speed:1,
+    life:1050,
+    collect:"sand"
+  },
+
+  rusty:{
+    emoji:"🐆",
+    name:"锈斑豹猫",
+    points:6,
+    rare:true,
+    speed:1.25,
+    life:900,
+    collect:"rusty"
+  },
+
+  robot:{
+    emoji:"🤖",
+    name:"扫地机器人",
+    points:-4,
+    robot:true,
+    speed:.55,
+    life:1350
+  },
+
+  power:{
+    emoji:"💗",
+    name:"摸摸券",
+    points:0,
+    power:true,
+    speed:.65,
+    life:1000
+  }
+
+};
+
+
+
+let score =
+  0;
+
+
+let timeLeft =
+  35;
+
+
+let running =
+  false;
+
+
+let timer =
+  null;
+
+
+let spawnTimer =
+  null;
+
+
+let combo =
+  0;
+
+
+let lastHitAt =
+  0;
+
+
+let frozenUntil =
+  0;
+
+
+let active =
+  new Set();
+
+
+let caught =
+  new Set();
+
+
+let highScore =
+  Number(
+    localStorage.getItem(
+      "catCatcherV2HighScore"
+    )
+    ||
+    0
+  );
+
+
+highScoreEl.textContent =
+  highScore;
+
+
+
+function vibrate(
+  ms = 20
+){
+
+  if(
+    navigator.vibrate
+  ){
+
+    navigator.vibrate(
+      ms
     );
 
-    clearTimeout(
-      message._t
-    );
+  }
 
-    message._t =
-      setTimeout(() => {
+}
 
-        message.classList.remove(
+
+
+function toast(
+  text
+){
+
+  toastEl.textContent =
+    text;
+
+
+  toastEl.classList.add(
+    "show"
+  );
+
+
+  clearTimeout(
+    toastEl._t
+  );
+
+
+  toastEl._t =
+    setTimeout(
+      () => {
+
+        toastEl.classList.remove(
           "show"
         );
 
-      }, 650);
-
-  }
-
-
-  function clearCats() {
-
-    active.forEach(
-      el => el.remove()
+      },
+      700
     );
 
-    active.clear();
-
-  }
+}
 
 
-  function spawn() {
 
-    if (!running)
-      return;
+function comboMultiplier(){
 
-
-    const r =
-      Math.random();
-
-
-    const type =
-      r < .12
-        ? "rare"
-        : (
-            r < .24
-              ? "bad"
-              : "normal"
-          );
+  if(
+    combo >= 15
+  )
+    return 4;
 
 
-    const el =
-      document.createElement(
-        "div"
-      );
+  if(
+    combo >= 10
+  )
+    return 3;
 
 
-    el.className =
-      "cat" +
-      (
-        type === "rare"
-          ? " rare"
-          : ""
-      ) +
-      (
-        type === "bad"
-          ? " bad"
-          : ""
-      );
+  if(
+    combo >= 5
+  )
+    return 2;
 
 
-    el.textContent =
-      type === "rare"
-        ? "🐆"
-        : (
-            type === "bad"
-              ? "🤖"
-              : normalCats[
-                  Math.floor(
-                    Math.random()
-                    *
-                    normalCats.length
-                  )
-                ]
-          );
+  return 1;
+
+}
 
 
-    el.dataset.type =
-      type;
+
+function updateComboUI(){
+
+  const mult =
+    comboMultiplier();
 
 
-    const rect =
-      arena.getBoundingClientRect();
+  comboText.textContent =
+    `Combo ×${combo} · 分数倍率 ${mult}x`;
 
 
-    const pad =
-      52;
+  comboFill.style.width =
+    Math.min(
+      100,
+      combo * 6.7
+    )
+    +
+    "%";
 
 
-    const x =
-      pad
-      +
-      Math.random()
-      *
-      Math.max(
-        10,
-        rect.width
-        -
-        pad * 2
-      );
+  arena.classList.toggle(
+    "fever",
+    combo >= 10
+  );
+
+}
 
 
-    const y =
-      74
-      +
-      Math.random()
-      *
-      Math.max(
-        10,
-        rect.height
-        -
-        130
-      );
+
+function resetCombo(){
+
+  combo =
+    0;
 
 
-    el.style.left =
-      x + "px";
+  updateComboUI();
 
-    el.style.top =
-      y + "px";
+}
 
 
-    const life =
-      type === "rare"
-        ? 850
-        : 1100
-          +
-          Math.random()
-          *
-          650;
+
+function updateCollection(
+  key
+){
+
+  if(
+    !key
+  )
+    return;
 
 
-    el.addEventListener(
-      "pointerdown",
-      e => {
-
-        e.preventDefault();
+  caught.add(
+    key
+  );
 
 
-        if (
-          !running
-          ||
-          el.dataset.hit
-        )
-          return;
+  document
+    .querySelectorAll(
+      ".badge"
+    )
+    .forEach(
+      b => {
 
+        if(
+          caught.has(
+            b.dataset.cat
+          )
+        ){
 
-        el.dataset.hit =
-          "1";
-
-
-        let delta =
-          1;
-
-        let label =
-          "+1";
-
-
-        if (
-          type === "rare"
-        ) {
-
-          delta =
-            5;
-
-          label =
-            "豹纹米米 +5";
-
-          toast(
-            "抓到稀有豹纹米米！！😶😋"
+          b.classList.add(
+            "got"
           );
 
         }
-
-
-        if (
-          type === "bad"
-        ) {
-
-          delta =
-            -3;
-
-          label =
-            "机器人 -3";
-
-
-          arena.classList.remove(
-            "shake"
-          );
-
-
-          void arena.offsetWidth;
-
-
-          arena.classList.add(
-            "shake"
-          );
-
-
-          toast(
-            "这是扫地机器人！！🙄"
-          );
-
-        }
-
-
-        score +=
-          delta;
-
-
-        scoreEl.textContent =
-          score;
-
-
-        const f =
-          document.createElement(
-            "div"
-          );
-
-
-        f.className =
-          "float";
-
-
-        f.textContent =
-          label;
-
-
-        f.style.left =
-          el.style.left;
-
-
-        f.style.top =
-          el.style.top;
-
-
-        arena.appendChild(
-          f
-        );
-
-
-        setTimeout(
-          () => f.remove(),
-          700
-        );
-
-
-        el.style.animation =
-          "bonk .22s ease-in forwards";
-
-
-        setTimeout(
-          () => {
-
-            active.delete(
-              el
-            );
-
-            el.remove();
-
-          },
-          220
-        );
 
       }
     );
 
+}
 
-    arena.appendChild(
-      el
+
+
+function chooseType(){
+
+  const r =
+    Math.random();
+
+
+  if(
+    r < .07
+  )
+    return "robot";
+
+
+  if(
+    r < .11
+  )
+    return "power";
+
+
+  if(
+    r < .17
+  )
+    return "rusty";
+
+
+  if(
+    r < .26
+  )
+    return "sand";
+
+
+  if(
+    r < .36
+  )
+    return "aby";
+
+
+  if(
+    r < .50
+  )
+    return "black";
+
+
+  return "normal";
+
+}
+
+
+
+function clearTargets(){
+
+  active.forEach(
+    t => {
+
+      cancelAnimationFrame(
+        t._raf
+      );
+
+
+      t.remove();
+
+    }
+  );
+
+
+  active.clear();
+
+}
+
+
+
+function makeFloat(
+  x,
+  y,
+  text
+){
+
+  const f =
+    document.createElement(
+      "div"
     );
 
 
-    active.add(
-      el
+  f.className =
+    "float";
+
+
+  f.textContent =
+    text;
+
+
+  f.style.left =
+    x + "px";
+
+
+  f.style.top =
+    y + "px";
+
+
+  arena.appendChild(
+    f
+  );
+
+
+  setTimeout(
+    () => f.remove(),
+    720
+  );
+
+}
+
+
+
+function spawn(){
+
+  if(
+    !running
+  )
+    return;
+
+
+  const type =
+    chooseType();
+
+
+  const info =
+    catalog[type];
+
+
+  const el =
+    document.createElement(
+      "div"
     );
 
 
-    setTimeout(
-      () => {
+  el.className =
+    "target"
+    +
+    (
+      info.rare
+      ? " rare"
+      : ""
+    )
+    +
+    (
+      info.robot
+      ? " robot"
+      : ""
+    )
+    +
+    (
+      info.power
+      ? " power"
+      : ""
+    );
 
-        if (
-          active.has(el)
-        ) {
 
-          active.delete(
-            el
+  el.innerHTML =
+    `
+    <div class="emoji">
+      ${info.emoji}
+    </div>
+
+    <div class="tag">
+      ${info.name}
+    </div>
+    `;
+
+
+  const rect =
+    arena.getBoundingClientRect();
+
+
+  const margin =
+    56;
+
+
+  let x =
+    margin
+    +
+    Math.random()
+    *
+    Math.max(
+      20,
+      rect.width
+      -
+      margin * 2
+    );
+
+
+  let y =
+    80
+    +
+    Math.random()
+    *
+    Math.max(
+      20,
+      rect.height
+      -
+      145
+    );
+
+
+  let angle =
+    Math.random()
+    *
+    Math.PI
+    *
+    2;
+
+
+  let vx =
+    Math.cos(
+      angle
+    )
+    *
+    info.speed;
+
+
+  let vy =
+    Math.sin(
+      angle
+    )
+    *
+    info.speed;
+
+
+  el.style.left =
+    x + "px";
+
+
+  el.style.top =
+    y + "px";
+
+
+  arena.appendChild(
+    el
+  );
+
+
+  active.add(
+    el
+  );
+
+
+  let born =
+    performance.now();
+
+
+  let last =
+    born;
+
+
+
+  function move(
+    now
+  ){
+
+    if(
+      !running
+      ||
+      !active.has(el)
+    )
+      return;
+
+
+    const dt =
+      Math.min(
+        32,
+        now - last
+      );
+
+
+    last =
+      now;
+
+
+    if(
+      now >= frozenUntil
+    ){
+
+      const boost =
+        combo >= 10
+        ? 1.35
+        : 1;
+
+
+      x +=
+        vx
+        *
+        dt
+        *
+        boost;
+
+
+      y +=
+        vy
+        *
+        dt
+        *
+        boost;
+
+
+      if(
+        x < margin
+        ||
+        x >
+        rect.width
+        -
+        margin
+      ){
+
+        vx *=
+          -1;
+
+
+        x =
+          Math.max(
+            margin,
+            Math.min(
+              rect.width
+              -
+              margin,
+              x
+            )
           );
 
-          el.style.opacity =
-            "0";
+      }
 
+
+      if(
+        y < 72
+        ||
+        y >
+        rect.height
+        -
+        72
+      ){
+
+        vy *=
+          -1;
+
+
+        y =
+          Math.max(
+            72,
+            Math.min(
+              rect.height
+              -
+              72,
+              y
+            )
+          );
+
+      }
+
+
+      el.style.left =
+        x + "px";
+
+
+      el.style.top =
+        y + "px";
+
+    }
+
+
+
+    if(
+      now
+      -
+      born
+      >=
+      info.life
+    ){
+
+      active.delete(
+        el
+      );
+
+
+      el.style.opacity =
+        "0";
+
+
+      setTimeout(
+        () => el.remove(),
+        140
+      );
+
+
+      if(
+        info.rare
+        &&
+        !info.robot
+        &&
+        !info.power
+      ){
+
+        resetCombo();
+
+
+        toast(
+          `${info.name}跑掉了 😾`
+        );
+
+      }
+
+
+      return;
+
+    }
+
+
+    el._raf =
+      requestAnimationFrame(
+        move
+      );
+
+  }
+
+
+  el._raf =
+    requestAnimationFrame(
+      move
+    );
+
+
+
+  el.addEventListener(
+    "pointerdown",
+    e => {
+
+      e.preventDefault();
+
+
+      if(
+        !running
+        ||
+        !active.has(el)
+        ||
+        el.dataset.hit
+      )
+        return;
+
+
+      el.dataset.hit =
+        "1";
+
+
+      active.delete(
+        el
+      );
+
+
+      cancelAnimationFrame(
+        el._raf
+      );
+
+
+      const now =
+        performance.now();
+
+
+
+      if(
+        info.power
+      ){
+
+        frozenUntil =
+          now + 2600;
+
+
+        toast(
+          "💗 摸摸券：全场冻结 2.6 秒"
+        );
+
+
+        makeFloat(
+          x,
+          y,
+          "冻结！"
+        );
+
+
+        vibrate(
+          35
+        );
+
+      }
+
+
+
+      else if(
+        info.robot
+      ){
+
+        score +=
+          info.points;
+
+
+        resetCombo();
+
+
+        arena.classList.remove(
+          "shake"
+        );
+
+
+        void arena.offsetWidth;
+
+
+        arena.classList.add(
+          "shake"
+        );
+
+
+        toast(
+          "你又打扫地机器人！！🙄"
+        );
+
+
+        makeFloat(
+          x,
+          y,
+          "-4"
+        );
+
+
+        vibrate(
+          70
+        );
+
+      }
+
+
+
+      else{
+
+        combo =
+          (
+            now
+            -
+            lastHitAt
+            <=
+            1300
+          )
+          ?
+          combo + 1
+          :
+          1;
+
+
+        lastHitAt =
+          now;
+
+
+        const mult =
+          comboMultiplier();
+
+
+        const gain =
+          info.points
+          *
+          mult;
+
+
+        score +=
+          gain;
+
+
+        updateComboUI();
+
+
+        updateCollection(
+          info.collect
+        );
+
+
+        makeFloat(
+          x,
+          y,
+          `+${gain}`
+        );
+
+
+        vibrate(
+          info.rare
+          ? 35
+          : 15
+        );
+
+
+        if(
+          type === "rusty"
+        ){
+
+          toast(
+            "抓到锈斑豹猫！！😶😋"
+          );
+
+        }
+
+
+        else if(
+          type === "sand"
+        ){
+
+          toast(
+            "沙丘猫到手！！🏜️🐈"
+          );
+
+        }
+
+
+        else if(
+          combo === 10
+        ){
+
+          toast(
+            "🔥 猫猫暴走！倍率 3x"
+          );
+
+        }
+
+
+        else if(
+          combo === 15
+        ){
+
+          toast(
+            "🔥🔥 4x！你开始不讲武德了"
+          );
+
+        }
+
+      }
+
+
+      scoreEl.textContent =
+        score;
+
+
+      el.style.animation =
+        "hit .2s ease-in forwards";
+
+
+      setTimeout(
+        () => el.remove(),
+        210
+      );
+
+    }
+  );
+
+}
+
+
+
+function scheduleSpawns(){
+
+  clearInterval(
+    spawnTimer
+  );
+
+
+  spawnTimer =
+    setInterval(
+      () => {
+
+        spawn();
+
+
+        if(
+          combo >= 10
+          &&
+          Math.random()
+          <
+          .55
+        ){
 
           setTimeout(
-            () =>
-              el.remove(),
+            spawn,
             160
           );
 
         }
 
+
+        else if(
+          Math.random()
+          <
+          .25
+        ){
+
+          setTimeout(
+            spawn,
+            190
+          );
+
+        }
+
       },
-      life
+      combo >= 10
+      ? 430
+      : 590
     );
 
-  }
+}
 
 
-  function endGame() {
 
-    running =
-      false;
+function endGame(){
 
-
-    clearInterval(
-      timer
-    );
+  running =
+    false;
 
 
-    clearInterval(
-      spawner
-    );
+  clearInterval(
+    timer
+  );
 
 
-    clearCats();
+  clearInterval(
+    spawnTimer
+  );
 
 
-    let rank =
-      "猫猫路人";
+  clearTargets();
 
 
-    if (
-      score >= 18
-    )
-      rank =
-        "咪咪诱捕专家";
+  arena.classList.remove(
+    "fever"
+  );
 
 
-    if (
-      score >= 28
-    )
-      rank =
-        "猫科目击证人";
 
+  if(
+    score > highScore
+  ){
 
-    if (
-      score >= 38
-    )
-      rank =
-        "沙丘猫精神饲养员";
-
-
-    if (
-      score >= 48
-    )
-      rank =
-        "豹纹米米收藏家";
-
-
-    cardTitle.textContent =
-      score
-      +
-      " 分 · "
-      +
-      rank;
-
-
-    cardDesc.innerHTML =
-      score < 20
-
-      ? `
-        猫猫跑得有点快 😶
-        <br>
-        再来一把，我不信你抓不到。
-        `
-
-      : `
-        成绩已登记进
-        《想偷但偷不到的猫》档案。
-        <br>
-        稀有豹纹米米抓到越多越赚。
-        `;
-
-
-    startBtn.textContent =
-      "再来一把";
-
-
-    startCard.style.display =
-      "grid";
-
-  }
-
-
-  function startGame() {
-
-    score =
-      0;
-
-    timeLeft =
-      30;
-
-    running =
-      true;
-
-
-    scoreEl.textContent =
+    highScore =
       score;
 
 
-    timeEl.textContent =
-      timeLeft;
+    localStorage.setItem(
+      "catCatcherV2HighScore",
+      String(
+        highScore
+      )
+    );
 
 
-    startCard.style.display =
-      "none";
-
-
-    clearCats();
-
-
-    spawn();
-
-
-    spawner =
-      setInterval(
-        () => {
-
-          spawn();
-
-
-          if (
-            Math.random()
-            <
-            .28
-          ) {
-
-            setTimeout(
-              spawn,
-              170
-            );
-
-          }
-
-        },
-        620
-      );
-
-
-    timer =
-      setInterval(
-        () => {
-
-          timeLeft--;
-
-
-          timeEl.textContent =
-            timeLeft;
-
-
-          if (
-            timeLeft <= 0
-          ) {
-
-            endGame();
-
-          }
-
-        },
-        1000
-      );
+    highScoreEl.textContent =
+      highScore;
 
   }
 
 
-  startBtn.addEventListener(
-    "click",
-    startGame
+
+  let title =
+    "猫猫路人";
+
+
+  if(
+    score >= 45
+  )
+    title =
+      "咪咪诱捕专家";
+
+
+  if(
+    score >= 80
+  )
+    title =
+      "沙丘猫追踪员";
+
+
+  if(
+    score >= 120
+  )
+    title =
+      "锈斑豹猫收藏家";
+
+
+  if(
+    score >= 170
+  )
+    title =
+      "猫科动物通缉犯";
+
+
+  if(
+    score >= 230
+  )
+    title =
+      "咪咪界最终 Boss";
+
+
+
+  panelTitle.textContent =
+    `${score} 分 · ${title}`;
+
+
+
+  panelDesc.innerHTML =
+    `最高分：${highScore}。<br>`
+    +
+    (
+      caught.size >= 4
+
+      ?
+      "图鉴全亮了。你是不是背着我练过。😾"
+
+      :
+
+      `本局点亮 ${caught.size}/4 个图鉴，继续抓。`
+    );
+
+
+
+  startBtn.textContent =
+    "再来一把";
+
+
+  overlay.style.display =
+    "grid";
+
+}
+
+
+
+function startGame(){
+
+  score =
+    0;
+
+
+  combo =
+    0;
+
+
+  lastHitAt =
+    0;
+
+
+  frozenUntil =
+    0;
+
+
+  timeLeft =
+    35;
+
+
+  caught.clear();
+
+
+
+  document
+    .querySelectorAll(
+      ".badge"
+    )
+    .forEach(
+      b =>
+        b.classList.remove(
+          "got"
+        )
+    );
+
+
+
+  scoreEl.textContent =
+    score;
+
+
+  timeEl.textContent =
+    timeLeft;
+
+
+  updateComboUI();
+
+
+  overlay.style.display =
+    "none";
+
+
+  clearTargets();
+
+
+  running =
+    true;
+
+
+  spawn();
+
+
+  setTimeout(
+    spawn,
+    220
   );
+
+
+  scheduleSpawns();
+
+
+
+  timer =
+    setInterval(
+      () => {
+
+        timeLeft--;
+
+
+        timeEl.textContent =
+          timeLeft;
+
+
+
+        if(
+          combo > 0
+          &&
+          performance.now()
+          -
+          lastHitAt
+          >
+          1450
+        ){
+
+          resetCombo();
+
+        }
+
+
+
+        if(
+          timeLeft <= 0
+        ){
+
+          endGame();
+
+        }
+
+      },
+      1000
+    );
+
+}
+
+
+
+startBtn.addEventListener(
+  "click",
+  startGame
+);
+
 
 })();
 
