@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>谁混进来了 V2 · Ariki's Game Room</title>
+<style>
+:root{
+  --bg1:#fff8f1;--bg2:#ffe7d9;--ink:#241c18;--muted:#7a6a62;
+  --accent:#ff7b59;--accent2:#ffb26a;--good:#83c98d;--bad:#ff6b62;
+  --card:rgba(255,255,255,.88);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:var(--ink)}
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 18% 0%,rgba(255,255,255,.96),transparent 24%),
+    linear-gradient(160deg,var(--bg1),var(--bg2));
+}
+button,a{font:inherit}
+a{text-decoration:none;color:inherit}
+.shell{max-width:760px;margin:auto;padding:max(env(safe-area-inset-top),16px) 16px max(env(safe-area-inset-bottom),24px)}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.back{font-weight:900;color:var(--muted);font-size:14px}
+.badge{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.74);font-size:12px;font-weight:900}
+.card{
+  background:var(--card);border:1px solid rgba(255,255,255,.95);border-radius:26px;
+  box-shadow:0 18px 50px rgba(105,61,36,.12);backdrop-filter:blur(10px)
+}
+.title-row{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+h1{font-size:28px;margin:2px 0 4px}
+.subtitle{font-size:13px;color:var(--muted);line-height:1.5}
+.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.hud div{padding:9px 8px;border-radius:17px;background:rgba(255,255,255,.74);text-align:center;font-weight:950}
+.hud small{display:block;color:var(--muted);font-size:9px;margin-bottom:1px}
+#stage{position:relative;min-height:540px;padding:16px;overflow:hidden}
+#question{
+  font-size:17px;font-weight:950;text-align:center;min-height:54px;
+  display:grid;place-items:center;padding:5px 12px
+}
+#timerBarWrap{
+  height:7px;border-radius:999px;background:#f3e5da;overflow:hidden;margin:0 8px 10px;
+  opacity:0;transition:.15s
+}
+#timerBar{height:100%;width:100%;background:linear-gradient(90deg,#ffb36a,#ff705b);transform-origin:left center}
+#grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:6px}
+.creature{
+  aspect-ratio:1;border:1px solid rgba(255,255,255,.96);border-radius:20px;background:rgba(255,255,255,.82);
+  display:grid;place-items:center;font-size:37px;box-shadow:0 8px 18px rgba(87,50,31,.09);
+  transition:.16s;user-select:none;position:relative
+}
+.creature.hide{font-size:0;background:#fff5ed}
+.creature.hide::after{content:"?";font-size:27px;color:#b88d75;font-weight:950}
+.creature.tap{cursor:pointer}
+.creature.good{box-shadow:0 0 0 3px rgba(98,190,111,.35);transform:scale(.96)}
+.creature.bad{box-shadow:0 0 0 3px rgba(255,91,76,.35);transform:scale(.96)}
+.creature.mark::before{
+  content:attr(data-mark);position:absolute;top:5px;left:7px;font-size:11px;font-weight:1000;color:#8c6b58
+}
+#answerArea{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}
+.answer{
+  border:1px solid #ffe2cf;border-radius:17px;padding:12px;background:#fff8f2;font-weight:900;color:var(--ink)
+}
+#banner{margin:10px auto 0;min-height:42px;display:grid;place-items:center;text-align:center;font-size:13px;font-weight:900;color:var(--muted)}
+#overlay{
+  position:absolute;inset:0;display:grid;place-items:center;padding:18px;
+  background:rgba(255,244,235,.76);backdrop-filter:blur(5px);z-index:5
+}
+.panel{width:min(96%,420px);padding:22px;text-align:center}
+.panel .hero{font-size:62px;line-height:1}
+.panel h2{font-size:24px;margin:10px 0 6px}
+.panel p{font-size:13px;line-height:1.6;color:var(--muted)}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;text-align:left}
+.rule{padding:10px;border-radius:15px;background:#fff7f0;font-size:11px;line-height:1.45}
+.btn{
+  border:0;border-radius:18px;padding:13px 18px;font-weight:950;color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 10px 24px rgba(255,123,89,.22)
+}
+.btn.secondary{background:#fff4e9;color:var(--ink);box-shadow:none;border:1px solid #ffe0c7}
+.row{display:flex;gap:8px;margin-top:12px}.row>*{flex:1}
+.flash{animation:flash .35s ease}
+@keyframes flash{50%{transform:scale(1.035)}}
+footer{text-align:center;font-size:11px;color:var(--muted);padding:16px 0 2px}
+@media(max-width:430px){
+  #grid{gap:7px}.creature{font-size:33px;border-radius:17px}
+  #stage{min-height:515px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <a class="back" href="index.html">← 游戏大厅</a>
+    <div class="badge">👀 V2 · 观察力</div>
+  </div>
+
+  <div class="title-row">
+    <div>
+      <h1>谁混进来了 V2 😶</h1>
+      <div class="subtitle">不加速。改成更阴、更会骗你。</div>
+    </div>
+    <div class="badge">12 回合</div>
+  </div>
+
+  <div class="hud">
+    <div><small>分数</small><span id="score">0</span></div>
+    <div><small>回合</small><span id="round">0/12</span></div>
+    <div><small>连对</small><span id="combo">0</span></div>
+    <div><small>生命</small><span id="life">❤️❤️❤️</span></div>
+  </div>
+
+  <main id="stage" class="card">
+    <div id="question">准备开始。</div>
+    <div id="timerBarWrap"><div id="timerBar"></div></div>
+    <div id="grid"></div>
+    <div id="answerArea"></div>
+    <div id="banner"></div>
+
+    <div id="overlay">
+      <div class="panel card">
+        <div class="hero">🐈🕵️</div>
+        <h2>谁混进来了 V2</h2>
+        <p>你第一版 10/10 满命通关了，所以这次不靠速度折磨你，改靠题目本身阴你。😾</p>
+        <div class="rules">
+          <div class="rule">🕵️ <b>单双卧底</b><br>可能 0、1、2 个。</div>
+          <div class="rule">🧠 <b>位置记忆</b><br>会问刚才谁在哪。</div>
+          <div class="rule">🙃 <b>反向题</b><br>有时要找“猫”，不是卧底。</div>
+          <div class="rule">👑 <b>Boss 回合</b><br>第 12 回合两阶段。</div>
+        </div>
+        <button class="btn" id="startBtn">开始高级调查</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>难度靠判断与记忆 · 不是靠乱窜 · 错三次结束调查 😶</footer>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const grid=$('grid'),question=$('question'),answerArea=$('answerArea'),banner=$('banner');
+const scoreEl=$('score'),roundEl=$('round'),comboEl=$('combo'),lifeEl=$('life'),overlay=$('overlay');
+const timerBarWrap=$('timerBarWrap'),timerBar=$('timerBar');
+
+const cats=[
+  {emoji:'🐈',name:'普通咪咪',kind:'cat'},
+  {emoji:'🐈‍⬛',name:'黑咪',kind:'cat'},
+  {emoji:'🐱',name:'猫猫',kind:'cat'},
+  {emoji:'😺',name:'开心咪',kind:'cat'},
+  {emoji:'😼',name:'坏笑咪',kind:'cat'},
+  {emoji:'🐯',name:'老虎',kind:'cat'},
+  {emoji:'🦁',name:'狮子',kind:'cat'},
+  {emoji:'🐆',name:'豹纹米米',kind:'cat'}
+];
+
+const intruders=[
+  {emoji:'🐕',name:'狗',kind:'intruder'},
+  {emoji:'🤖',name:'扫地机器人',kind:'intruder'},
+  {emoji:'🦊',name:'狐狸',kind:'intruder'},
+  {emoji:'🐰',name:'兔子',kind:'intruder'},
+  {emoji:'🐼',name:'熊猫',kind:'intruder'},
+  {emoji:'🐸',name:'青蛙',kind:'intruder'},
+  {emoji:'🦆',name:'鸭子',kind:'intruder'},
+  {emoji:'🐵',name:'猴子',kind:'intruder'}
+];
+
+let score=0,round=0,combo=0,lives=3,locked=false,roundTimer=null;
+let state={best:0,bestCombo:0,games:0};
+try{state=JSON.parse(localStorage.getItem('intruderGameV1')||'null')||state}catch{}
+
+function sample(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function updateHUD(){
+  scoreEl.textContent=score;roundEl.textContent=`${round}/12`;comboEl.textContent=combo;
+  lifeEl.textContent='❤️'.repeat(lives)+'🖤'.repeat(3-lives)
+}
+function clearBoard(){
+  clearTimeout(roundTimer);grid.innerHTML='';answerArea.innerHTML='';banner.textContent='';
+  timerBarWrap.style.opacity='0';timerBar.style.transition='none';timerBar.style.transform='scaleX(1)'
+}
+function makeCrowd(count,intruderCount=1){
+  const crowd=[];
+  for(let i=0;i<count-intruderCount;i++)crowd.push({...sample(cats)});
+  for(let i=0;i<intruderCount;i++)crowd.push({...sample(intruders)});
+  return shuffle(crowd)
+}
+function makeAllCats(count){return shuffle(Array.from({length:count},()=>({...sample(cats)})))}
+function renderCrowd(crowd,clickable=false,onTap=null,marks=false){
+  grid.innerHTML='';
+  crowd.forEach((item,i)=>{
+    const b=document.createElement('button');
+    b.className='creature'+(clickable?' tap':'')+(marks?' mark':'');
+    b.textContent=item.emoji;b.dataset.i=i;b.dataset.mark=marks?String(i+1):'';
+    b.setAttribute('aria-label',item.name);
+    if(clickable&&onTap)b.onclick=()=>onTap(i,b);
+    grid.appendChild(b)
+  })
+}
+function hideCrowd(){[...grid.children].forEach(el=>el.classList.add('hide'))}
+function stageFlash(){
+  const stage=$('stage');stage.classList.remove('flash');void stage.offsetWidth;stage.classList.add('flash')
+}
+function pointsForCorrect(){
+  const bonus=Math.min(18,combo*3),gained=12+bonus;
+  score+=gained;combo++;state.bestCombo=Math.max(state.bestCombo||0,combo);return gained
+}
+function wrong(msg='答错了 😾'){
+  if(locked)return;locked=true;clearTimeout(roundTimer);lives--;combo=0;updateHUD();banner.textContent=msg;stageFlash();
+  setTimeout(()=>{if(lives<=0)endGame();else nextRound()},900)
+}
+function correct(msg='答对了'){
+  if(locked)return;locked=true;clearTimeout(roundTimer);
+  const gained=pointsForCorrect();updateHUD();banner.textContent=`${msg} · +${gained}`;
+  setTimeout(()=>nextRound(),850)
+}
+function buildAnswers(options,correctValue){
+  answerArea.innerHTML='';
+  shuffle(options).forEach(opt=>{
+    const b=document.createElement('button');b.className='answer';b.textContent=opt.label;
+    b.onclick=()=>{if(locked)return;if(opt.value===correctValue)correct('记对了');else wrong(`正确答案：${options.find(x=>x.value===correctValue).label}`)};
+    answerArea.appendChild(b)
+  })
+}
+function startAnswerTimer(ms=5500){
+  if(round<7)return;
+  timerBarWrap.style.opacity='1';
+  timerBar.style.transition='none';timerBar.style.transform='scaleX(1)';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    timerBar.style.transition=`transform ${ms}ms linear`;
+    timerBar.style.transform='scaleX(0)'
+  }));
+  roundTimer=setTimeout(()=>wrong('时间到。你看太久了 😶'),ms)
+}
+
+function roundFindIntruder(){
+  const count=9+Math.floor(Math.random()*5);
+  const n=Math.random()<.16?0:(Math.random()<.32?2:1);
+  const crowd=n===0?makeAllCats(count):makeCrowd(count,n);
+  const reverse=Math.random()<.24;
+
+  if(reverse){
+    question.textContent='反向题：点一只真正的猫科。';
+    renderCrowd(crowd,true,(i,b)=>{
+      if(locked)return;
+      const item=crowd[i];
+      if(item.kind==='cat'){b.classList.add('good');correct('这次你没被题目骗到')}
+      else{b.classList.add('bad');wrong('反向题！你点的是卧底 😾')}
+    })
+  }else{
+    question.textContent=n===0?'这轮到底有没有卧底？':'找出一个卧底。';
+    renderCrowd(crowd,true,(i,b)=>{
+      if(locked)return;const item=crowd[i];
+      if(item.kind==='intruder'){b.classList.add('good');correct(`发现 ${item.name}`)}
+      else{b.classList.add('bad');wrong('无辜猫被你抓了 😾')}
+    });
+    if(n===0){
+      const none=document.createElement('button');none.className='answer';none.textContent='这轮没有卧底';
+      none.onclick=()=>correct('确实没有');answerArea.appendChild(none)
+    }
+  }
+  startAnswerTimer()
+}
+
+function roundCount(){
+  const count=10+Math.floor(Math.random()*4);
+  const intrCount=[0,1,2][Math.floor(Math.random()*3)];
+  const crowd=intrCount===0?makeAllCats(count):makeCrowd(count,intrCount);
+  question.textContent='先看。等会儿要问数量。';renderCrowd(crowd,false);
+  setTimeout(()=>{
+    if(locked)return;hideCrowd();
+    const ask=Math.random();
+    if(ask<.5){
+      const black=crowd.filter(x=>x.emoji==='🐈‍⬛').length;
+      question.textContent='刚刚有几只黑咪？';
+      const vals=new Set([black]);
+      while(vals.size<4)vals.add(Math.max(0,black-2+Math.floor(Math.random()*5)));
+      buildAnswers([...vals].map(v=>({label:v+' 只',value:v})),black)
+    }else{
+      question.textContent='刚刚一共有几个卧底？';
+      buildAnswers([0,1,2,3].map(v=>({label:v+' 个',value:v})),intrCount)
+    }
+    startAnswerTimer()
+  },2300)
+}
+
+function roundIdentity(){
+  const count=9+Math.floor(Math.random()*4);
+  const crowd=makeCrowd(count,1),intr=crowd.find(x=>x.kind==='intruder');
+  question.textContent='记住卧底是谁。';renderCrowd(crowd,false);
+  setTimeout(()=>{
+    if(locked)return;hideCrowd();question.textContent='刚才的卧底是谁？';
+    const wrongs=shuffle(intruders.filter(x=>x.name!==intr.name)).slice(0,3);
+    buildAnswers([intr,...wrongs].map(x=>({label:x.emoji+' '+x.name,value:x.name})),intr.name);
+    startAnswerTimer()
+  },2200)
+}
+
+function roundPosition(){
+  const count=12,crowd=makeCrowd(count,1),idx=crowd.findIndex(x=>x.kind==='intruder'),intr=crowd[idx];
+  question.textContent='记住卧底的位置编号。';renderCrowd(crowd,false,null,true);
+  setTimeout(()=>{
+    if(locked)return;hideCrowd();question.textContent=`${intr.emoji} ${intr.name} 刚才在几号位？`;
+    const correctPos=idx+1;
+    const vals=new Set([correctPos]);
+    while(vals.size<4)vals.add(1+Math.floor(Math.random()*count));
+    buildAnswers([...vals].map(v=>({label:v+' 号',value:v})),correctPos);
+    startAnswerTimer()
+  },2400)
+}
+
+function bossRound(){
+  const count=12,crowd=makeCrowd(count,2);
+  const intrs=crowd.map((x,i)=>({...x,pos:i+1})).filter(x=>x.kind==='intruder');
+  question.textContent='👑 Boss：记住两个卧底，以及它们的位置。';
+  renderCrowd(crowd,false,null,true);
+  setTimeout(()=>{
+    if(locked)return;hideCrowd();
+    question.textContent='第一问：刚才是哪两个卧底？';
+    const correctNames=intrs.map(x=>x.name).sort().join('|');
+    const options=[{label:intrs.map(x=>x.emoji).join(' ')+' '+intrs.map(x=>x.name).join(' + '),value:correctNames}];
+    while(options.length<4){
+      const a=sample(intruders),b=sample(intruders);
+      if(a.name===b.name)continue;
+      const value=[a.name,b.name].sort().join('|');
+      if(options.some(o=>o.value===value))continue;
+      options.push({label:a.emoji+' '+b.emoji+' '+a.name+' + '+b.name,value})
+    }
+    answerArea.innerHTML='';
+    shuffle(options).forEach(opt=>{
+      const btn=document.createElement('button');btn.className='answer';btn.textContent=opt.label;
+      btn.onclick=()=>{
+        if(locked)return;
+        if(opt.value!==correctNames){wrong('Boss 第一问就被骗了 😾');return}
+        answerArea.innerHTML='';question.textContent='第二问：两个卧底的位置相加是多少？';
+        const sum=intrs[0].pos+intrs[1].pos;
+        const vals=new Set([sum]);
+        while(vals.size<4)vals.add(Math.max(2,sum-4+Math.floor(Math.random()*9)));
+        buildAnswers([...vals].map(v=>({label:String(v),value:v})),sum);
+        startAnswerTimer(6500)
+      };
+      answerArea.appendChild(btn)
+    });
+    startAnswerTimer(6500)
+  },3000)
+}
+
+function nextRound(){
+  locked=false;clearBoard();
+  if(round>=12){endGame();return}
+  round++;updateHUD();
+
+  if(round===12){bossRound();return}
+
+  const r=Math.random();
+  if(r<.32)roundFindIntruder();
+  else if(r<.56)roundCount();
+  else if(r<.78)roundIdentity();
+  else roundPosition()
+}
+
+function startGame(){
+  score=0;round=0;combo=0;lives=3;locked=false;overlay.style.display='none';updateHUD();nextRound()
+}
+
+function endGame(){
+  locked=true;clearTimeout(roundTimer);clearBoard();
+  state.games=(state.games||0)+1;
+  state.best=Math.max(state.best||0,score);
+  localStorage.setItem('intruderGameV1',JSON.stringify(state));
+  overlay.style.display='grid';
+  overlay.innerHTML=`<div class="panel card">
+    <div class="hero">${lives>0?'😼':'🙀'}</div>
+    <h2>${score} 分</h2>
+    <p>${lives>0?'12 回合高级调查完成。':'高级调查提前结束。'}<br>
+    历史最高：${state.best} 分 · 历史最高连对：${state.bestCombo||0}</p>
+    <div class="rules">
+      <div class="rule">🎯 本局得分<br><b>${score}</b></div>
+      <div class="rule">❤️ 剩余生命<br><b>${lives}</b></div>
+      <div class="rule">🔥 历史连对<br><b>${state.bestCombo||0}</b></div>
+      <div class="rule">🕵️ 调查次数<br><b>${state.games}</b></div>
+    </div>
+    <div class="row">
+      <button class="btn" id="againBtn">再查一轮</button>
+      <a class="btn secondary" href="index.html">回大厅</a>
+    </div>
+  </div>`;
+  document.getElementById('againBtn').onclick=startGame
+}
+
+document.getElementById('startBtn').onclick=startGame;
+updateHUD();
+</script>
+</body>
+</html>
