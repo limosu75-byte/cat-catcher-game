@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>0.3 秒 · Ariki's Game Room</title>
+<style>
+
+:root{
+  --bg1:#fff8f1;--bg2:#ffe7d9;--ink:#241c18;--muted:#7a6a62;
+  --accent:#ff7b59;--accent2:#ffb26a;--card:rgba(255,255,255,.86);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:var(--ink)}
+body{
+  background:
+    radial-gradient(circle at 18% 0%,rgba(255,255,255,.95),transparent 24%),
+    linear-gradient(160deg,var(--bg1),var(--bg2));
+}
+button,a{font:inherit}
+a{text-decoration:none;color:inherit}
+.shell{max-width:760px;margin:auto;padding:max(env(safe-area-inset-top),16px) 16px max(env(safe-area-inset-bottom),24px)}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.back{font-weight:900;color:var(--muted);font-size:14px}
+.badge{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.7);font-size:12px;font-weight:900}
+.card{
+  background:var(--card);border:1px solid rgba(255,255,255,.94);border-radius:26px;
+  box-shadow:0 18px 50px rgba(105,61,36,.12);backdrop-filter:blur(10px)
+}
+.btn{
+  border:0;border-radius:18px;padding:13px 18px;font-weight:950;color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 10px 24px rgba(255,123,89,.22)
+}
+.btn.secondary{background:#fff4e9;color:var(--ink);box-shadow:none;border:1px solid #ffe0c7}
+.muted{color:var(--muted)}
+
+body{min-height:100vh}
+.gamebox{padding:18px}
+h1{font-size:28px;margin:4px 0}p{line-height:1.6}
+.screen{
+  height:58vh;min-height:380px;border-radius:30px;display:grid;place-items:center;text-align:center;padding:30px;
+  background:rgba(255,255,255,.82);border:1px solid #fff;box-shadow:0 18px 50px rgba(105,61,36,.12);
+  user-select:none;transition:.16s
+}
+.screen.waiting{background:#fff4e9}.screen.ready{background:#dff7df}.screen.tooSoon{background:#ffe0df}
+.big{font-size:58px}.msg{font-size:22px;font-weight:1000;margin-top:14px}.submsg{font-size:13px;color:var(--muted);margin-top:8px}
+.row{display:flex;gap:9px;margin-top:12px}.row>*{flex:1}
+.list{margin-top:12px;padding:14px}.list b{font-size:13px}#history{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.7}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar"><a class="back" href="index.html">← 游戏大厅</a><div class="badge">⚡ 反应力</div></div>
+  <div class="gamebox card">
+    <h1>0.3 秒</h1>
+    <p class="muted">一局 5 次。等它变绿再点；提前按就是偷跑。😾</p>
+    <div id="screen" class="screen">
+      <div><div class="big">⚡</div><div class="msg" id="msg">点这里开始</div><div class="submsg" id="submsg">最好成绩会保存在浏览器里</div></div>
+    </div>
+    <div class="row">
+      <button class="btn secondary" id="resetBtn">重新开始</button>
+      <div class="badge" style="display:grid;place-items:center">最佳：<span id="best">—</span></div>
+    </div>
+    <div class="list card"><b>本局记录</b><div id="history">还没开始。</div></div>
+  </div>
+</div>
+<script>
+const screen=document.getElementById('screen'),msg=document.getElementById('msg'),sub=document.getElementById('submsg');
+const history=document.getElementById('history'),bestEl=document.getElementById('best');
+let state={best:null};try{state=JSON.parse(localStorage.getItem('reactionGameV1')||'null')||state}catch{}
+bestEl.textContent=state.best?state.best+' ms':'—';
+let phase='idle',timeout=null,startAt=0,round=0,results=[];
+function renderHistory(){
+  history.textContent=results.length?results.map((x,i)=>`${i+1}. ${x} ms`).join(' · '):'还没开始。';
+}
+function beginRound(){
+  clearTimeout(timeout);phase='waiting';screen.className='screen waiting';msg.textContent='等一下……';sub.textContent=`第 ${round+1} / 5 次`;
+  timeout=setTimeout(()=>{phase='ready';screen.className='screen ready';msg.textContent='现在！';sub.textContent='点！';startAt=performance.now()},1400+Math.random()*2600);
+}
+function finishRun(){
+  const avg=Math.round(results.reduce((a,b)=>a+b,0)/results.length);
+  const min=Math.min(...results);
+  msg.textContent=`平均 ${avg} ms`;sub.textContent=`最快 ${min} ms · 点一下再来一局`;screen.className='screen';phase='done';
+  if(!state.best||min<state.best){state.best=min;localStorage.setItem('reactionGameV1',JSON.stringify(state));bestEl.textContent=min+' ms';}
+}
+screen.addEventListener('pointerdown',()=>{
+  if(phase==='idle'||phase==='done'){round=0;results=[];renderHistory();beginRound();return}
+  if(phase==='waiting'){
+    clearTimeout(timeout);phase='tooSoon';screen.className='screen tooSoon';msg.textContent='偷跑！😾';sub.textContent='这一轮重来，别预判。';
+    timeout=setTimeout(beginRound,900);return;
+  }
+  if(phase==='ready'){
+    const ms=Math.round(performance.now()-startAt);results.push(ms);round++;renderHistory();
+    if(round>=5)finishRun();else{phase='pause';screen.className='screen';msg.textContent=`${ms} ms`;sub.textContent='下一轮马上来';timeout=setTimeout(beginRound,850)}
+  }
+});
+document.getElementById('resetBtn').onclick=()=>{clearTimeout(timeout);phase='idle';round=0;results=[];renderHistory();screen.className='screen';msg.textContent='点这里开始';sub.textContent='一局 5 次';};
+</script>
+</body>
+</html>
