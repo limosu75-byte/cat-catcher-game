@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>咪咪捕捉计划 · V2</title>
+<title>咪咪捕捉计划 · V3</title>
 
 <style>
 :root{
@@ -13,7 +13,7 @@
   --muted:#7a6b63;
   --accent:#ff7b59;
   --accent2:#ffb26b;
-  --glass:rgba(255,255,255,.78);
+  --glass:rgba(255,255,255,.8);
 }
 
 *{
@@ -25,6 +25,7 @@ html,
 body{
   margin:0;
   height:100%;
+
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -44,11 +45,13 @@ body{
       rgba(255,255,255,.95),
       transparent 24%
     ),
+
     radial-gradient(
       circle at 90% 8%,
-      rgba(255,255,255,.8),
+      rgba(255,255,255,.82),
       transparent 18%
     ),
+
     linear-gradient(
       160deg,
       var(--bg1),
@@ -88,9 +91,7 @@ header{
 
 .sub{
   font-size:12px;
-
   color:var(--muted);
-
   margin-top:2px;
 }
 
@@ -104,8 +105,7 @@ header{
 }
 
 .pill{
-  background:
-    var(--glass);
+  background:var(--glass);
 
   border:
     1px solid rgba(255,255,255,.95);
@@ -256,11 +256,13 @@ header{
       rgba(255,255,255,.26),
       rgba(255,255,255,.12)
     ),
+
     repeating-linear-gradient(
       90deg,
       rgba(255,255,255,.16) 0 1px,
       transparent 1px 46px
     ),
+
     repeating-linear-gradient(
       0deg,
       rgba(255,255,255,.12) 0 1px,
@@ -270,7 +272,7 @@ header{
 
 #arena.fever{
   animation:
-    feverPulse .7s ease-in-out infinite alternate;
+    feverPulse .75s ease-in-out infinite alternate;
 }
 
 @keyframes feverPulse{
@@ -282,8 +284,8 @@ header{
 
   to{
     box-shadow:
-      0 18px 70px rgba(255,122,89,.35),
-      inset 0 0 0 2px rgba(255,157,86,.24);
+      0 18px 70px rgba(255,122,89,.30),
+      inset 0 0 0 2px rgba(255,157,86,.20);
   }
 
 }
@@ -324,7 +326,7 @@ header{
     1px solid rgba(255,255,255,.95);
 
   background:
-    rgba(255,255,255,.88);
+    rgba(255,255,255,.9);
 
   box-shadow:
     0 12px 28px rgba(81,48,31,.16);
@@ -418,6 +420,68 @@ header{
     );
 }
 
+.target.boss{
+  width:
+    104px;
+
+  height:
+    104px;
+
+  border-radius:
+    30px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff4cf,
+      #ffcf70
+    );
+
+  box-shadow:
+    0 0 0 4px rgba(255,189,57,.28),
+    0 16px 38px rgba(121,72,23,.23);
+}
+
+.target.boss .emoji{
+  font-size:
+    50px;
+}
+
+.hp{
+  position:
+    absolute;
+
+  top:
+    -11px;
+
+  left:
+    50%;
+
+  transform:
+    translateX(-50%);
+
+  font-size:
+    11px;
+
+  font-weight:
+    950;
+
+  background:
+    #2a211d;
+
+  color:
+    #fff;
+
+  padding:
+    4px 8px;
+
+  border-radius:
+    999px;
+
+  white-space:
+    nowrap;
+}
+
 @keyframes pop{
 
   to{
@@ -436,8 +500,8 @@ header{
   45%{
     transform:
       translate(-50%,-50%)
-      scale(1.22)
-      rotate(-8deg);
+      scale(1.18)
+      rotate(-6deg);
   }
 
   100%{
@@ -447,6 +511,16 @@ header{
 
     opacity:
       0;
+  }
+
+}
+
+@keyframes bump{
+
+  50%{
+    transform:
+      translate(-50%,-50%)
+      scale(1.08);
   }
 
 }
@@ -562,7 +636,7 @@ header{
     center;
 
   padding:
-    24px;
+    22px;
 
   z-index:
     8;
@@ -585,7 +659,7 @@ header{
     center;
 
   background:
-    rgba(255,255,255,.9);
+    rgba(255,255,255,.91);
 
   border:
     1px solid white;
@@ -594,7 +668,7 @@ header{
     30px;
 
   padding:
-    26px 22px;
+    24px 22px;
 
   box-shadow:
     0 20px 60px rgba(109,69,43,.17);
@@ -602,7 +676,7 @@ header{
 
 .hero{
   font-size:
-    72px;
+    66px;
 
   line-height:
     1;
@@ -610,7 +684,7 @@ header{
 
 .panel h1{
   font-size:
-    25px;
+    24px;
 
   margin:
     12px 0 6px;
@@ -621,13 +695,13 @@ header{
     14px;
 
   line-height:
-    1.65;
+    1.6;
 
   color:
     var(--muted);
 
   margin:
-    0 auto 16px;
+    0 auto 14px;
 
   max-width:
     330px;
@@ -647,7 +721,7 @@ header{
     left;
 
   margin:
-    14px 0 18px;
+    12px 0 17px;
 }
 
 .rule{
@@ -658,13 +732,13 @@ header{
     rgba(255,245,236,.75);
 
   padding:
-    10px 11px;
+    9px 10px;
 
   font-size:
     12px;
 
   line-height:
-    1.45;
+    1.4;
 
   font-weight:
     750;
@@ -811,11 +885,11 @@ footer{
   <div>
 
     <div class="title">
-      咪咪捕捉计划 V2 😶👉🐈
+      咪咪捕捉计划 V3 😶👉🐈
     </div>
 
     <div class="sub">
-      35 秒。连击越高，分越疯。别打扫地机器人。
+      40 秒。猫跑慢一点了，但后面会越来越热闹。
     </div>
 
   </div>
@@ -829,7 +903,7 @@ footer{
 
     <div class="pill">
       <small>时间</small>
-      <span id="time">35</span>s
+      <span id="time">40</span>s
     </div>
 
   </div>
@@ -847,7 +921,7 @@ footer{
     </div>
 
     <span id="comboText">
-      Combo ×0
+      Combo ×0 · 1x
     </span>
 
   </div>
@@ -873,11 +947,13 @@ footer{
       </div>
 
       <h1 id="panelTitle">
-        这次认真抓咪咪
+        V3：别窜那么快版
       </h1>
 
       <p id="panelDesc">
-        普通猫只是开胃菜。稀有猫会跑，连击高了还会进入“猫猫暴走”。
+        这次猫咪明显慢下来了。
+        连击时间也放宽，
+        最后 7 秒只增加数量，不额外加速。
       </p>
 
 
@@ -902,16 +978,16 @@ footer{
         </div>
 
         <div class="rule">
-          🤖 扫地机器人
+          👑 Boss 猫
           <br>
-          -4，连击清零
+          点 3 次，击败 +15
         </div>
 
       </div>
 
 
       <button id="startBtn">
-        开始 V2
+        开始 V3
       </button>
 
     </div>
@@ -951,9 +1027,9 @@ footer{
 
 
 <footer>
-  单文件 HTML / CSS / JS ·
-  最高分会保存在你的浏览器里 ·
-  依然没有猫受到伤害
+  更慢的移动速度 · 更长停留时间 ·
+  Boss 猫 · 最高分保存在浏览器里 ·
+  仍然没有猫受到伤害
 </footer>
 
 </div>
@@ -1036,67 +1112,81 @@ const catalog = {
     emoji:"🐈",
     name:"咪咪",
     points:1,
-    rare:false,
-    speed:.35,
-    life:1500
+    speed:.16,
+    life:2300
   },
+
 
   black:{
     emoji:"🐈‍⬛",
     name:"黑咪",
     points:2,
-    rare:false,
-    speed:.55,
-    life:1350,
+    speed:.22,
+    life:2200,
     collect:"black"
   },
+
 
   aby:{
     emoji:"🐈",
     name:"阿比西尼亚",
     points:3,
     rare:true,
-    speed:.8,
-    life:1200,
+    speed:.28,
+    life:2050,
     collect:"aby"
   },
+
 
   sand:{
     emoji:"🏜️",
     name:"沙丘猫",
     points:4,
     rare:true,
-    speed:1,
-    life:1050,
+    speed:.34,
+    life:1900,
     collect:"sand"
   },
+
 
   rusty:{
     emoji:"🐆",
     name:"锈斑豹猫",
     points:6,
     rare:true,
-    speed:1.25,
-    life:900,
+    speed:.42,
+    life:1750,
     collect:"rusty"
   },
+
 
   robot:{
     emoji:"🤖",
     name:"扫地机器人",
     points:-4,
     robot:true,
-    speed:.55,
-    life:1350
+    speed:.20,
+    life:2200
   },
+
 
   power:{
     emoji:"💗",
     name:"摸摸券",
     points:0,
     power:true,
-    speed:.65,
-    life:1000
+    speed:.18,
+    life:1800
+  },
+
+
+  boss:{
+    emoji:"👑🐈",
+    name:"Boss 猫",
+    points:15,
+    boss:true,
+    speed:.18,
+    life:6500
   }
 
 };
@@ -1108,7 +1198,7 @@ let score =
 
 
 let timeLeft =
-  35;
+  40;
 
 
 let running =
@@ -1143,10 +1233,14 @@ let caught =
   new Set();
 
 
+let bossSpawned =
+  false;
+
+
 let highScore =
   Number(
     localStorage.getItem(
-      "catCatcherV2HighScore"
+      "catCatcherV3HighScore"
     )
     ||
     0
@@ -1203,7 +1297,7 @@ function toast(
         );
 
       },
-      700
+      750
     );
 
 }
@@ -1243,7 +1337,7 @@ function updateComboUI(){
 
 
   comboText.textContent =
-    `Combo ×${combo} · 分数倍率 ${mult}x`;
+    `Combo ×${combo} · ${mult}x`;
 
 
   comboFill.style.width =
@@ -1324,25 +1418,25 @@ function chooseType(){
 
 
   if(
-    r < .07
+    r < .065
   )
     return "robot";
 
 
   if(
-    r < .11
+    r < .105
   )
     return "power";
 
 
   if(
-    r < .17
+    r < .165
   )
     return "rusty";
 
 
   if(
-    r < .26
+    r < .255
   )
     return "sand";
 
@@ -1354,7 +1448,7 @@ function chooseType(){
 
 
   if(
-    r < .50
+    r < .52
   )
     return "black";
 
@@ -1429,7 +1523,9 @@ function makeFloat(
 
 
 
-function spawn(){
+function spawn(
+  forcedType = null
+){
 
   if(
     !running
@@ -1438,6 +1534,8 @@ function spawn(){
 
 
   const type =
+    forcedType
+    ||
     chooseType();
 
 
@@ -1470,7 +1568,23 @@ function spawn(){
       info.power
       ? " power"
       : ""
+    )
+    +
+    (
+      info.boss
+      ? " boss"
+      : ""
     );
+
+
+  const hp =
+    info.boss
+    ? 3
+    : 0;
+
+
+  el.dataset.hp =
+    hp;
 
 
   el.innerHTML =
@@ -1482,7 +1596,20 @@ function spawn(){
     <div class="tag">
       ${info.name}
     </div>
+
+    ${
+      info.boss
+      ?
+      `
+      <div class="hp">
+        HP 3/3
+      </div>
+      `
+      :
+      ""
+    }
     `;
+
 
 
   const rect =
@@ -1490,7 +1617,10 @@ function spawn(){
 
 
   const margin =
-    56;
+    info.boss
+    ? 72
+    : 56;
+
 
 
   let x =
@@ -1507,7 +1637,7 @@ function spawn(){
 
 
   let y =
-    80
+    85
     +
     Math.random()
     *
@@ -1515,7 +1645,7 @@ function spawn(){
       20,
       rect.height
       -
-      145
+      155
     );
 
 
@@ -1543,6 +1673,7 @@ function spawn(){
     info.speed;
 
 
+
   el.style.left =
     x + "px";
 
@@ -1561,7 +1692,8 @@ function spawn(){
   );
 
 
-  let born =
+
+  const born =
     performance.now();
 
 
@@ -1593,30 +1725,22 @@ function spawn(){
       now;
 
 
+
     if(
       now >= frozenUntil
     ){
 
-      const boost =
-        combo >= 10
-        ? 1.35
-        : 1;
-
-
       x +=
         vx
         *
-        dt
-        *
-        boost;
+        dt;
 
 
       y +=
         vy
         *
-        dt
-        *
-        boost;
+        dt;
+
 
 
       if(
@@ -1646,6 +1770,7 @@ function spawn(){
       }
 
 
+
       if(
         y < 72
         ||
@@ -1671,6 +1796,7 @@ function spawn(){
           );
 
       }
+
 
 
       el.style.left =
@@ -1715,11 +1841,19 @@ function spawn(){
         !info.power
       ){
 
-        resetCombo();
+        toast(
+          `${info.name}溜走了 😾`
+        );
 
+      }
+
+
+      if(
+        info.boss
+      ){
 
         toast(
-          `${info.name}跑掉了 😾`
+          "Boss 猫跑了！😶"
         );
 
       }
@@ -1730,12 +1864,14 @@ function spawn(){
     }
 
 
+
     el._raf =
       requestAnimationFrame(
         move
       );
 
   }
+
 
 
   el._raf =
@@ -1756,10 +1892,154 @@ function spawn(){
         !running
         ||
         !active.has(el)
-        ||
+      )
+        return;
+
+
+
+      const now =
+        performance.now();
+
+
+
+      if(
+        info.boss
+      ){
+
+        let hpNow =
+          Number(
+            el.dataset.hp
+          )
+          -
+          1;
+
+
+        el.dataset.hp =
+          hpNow;
+
+
+        el
+          .querySelector(
+            ".hp"
+          )
+          .textContent =
+          `HP ${hpNow}/3`;
+
+
+        makeFloat(
+          x,
+          y,
+          "-1 HP"
+        );
+
+
+        el.style.animation =
+          "bump .15s ease";
+
+
+        setTimeout(
+          () =>
+            el.style.animation =
+              "",
+          160
+        );
+
+
+        vibrate(
+          30
+        );
+
+
+
+        if(
+          hpNow > 0
+        )
+          return;
+
+
+
+        active.delete(
+          el
+        );
+
+
+        cancelAnimationFrame(
+          el._raf
+        );
+
+
+
+        combo =
+          (
+            now
+            -
+            lastHitAt
+            <=
+            1800
+          )
+          ?
+          combo + 1
+          :
+          1;
+
+
+        lastHitAt =
+          now;
+
+
+
+        const gain =
+          info.points
+          *
+          comboMultiplier();
+
+
+
+        score +=
+          gain;
+
+
+        scoreEl.textContent =
+          score;
+
+
+        updateComboUI();
+
+
+
+        makeFloat(
+          x,
+          y,
+          `Boss +${gain}`
+        );
+
+
+        toast(
+          "👑 Boss 猫投降了！+15 基础分"
+        );
+
+
+        el.style.animation =
+          "hit .2s ease-in forwards";
+
+
+        setTimeout(
+          () => el.remove(),
+          210
+        );
+
+
+        return;
+
+      }
+
+
+
+      if(
         el.dataset.hit
       )
         return;
+
 
 
       el.dataset.hit =
@@ -1776,21 +2056,17 @@ function spawn(){
       );
 
 
-      const now =
-        performance.now();
-
-
 
       if(
         info.power
       ){
 
         frozenUntil =
-          now + 2600;
+          now + 3000;
 
 
         toast(
-          "💗 摸摸券：全场冻结 2.6 秒"
+          "💗 摸摸券：全场冻结 3 秒"
         );
 
 
@@ -1834,7 +2110,7 @@ function spawn(){
 
 
         toast(
-          "你又打扫地机器人！！🙄"
+          "又点机器人 🙄"
         );
 
 
@@ -1861,7 +2137,7 @@ function spawn(){
             -
             lastHitAt
             <=
-            1300
+            1800
           )
           ?
           combo + 1
@@ -1873,14 +2149,12 @@ function spawn(){
           now;
 
 
-        const mult =
-          comboMultiplier();
-
 
         const gain =
           info.points
           *
-          mult;
+          comboMultiplier();
+
 
 
         score +=
@@ -1909,12 +2183,13 @@ function spawn(){
         );
 
 
+
         if(
           type === "rusty"
         ){
 
           toast(
-            "抓到锈斑豹猫！！😶😋"
+            "锈斑豹猫到手 😶😋"
           );
 
         }
@@ -1925,7 +2200,7 @@ function spawn(){
         ){
 
           toast(
-            "沙丘猫到手！！🏜️🐈"
+            "沙丘猫到手 🏜️🐈"
           );
 
         }
@@ -1936,7 +2211,7 @@ function spawn(){
         ){
 
           toast(
-            "🔥 猫猫暴走！倍率 3x"
+            "🔥 猫猫暴走：只加数量，不加速度"
           );
 
         }
@@ -1947,12 +2222,13 @@ function spawn(){
         ){
 
           toast(
-            "🔥🔥 4x！你开始不讲武德了"
+            "🔥🔥 4x！慢慢抓也能高分"
           );
 
         }
 
       }
+
 
 
       scoreEl.textContent =
@@ -1975,7 +2251,7 @@ function spawn(){
 
 
 
-function scheduleSpawns(){
+function startSpawnLoop(){
 
   clearInterval(
     spawnTimer
@@ -1989,39 +2265,67 @@ function scheduleSpawns(){
         spawn();
 
 
+
         if(
-          combo >= 10
-          &&
-          Math.random()
-          <
-          .55
+          timeLeft <= 7
         ){
 
-          setTimeout(
-            spawn,
-            160
-          );
+          if(
+            Math.random()
+            <
+            .65
+          ){
+
+            setTimeout(
+              spawn,
+              220
+            );
+
+          }
 
         }
+
+
+
+        else if(
+          combo >= 10
+        ){
+
+          if(
+            Math.random()
+            <
+            .35
+          ){
+
+            setTimeout(
+              spawn,
+              260
+            );
+
+          }
+
+        }
+
 
 
         else if(
           Math.random()
           <
-          .25
+          .18
         ){
 
           setTimeout(
             spawn,
-            190
+            300
           );
 
         }
 
       },
-      combo >= 10
-      ? 430
-      : 590
+
+      timeLeft <= 7
+      ? 520
+      : 720
     );
 
 }
@@ -2052,6 +2356,9 @@ function endGame(){
   );
 
 
+  resetCombo();
+
+
 
   if(
     score > highScore
@@ -2062,7 +2369,7 @@ function endGame(){
 
 
     localStorage.setItem(
-      "catCatcherV2HighScore",
+      "catCatcherV3HighScore",
       String(
         highScore
       )
@@ -2081,35 +2388,35 @@ function endGame(){
 
 
   if(
-    score >= 45
+    score >= 40
   )
     title =
       "咪咪诱捕专家";
 
 
   if(
-    score >= 80
+    score >= 75
   )
     title =
       "沙丘猫追踪员";
 
 
   if(
-    score >= 120
+    score >= 110
   )
     title =
       "锈斑豹猫收藏家";
 
 
   if(
-    score >= 170
+    score >= 150
   )
     title =
       "猫科动物通缉犯";
 
 
   if(
-    score >= 230
+    score >= 200
   )
     title =
       "咪咪界最终 Boss";
@@ -2128,11 +2435,11 @@ function endGame(){
       caught.size >= 4
 
       ?
-      "图鉴全亮了。你是不是背着我练过。😾"
+      "图鉴全亮。你已经开始熟练作案了。😾"
 
       :
 
-      `本局点亮 ${caught.size}/4 个图鉴，继续抓。`
+      `本局点亮 ${caught.size}/4 个图鉴。`
     );
 
 
@@ -2167,7 +2474,11 @@ function startGame(){
 
 
   timeLeft =
-    35;
+    40;
+
+
+  bossSpawned =
+    false;
 
 
   caught.clear();
@@ -2198,6 +2509,7 @@ function startGame(){
   updateComboUI();
 
 
+
   overlay.style.display =
     "none";
 
@@ -2209,16 +2521,17 @@ function startGame(){
     true;
 
 
+
   spawn();
 
 
   setTimeout(
     spawn,
-    220
+    300
   );
 
 
-  scheduleSpawns();
+  startSpawnLoop();
 
 
 
@@ -2241,10 +2554,48 @@ function startGame(){
           -
           lastHitAt
           >
-          1450
+          1900
         ){
 
           resetCombo();
+
+        }
+
+
+
+        if(
+          timeLeft === 14
+          &&
+          !bossSpawned
+        ){
+
+          bossSpawned =
+            true;
+
+
+          spawn(
+            "boss"
+          );
+
+
+          toast(
+            "👑 Boss 猫出现！要点 3 次"
+          );
+
+        }
+
+
+
+        if(
+          timeLeft === 7
+        ){
+
+          toast(
+            "最后 7 秒：猫猫潮！数量增加，速度不变"
+          );
+
+
+          startSpawnLoop();
 
         }
 
