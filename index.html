@@ -3,17 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>咪咪捕捉计划 · V3</title>
+<title>咪咪捕捉计划 V4 · 猫猫研究所</title>
 
 <style>
 :root{
   --bg1:#fff7ef;
-  --bg2:#ffe6d6;
+  --bg2:#ffe7d8;
   --ink:#251d19;
   --muted:#7a6b63;
   --accent:#ff7b59;
   --accent2:#ffb26b;
-  --glass:rgba(255,255,255,.8);
+  --glass:rgba(255,255,255,.82);
+  --line:rgba(255,255,255,.92);
 }
 
 *{
@@ -42,8 +43,8 @@ body{
   background:
     radial-gradient(
       circle at 18% 8%,
-      rgba(255,255,255,.95),
-      transparent 24%
+      rgba(255,255,255,.96),
+      transparent 25%
     ),
 
     radial-gradient(
@@ -57,6 +58,10 @@ body{
       var(--bg1),
       var(--bg2)
     );
+}
+
+button{
+  font:inherit;
 }
 
 #app{
@@ -87,6 +92,7 @@ header{
 .title{
   font-size:21px;
   font-weight:950;
+  letter-spacing:.1px;
 }
 
 .sub{
@@ -105,28 +111,26 @@ header{
 }
 
 .pill{
-  background:var(--glass);
-
-  border:
-    1px solid rgba(255,255,255,.95);
-
-  border-radius:
-    18px;
+  min-width:74px;
 
   padding:
     8px 10px;
 
+  text-align:center;
+
+  font-weight:900;
+
+  background:
+    var(--glass);
+
+  border:
+    1px solid var(--line);
+
+  border-radius:
+    18px;
+
   box-shadow:
     0 8px 24px rgba(110,67,42,.08);
-
-  font-weight:
-    900;
-
-  text-align:
-    center;
-
-  min-width:
-    74px;
 
   backdrop-filter:
     blur(10px);
@@ -135,8 +139,7 @@ header{
 .pill small{
   display:block;
 
-  font-size:
-    10px;
+  font-size:10px;
 
   color:
     var(--muted);
@@ -148,43 +151,41 @@ header{
     1px;
 }
 
-.bar{
+.toprow{
   display:flex;
-
-  align-items:center;
 
   gap:8px;
 
+  align-items:center;
+
   min-height:
-    34px;
+    36px;
 }
 
 .combo{
   flex:1;
 
-  background:
-    rgba(255,255,255,.58);
+  position:relative;
 
-  border:
-    1px solid rgba(255,255,255,.8);
+  overflow:hidden;
+
+  padding:
+    8px 10px;
 
   border-radius:
     16px;
 
-  padding:
-    7px 10px;
+  background:
+    rgba(255,255,255,.58);
+
+  border:
+    1px solid rgba(255,255,255,.82);
 
   font-size:
     12px;
 
   font-weight:
     850;
-
-  overflow:
-    hidden;
-
-  position:
-    relative;
 }
 
 .combo .fill{
@@ -208,8 +209,7 @@ header{
 }
 
 .combo span{
-  position:
-    relative;
+  position:relative;
 
   z-index:
     1;
@@ -222,57 +222,102 @@ header{
   color:
     var(--muted);
 
+  font-weight:
+    850;
+
   white-space:
     nowrap;
+}
+
+#mission{
+  display:flex;
+
+  align-items:center;
+
+  gap:8px;
+
+  min-height:
+    42px;
+
+  padding:
+    8px 10px;
+
+  border-radius:
+    16px;
+
+  background:
+    rgba(255,255,255,.62);
+
+  border:
+    1px solid rgba(255,255,255,.82);
+
+  font-size:
+    12px;
 
   font-weight:
     800;
 }
 
+#mission .icon{
+  font-size:
+    18px;
+}
+
+#mission .text{
+  flex:1;
+}
+
+#mission .progress{
+  color:
+    var(--accent);
+
+  font-weight:
+    950;
+
+  white-space:
+    nowrap;
+}
+
 #arena{
-  position:
-    relative;
+  position:relative;
 
-  flex:
-    1;
+  flex:1;
 
-  min-height:
-    0;
+  min-height:0;
 
-  overflow:
-    hidden;
+  overflow:hidden;
 
   border-radius:
     28px;
 
   border:
-    1px solid rgba(255,255,255,.9);
+    1px solid rgba(255,255,255,.94);
 
   box-shadow:
     0 18px 55px rgba(103,61,36,.13);
 
   background:
     linear-gradient(
-      rgba(255,255,255,.26),
+      rgba(255,255,255,.28),
       rgba(255,255,255,.12)
     ),
 
     repeating-linear-gradient(
       90deg,
-      rgba(255,255,255,.16) 0 1px,
+      rgba(255,255,255,.15) 0 1px,
       transparent 1px 46px
     ),
 
     repeating-linear-gradient(
       0deg,
-      rgba(255,255,255,.12) 0 1px,
+      rgba(255,255,255,.11) 0 1px,
       transparent 1px 46px
     );
 }
 
 #arena.fever{
   animation:
-    feverPulse .75s ease-in-out infinite alternate;
+    feverPulse .8s ease-in-out infinite alternate;
 }
 
 @keyframes feverPulse{
@@ -284,43 +329,34 @@ header{
 
   to{
     box-shadow:
-      0 18px 70px rgba(255,122,89,.30),
-      inset 0 0 0 2px rgba(255,157,86,.20);
+      0 18px 70px rgba(255,122,89,.28),
+      inset 0 0 0 2px rgba(255,157,86,.18);
   }
 
 }
 
 .target{
-  position:
-    absolute;
+  position:absolute;
 
-  width:
-    76px;
-
-  height:
-    76px;
+  width:78px;
+  height:78px;
 
   border-radius:
     24px;
 
-  display:
-    grid;
+  display:grid;
 
-  place-items:
-    center;
+  place-items:center;
 
   transform:
     translate(-50%,-50%)
-    scale(.45);
+    scale(.46);
 
-  opacity:
-    0;
+  opacity:0;
 
-  user-select:
-    none;
+  user-select:none;
 
-  cursor:
-    pointer;
+  cursor:pointer;
 
   border:
     1px solid rgba(255,255,255,.95);
@@ -332,7 +368,7 @@ header{
     0 12px 28px rgba(81,48,31,.16);
 
   animation:
-    pop .16s ease-out forwards;
+    pop .17s ease-out forwards;
 
   will-change:
     transform,
@@ -349,14 +385,11 @@ header{
 }
 
 .target .tag{
-  position:
-    absolute;
+  position:absolute;
 
-  bottom:
-    -8px;
+  bottom:-9px;
 
-  left:
-    50%;
+  left:50%;
 
   transform:
     translateX(-50%);
@@ -370,8 +403,7 @@ header{
   background:
     rgba(42,33,29,.86);
 
-  color:
-    white;
+  color:#fff;
 
   padding:
     3px 7px;
@@ -384,30 +416,57 @@ header{
 }
 
 .target.rare{
-  width:
-    84px;
-
-  height:
-    84px;
+  width:86px;
+  height:86px;
 
   background:
     linear-gradient(
       145deg,
-      #fff8df,
-      #ffd884
+      #fff9e5,
+      #ffdc92
     );
 
   box-shadow:
-    0 0 0 3px rgba(255,197,78,.25),
-    0 12px 30px rgba(148,93,24,.22);
+    0 0 0 3px rgba(255,197,78,.24),
+    0 12px 30px rgba(148,93,24,.20);
 }
 
-.target.robot{
+.target.legend{
+  width:92px;
+  height:92px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #fff4d5,
+      #ffc86d
+    );
+
+  box-shadow:
+    0 0 0 4px rgba(255,183,44,.25),
+    0 14px 34px rgba(121,72,23,.22);
+}
+
+.target.legend .emoji{
+  font-size:
+    44px;
+}
+
+.target.bad{
   background:
     linear-gradient(
       145deg,
       #eef4ff,
-      #dae6ff
+      #dce8ff
+    );
+}
+
+.target.fake{
+  background:
+    linear-gradient(
+      145deg,
+      #f6f6f6,
+      #e5e5e5
     );
 }
 
@@ -421,11 +480,8 @@ header{
 }
 
 .target.boss{
-  width:
-    104px;
-
-  height:
-    104px;
+  width:108px;
+  height:108px;
 
   border-radius:
     30px;
@@ -433,12 +489,12 @@ header{
   background:
     linear-gradient(
       145deg,
-      #fff4cf,
-      #ffcf70
+      #fff2c7,
+      #ffcc67
     );
 
   box-shadow:
-    0 0 0 4px rgba(255,189,57,.28),
+    0 0 0 4px rgba(255,184,45,.28),
     0 16px 38px rgba(121,72,23,.23);
 }
 
@@ -447,15 +503,17 @@ header{
     50px;
 }
 
+.target.shy .tag{
+  background:
+    rgba(85,68,58,.9);
+}
+
 .hp{
-  position:
-    absolute;
+  position:absolute;
 
-  top:
-    -11px;
+  top:-11px;
 
-  left:
-    50%;
+  left:50%;
 
   transform:
     translateX(-50%);
@@ -469,8 +527,7 @@ header{
   background:
     #2a211d;
 
-  color:
-    #fff;
+  color:#fff;
 
   padding:
     4px 8px;
@@ -489,8 +546,7 @@ header{
       translate(-50%,-50%)
       scale(1);
 
-    opacity:
-      1;
+    opacity:1;
   }
 
 }
@@ -500,7 +556,7 @@ header{
   45%{
     transform:
       translate(-50%,-50%)
-      scale(1.18)
+      scale(1.17)
       rotate(-6deg);
   }
 
@@ -509,8 +565,7 @@ header{
       translate(-50%,-50%)
       scale(.1);
 
-    opacity:
-      0;
+    opacity:0;
   }
 
 }
@@ -526,8 +581,7 @@ header{
 }
 
 .float{
-  position:
-    absolute;
+  position:absolute;
 
   transform:
     translate(-50%,-50%);
@@ -538,11 +592,9 @@ header{
   font-weight:
     950;
 
-  pointer-events:
-    none;
+  pointer-events:none;
 
-  z-index:
-    4;
+  z-index:4;
 
   animation:
     floatUp .7s ease-out forwards;
@@ -558,33 +610,35 @@ header{
       translate(-50%,-115px)
       scale(1.08);
 
-    opacity:
-      0;
+    opacity:0;
   }
 
 }
 
 #toast{
-  position:
-    absolute;
+  position:absolute;
 
-  z-index:
-    6;
+  z-index:7;
 
-  left:
-    50%;
+  left:50%;
 
-  top:
-    15px;
+  top:15px;
 
   transform:
     translateX(-50%);
 
+  max-width:90%;
+
+  overflow:hidden;
+
+  text-overflow:ellipsis;
+
+  white-space:nowrap;
+
   background:
     rgba(37,29,25,.88);
 
-  color:
-    white;
+  color:white;
 
   padding:
     9px 13px;
@@ -598,53 +652,82 @@ header{
   font-weight:
     900;
 
-  opacity:
-    0;
+  opacity:0;
 
-  transition:
-    .18s;
-
-  white-space:
-    nowrap;
-
-  max-width:
-    90%;
-
-  overflow:
-    hidden;
-
-  text-overflow:
-    ellipsis;
+  transition:.18s;
 }
 
 #toast.show{
-  opacity:
-    1;
+  opacity:1;
+}
+
+#eventBanner{
+  position:absolute;
+
+  z-index:6;
+
+  left:50%;
+
+  top:58px;
+
+  transform:
+    translateX(-50%)
+    translateY(-10px);
+
+  opacity:0;
+
+  transition:.2s;
+
+  background:
+    rgba(255,245,218,.94);
+
+  border:
+    1px solid rgba(255,213,124,.95);
+
+  box-shadow:
+    0 10px 28px rgba(139,91,28,.12);
+
+  padding:
+    8px 12px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    12px;
+
+  font-weight:
+    950;
+
+  white-space:
+    nowrap;
+}
+
+#eventBanner.show{
+  opacity:1;
+
+  transform:
+    translateX(-50%)
+    translateY(0);
 }
 
 #overlay{
-  position:
-    absolute;
+  position:absolute;
 
-  inset:
-    0;
+  inset:0;
 
-  display:
-    grid;
+  display:grid;
 
-  place-items:
-    center;
+  place-items:center;
 
-  padding:
-    22px;
+  padding:20px;
 
-  z-index:
-    8;
+  z-index:10;
 
   background:
     linear-gradient(
-      rgba(255,247,239,.25),
-      rgba(255,235,219,.42)
+      rgba(255,247,239,.26),
+      rgba(255,235,219,.44)
     );
 
   backdrop-filter:
@@ -653,13 +736,17 @@ header{
 
 .panel{
   width:
-    min(94%,440px);
+    min(95%,450px);
 
-  text-align:
-    center;
+  max-height:
+    92%;
+
+  overflow:auto;
+
+  text-align:center;
 
   background:
-    rgba(255,255,255,.91);
+    rgba(255,255,255,.92);
 
   border:
     1px solid white;
@@ -676,7 +763,7 @@ header{
 
 .hero{
   font-size:
-    66px;
+    64px;
 
   line-height:
     1;
@@ -687,7 +774,7 @@ header{
     24px;
 
   margin:
-    12px 0 6px;
+    11px 0 6px;
 }
 
 .panel p{
@@ -704,64 +791,34 @@ header{
     0 auto 14px;
 
   max-width:
-    330px;
+    340px;
 }
 
-.rules{
-  display:
-    grid;
+.menuBtns{
+  display:grid;
 
-  grid-template-columns:
-    1fr 1fr;
+  gap:9px;
 
-  gap:
-    8px;
-
-  text-align:
-    left;
-
-  margin:
-    12px 0 17px;
-}
-
-.rule{
-  border-radius:
+  margin-top:
     16px;
-
-  background:
-    rgba(255,245,236,.75);
-
-  padding:
-    9px 10px;
-
-  font-size:
-    12px;
-
-  line-height:
-    1.4;
-
-  font-weight:
-    750;
 }
 
-button{
-  border:
-    0;
+.btn{
+  border:0;
 
   border-radius:
     18px;
 
   padding:
-    13px 22px;
+    13px 20px;
 
   font-size:
-    16px;
+    15px;
 
   font-weight:
     950;
 
-  color:
-    white;
+  color:white;
 
   background:
     linear-gradient(
@@ -771,83 +828,227 @@ button{
     );
 
   box-shadow:
-    0 11px 25px rgba(255,122,89,.27);
+    0 11px 25px rgba(255,122,89,.24);
 }
 
-#collection{
-  display:
-    flex;
-
-  gap:
-    6px;
-
-  overflow:
-    auto;
-
-  scrollbar-width:
-    none;
-
-  padding:
-    2px 1px 0;
-
-  min-height:
-    34px;
-}
-
-#collection::-webkit-scrollbar{
-  display:
-    none;
-}
-
-.badge{
-  flex:
-    0 0 auto;
-
-  font-size:
-    11px;
-
-  font-weight:
-    850;
-
+.btn.secondary{
   color:
-    #554841;
+    var(--ink);
 
   background:
-    rgba(255,255,255,.66);
+    #fff4e9;
+
+  box-shadow:none;
 
   border:
-    1px solid rgba(255,255,255,.85);
-
-  padding:
-    7px 9px;
-
-  border-radius:
-    999px;
-
-  opacity:
-    .42;
+    1px solid #ffe1c9;
 }
 
-.badge.got{
-  opacity:
-    1;
+.btn.ghost{
+  color:
+    var(--muted);
 
   background:
-    rgba(255,241,194,.9);
+    transparent;
+
+  box-shadow:none;
+
+  border:
+    1px solid #eadfd6;
 }
 
-footer{
-  text-align:
-    center;
+.grid2{
+  display:grid;
 
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:8px;
+
+  margin:
+    12px 0 16px;
+
+  text-align:left;
+}
+
+.infoCard{
+  border-radius:
+    16px;
+
+  background:
+    rgba(255,245,236,.78);
+
+  padding:
+    10px 11px;
+
+  font-size:
+    12px;
+
+  line-height:
+    1.45;
+
+  font-weight:
+    760;
+}
+
+.catbook{
+  display:grid;
+
+  gap:9px;
+
+  text-align:left;
+
+  margin:
+    12px 0;
+}
+
+.catcard{
+  display:grid;
+
+  grid-template-columns:
+    50px 1fr auto;
+
+  align-items:center;
+
+  gap:10px;
+
+  padding:
+    10px 11px;
+
+  border-radius:
+    17px;
+
+  background:
+    #fff8f1;
+
+  border:
+    1px solid #ffe7d3;
+}
+
+.catcard.locked{
+  opacity:.48;
+
+  filter:
+    grayscale(.35);
+}
+
+.catface{
+  font-size:
+    34px;
+
+  text-align:center;
+}
+
+.catname{
+  font-weight:
+    950;
+
+  font-size:
+    14px;
+}
+
+.catmeta{
   font-size:
     11px;
 
   color:
     var(--muted);
 
-  padding-top:
-    1px;
+  margin-top:
+    2px;
+}
+
+.count{
+  font-size:
+    12px;
+
+  font-weight:
+    950;
+
+  color:
+    var(--accent);
+}
+
+.records{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:9px;
+
+  margin:
+    14px 0;
+}
+
+.rec{
+  background:
+    #fff8f1;
+
+  border:
+    1px solid #ffe7d3;
+
+  border-radius:
+    17px;
+
+  padding:
+    13px 10px;
+}
+
+.rec strong{
+  display:block;
+
+  font-size:
+    21px;
+}
+
+.rec span{
+  font-size:
+    11px;
+
+  color:
+    var(--muted);
+}
+
+.summary{
+  display:grid;
+
+  grid-template-columns:
+    1fr 1fr;
+
+  gap:8px;
+
+  margin:
+    13px 0;
+}
+
+.sum{
+  background:
+    #fff8f1;
+
+  border:
+    1px solid #ffe7d3;
+
+  border-radius:
+    16px;
+
+  padding:
+    10px;
+}
+
+.sum b{
+  display:block;
+
+  font-size:
+    17px;
+}
+
+.sum span{
+  font-size:
+    11px;
+
+  color:
+    var(--muted);
 }
 
 .shake{
@@ -873,6 +1074,51 @@ footer{
   }
 
 }
+
+footer{
+  text-align:center;
+
+  font-size:
+    11px;
+
+  color:
+    var(--muted);
+
+  padding-top:
+    1px;
+}
+
+@media (max-height:700px){
+
+  .panel{
+    padding:
+      18px 18px;
+  }
+
+  .hero{
+    font-size:
+      52px;
+  }
+
+  .title{
+    font-size:
+      19px;
+  }
+
+  .sub{
+    font-size:
+      11px;
+  }
+
+  #mission{
+    min-height:
+      36px;
+
+    padding:
+      6px 9px;
+  }
+
+}
 </style>
 </head>
 
@@ -885,11 +1131,11 @@ footer{
   <div>
 
     <div class="title">
-      咪咪捕捉计划 V3 😶👉🐈
+      咪咪捕捉计划 V4 😶🔬🐈
     </div>
 
     <div class="sub">
-      40 秒。猫跑慢一点了，但后面会越来越热闹。
+      猫猫研究所 · 这次靠观察，不靠高铁速度。
     </div>
 
   </div>
@@ -911,7 +1157,7 @@ footer{
 </header>
 
 
-<div class="bar">
+<div class="toprow">
 
   <div class="combo">
 
@@ -921,7 +1167,7 @@ footer{
     </div>
 
     <span id="comboText">
-      Combo ×0 · 1x
+      Combo ×0
     </span>
 
   </div>
@@ -934,62 +1180,38 @@ footer{
 </div>
 
 
+<div id="mission">
+
+  <div class="icon">
+    🎯
+  </div>
+
+  <div
+    class="text"
+    id="missionText">
+    等待任务
+  </div>
+
+  <div
+    class="progress"
+    id="missionProgress">
+    —
+  </div>
+
+</div>
+
+
 <main id="arena">
 
   <div id="toast"></div>
 
+  <div id="eventBanner"></div>
+
   <div id="overlay">
 
-    <div class="panel">
-
-      <div class="hero">
-        🐈‍⬛
-      </div>
-
-      <h1 id="panelTitle">
-        V3：别窜那么快版
-      </h1>
-
-      <p id="panelDesc">
-        这次猫咪明显慢下来了。
-        连击时间也放宽，
-        最后 7 秒只增加数量，不额外加速。
-      </p>
-
-
-      <div class="rules">
-
-        <div class="rule">
-          🐈 普通咪咪
-          <br>
-          基础 +1
-        </div>
-
-        <div class="rule">
-          🏜️ 沙丘猫
-          <br>
-          基础 +4
-        </div>
-
-        <div class="rule">
-          🐆 锈斑豹猫
-          <br>
-          基础 +6
-        </div>
-
-        <div class="rule">
-          👑 Boss 猫
-          <br>
-          点 3 次，击败 +15
-        </div>
-
-      </div>
-
-
-      <button id="startBtn">
-        开始 V3
-      </button>
-
+    <div
+      class="panel"
+      id="panel">
     </div>
 
   </div>
@@ -997,39 +1219,9 @@ footer{
 </main>
 
 
-<div id="collection">
-
-  <div
-    class="badge"
-    data-cat="sand">
-    🏜️ 沙丘猫
-  </div>
-
-  <div
-    class="badge"
-    data-cat="rusty">
-    🐆 锈斑豹猫
-  </div>
-
-  <div
-    class="badge"
-    data-cat="aby">
-    🐈 阿比西尼亚
-  </div>
-
-  <div
-    class="badge"
-    data-cat="black">
-    🐈‍⬛ 黑咪
-  </div>
-
-</div>
-
-
 <footer>
-  更慢的移动速度 · 更长停留时间 ·
-  Boss 猫 · 最高分保存在浏览器里 ·
-  仍然没有猫受到伤害
+  慢速移动 · 随机任务 · 长期图鉴 ·
+  随机事件 · Boss · 仍然没有猫受到伤害
 </footer>
 
 </div>
@@ -1039,157 +1231,282 @@ footer{
 
 (() => {
 
+const $ =
+  id =>
+    document.getElementById(
+      id
+    );
+
+
 const arena =
-  document.getElementById(
-    "arena"
-  );
+  $('arena');
 
 
 const scoreEl =
-  document.getElementById(
-    "score"
-  );
+  $('score');
 
 
 const timeEl =
-  document.getElementById(
-    "time"
-  );
+  $('time');
 
 
 const highScoreEl =
-  document.getElementById(
-    "highScore"
-  );
+  $('highScore');
 
 
 const comboText =
-  document.getElementById(
-    "comboText"
-  );
+  $('comboText');
 
 
 const comboFill =
-  document.getElementById(
-    "comboFill"
-  );
+  $('comboFill');
 
 
 const toastEl =
-  document.getElementById(
-    "toast"
-  );
+  $('toast');
+
+
+const eventBanner =
+  $('eventBanner');
 
 
 const overlay =
-  document.getElementById(
-    "overlay"
-  );
+  $('overlay');
 
 
-const panelTitle =
-  document.getElementById(
-    "panelTitle"
-  );
+const panel =
+  $('panel');
 
 
-const panelDesc =
-  document.getElementById(
-    "panelDesc"
-  );
+const missionText =
+  $('missionText');
 
 
-const startBtn =
-  document.getElementById(
-    "startBtn"
-  );
+const missionProgress =
+  $('missionProgress');
 
 
 
-const catalog = {
+const STORAGE_KEY =
+  'catLabV4State';
+
+
+
+const defaultState = {
+
+  highScore:0,
+
+  games:0,
+
+  totalCaught:0,
+
+  bestCombo:0,
+
+  bosses:0,
+
+  missions:0,
+
+  collection:{
+    black:0,
+    aby:0,
+    sand:0,
+    rusty:0,
+    unknown:0
+  }
+
+};
+
+
+
+let state =
+  loadState();
+
+
+highScoreEl.textContent =
+  state.highScore;
+
+
+
+const cats = {
 
   normal:{
-    emoji:"🐈",
-    name:"咪咪",
+    emoji:'🐈',
+    name:'普通咪咪',
     points:1,
-    speed:.16,
-    life:2300
+    speed:.07,
+    life:4200,
+    rarity:'普通'
   },
 
 
   black:{
-    emoji:"🐈‍⬛",
-    name:"黑咪",
+    emoji:'🐈‍⬛',
+    name:'黑咪',
     points:2,
-    speed:.22,
-    life:2200,
-    collect:"black"
+    speed:.085,
+    life:4000,
+    collect:'black',
+    rarity:'少见'
   },
 
 
   aby:{
-    emoji:"🐈",
-    name:"阿比西尼亚",
+    emoji:'🐈',
+    name:'阿比西尼亚',
     points:3,
-    rare:true,
-    speed:.28,
-    life:2050,
-    collect:"aby"
+    speed:.09,
+    life:4200,
+    collect:'aby',
+    rarity:'少见',
+    shy:true
   },
 
 
   sand:{
-    emoji:"🏜️",
-    name:"沙丘猫",
+    emoji:'🏜️🐈',
+    name:'沙丘猫',
     points:4,
-    rare:true,
-    speed:.34,
-    life:1900,
-    collect:"sand"
+    speed:.11,
+    life:3600,
+    collect:'sand',
+    rarity:'稀有',
+    rare:true
   },
 
 
   rusty:{
-    emoji:"🐆",
-    name:"锈斑豹猫",
+    emoji:'🐆',
+    name:'锈斑豹猫',
     points:6,
-    rare:true,
-    speed:.42,
-    life:1750,
-    collect:"rusty"
+    speed:.13,
+    life:3300,
+    collect:'rusty',
+    rarity:'稀有',
+    rare:true
+  },
+
+
+  unknown:{
+    emoji:'🐆✨',
+    name:'未知豹纹米米',
+    points:10,
+    speed:.10,
+    life:3900,
+    collect:'unknown',
+    rarity:'传说',
+    legend:true
   },
 
 
   robot:{
-    emoji:"🤖",
-    name:"扫地机器人",
+    emoji:'🤖',
+    name:'扫地机器人',
     points:-4,
-    robot:true,
-    speed:.20,
-    life:2200
+    speed:.075,
+    life:3900,
+    bad:true
   },
 
 
-  power:{
-    emoji:"💗",
-    name:"摸摸券",
+  dog:{
+    emoji:'🐕',
+    name:'伪装失败的狗',
+    points:-5,
+    speed:.08,
+    life:3800,
+    fake:true
+  },
+
+
+  heart:{
+    emoji:'💗',
+    name:'摸摸券',
     points:0,
-    power:true,
-    speed:.18,
-    life:1800
-  },
-
-
-  boss:{
-    emoji:"👑🐈",
-    name:"Boss 猫",
-    points:15,
-    boss:true,
-    speed:.18,
-    life:6500
+    speed:.06,
+    life:3200,
+    power:true
   }
 
 };
+
+
+
+const bosses = [
+
+  {
+    emoji:'👑🐈‍⬛',
+    name:'黑咪王',
+    hp:3,
+    points:12,
+    speed:.055
+  },
+
+  {
+    emoji:'👑🏜️🐈',
+    name:'巨型沙丘猫',
+    hp:2,
+    points:14,
+    speed:.045
+  },
+
+  {
+    emoji:'👑🐆',
+    name:'暴躁豹纹王',
+    hp:3,
+    points:16,
+    speed:.065
+  }
+
+];
+
+
+
+const missions = [
+
+  {
+    id:'sand2',
+    text:'抓到 2 只沙丘猫',
+    target:2,
+    reward:10
+  },
+
+  {
+    id:'rare3',
+    text:'抓到 3 只稀有猫',
+    target:3,
+    reward:10
+  },
+
+  {
+    id:'combo8',
+    text:'达到 8 连击',
+    target:8,
+    reward:10
+  },
+
+  {
+    id:'catch18',
+    text:'本局抓到 18 只猫',
+    target:18,
+    reward:10
+  },
+
+  {
+    id:'boss',
+    text:'击败本局 Boss',
+    target:1,
+    reward:12
+  },
+
+  {
+    id:'clean',
+    text:'整局不要点错机器人或狗',
+    target:1,
+    reward:12,
+    endCheck:true
+  }
+
+];
 
 
 
@@ -1213,6 +1530,10 @@ let spawnTimer =
   null;
 
 
+let active =
+  new Set();
+
+
 let combo =
   0;
 
@@ -1221,34 +1542,130 @@ let lastHitAt =
   0;
 
 
-let frozenUntil =
+let caughtThisGame =
   0;
 
 
-let active =
-  new Set();
+let rareThisGame =
+  0;
 
 
-let caught =
-  new Set();
+let mistakes =
+  0;
+
+
+let bossDefeated =
+  0;
+
+
+let mission =
+  null;
+
+
+let missionValue =
+  0;
+
+
+let missionDone =
+  false;
+
+
+let currentEvent =
+  'normal';
+
+
+let freezeUntil =
+  0;
 
 
 let bossSpawned =
   false;
 
 
-let highScore =
-  Number(
-    localStorage.getItem(
-      "catCatcherV3HighScore"
+let bestComboThisGame =
+  0;
+
+
+let rarestThisGame =
+  '普通';
+
+
+let rarestRank =
+  0;
+
+
+
+function loadState(){
+
+  try{
+
+    const saved =
+      JSON.parse(
+        localStorage.getItem(
+          STORAGE_KEY
+        )
+        ||
+        'null'
+      );
+
+
+    if(
+      !saved
+    ){
+
+      return structuredClone(
+        defaultState
+      );
+
+    }
+
+
+    return {
+
+      ...structuredClone(
+        defaultState
+      ),
+
+      ...saved,
+
+      collection:{
+
+        ...defaultState.collection,
+
+        ...(
+          saved.collection
+          ||
+          {}
+        )
+
+      }
+
+    };
+
+  }
+
+  catch{
+
+    return structuredClone(
+      defaultState
+    );
+
+  }
+
+}
+
+
+
+function saveState(){
+
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(
+      state
     )
-    ||
-    0
   );
 
-
-highScoreEl.textContent =
-  highScore;
+}
 
 
 
@@ -1279,7 +1696,7 @@ function toast(
 
 
   toastEl.classList.add(
-    "show"
+    'show'
   );
 
 
@@ -1293,65 +1710,109 @@ function toast(
       () => {
 
         toastEl.classList.remove(
-          "show"
+          'show'
         );
 
       },
-      750
+      850
     );
 
 }
 
 
 
-function comboMultiplier(){
+function showEvent(
+  text
+){
 
-  if(
-    combo >= 15
-  )
-    return 4;
-
-
-  if(
-    combo >= 10
-  )
-    return 3;
+  eventBanner.textContent =
+    text;
 
 
-  if(
-    combo >= 5
-  )
-    return 2;
+  eventBanner.classList.add(
+    'show'
+  );
 
 
-  return 1;
+  clearTimeout(
+    eventBanner._t
+  );
+
+
+  eventBanner._t =
+    setTimeout(
+      () => {
+
+        eventBanner.classList.remove(
+          'show'
+        );
+
+      },
+      1800
+    );
 
 }
 
 
 
-function updateComboUI(){
+function setRarest(
+  label,
+  rank
+){
 
-  const mult =
-    comboMultiplier();
+  if(
+    rank > rarestRank
+  ){
 
-
-  comboText.textContent =
-    `Combo ×${combo} · ${mult}x`;
-
-
-  comboFill.style.width =
-    Math.min(
-      100,
-      combo * 6.7
-    )
-    +
-    "%";
+    rarestRank =
+      rank;
 
 
-  arena.classList.toggle(
-    "fever",
-    combo >= 10
+    rarestThisGame =
+      label;
+
+  }
+
+}
+
+
+
+function makeFloat(
+  x,
+  y,
+  text
+){
+
+  const f =
+    document.createElement(
+      'div'
+    );
+
+
+  f.className =
+    'float';
+
+
+  f.textContent =
+    text;
+
+
+  f.style.left =
+    x + 'px';
+
+
+  f.style.top =
+    y + 'px';
+
+
+  arena.appendChild(
+    f
+  );
+
+
+  setTimeout(
+    () => f.remove(),
+    720
   );
 
 }
@@ -1370,90 +1831,280 @@ function resetCombo(){
 
 
 
-function updateCollection(
-  key
-){
+function updateComboUI(){
 
-  if(
-    !key
-  )
-    return;
+  comboText.textContent =
+    `Combo ×${combo}`;
 
 
-  caught.add(
-    key
-  );
-
-
-  document
-    .querySelectorAll(
-      ".badge"
+  comboFill.style.width =
+    Math.min(
+      100,
+      combo * 6.7
     )
-    .forEach(
-      b => {
+    +
+    '%';
 
-        if(
-          caught.has(
-            b.dataset.cat
-          )
-        ){
 
-          b.classList.add(
-            "got"
-          );
-
-        }
-
-      }
-    );
+  arena.classList.toggle(
+    'fever',
+    combo >= 10
+  );
 
 }
 
 
 
-function chooseType(){
+function comboBonus(){
 
-  const r =
-    Math.random();
+  if(
+    combo > 0
+    &&
+    combo % 5 === 0
+  ){
+
+    const bonus =
+      combo === 5
+      ?
+      2
+      :
+      combo === 10
+      ?
+      4
+      :
+      combo === 15
+      ?
+      6
+      :
+      8;
+
+
+    score +=
+      bonus;
+
+
+    scoreEl.textContent =
+      score;
+
+
+    toast(
+      `✨ ${combo} 连击奖励 +${bonus}`
+    );
+
+
+    return bonus;
+
+  }
+
+
+  return 0;
+
+}
+
+
+
+function updateMissionUI(){
+
+  if(
+    !mission
+  ){
+
+    missionText.textContent =
+      '等待任务';
+
+
+    missionProgress.textContent =
+      '—';
+
+
+    return;
+
+  }
+
+
+  missionText.textContent =
+    missionDone
+    ?
+    `✅ ${mission.text}`
+    :
+    mission.text;
+
 
 
   if(
-    r < .065
+    mission.id === 'clean'
+  ){
+
+    missionProgress.textContent =
+      missionDone
+      ?
+      `+${mission.reward}`
+      :
+      (
+        mistakes === 0
+        ?
+        '保持中'
+        :
+        '失败'
+      );
+
+  }
+
+  else{
+
+    missionProgress.textContent =
+      missionDone
+      ?
+      `+${mission.reward}`
+      :
+      `${Math.min(
+        missionValue,
+        mission.target
+      )}/${mission.target}`;
+
+  }
+
+}
+
+
+
+function checkMission(
+  type
+){
+
+  if(
+    !mission
+    ||
+    missionDone
   )
-    return "robot";
+    return;
+
 
 
   if(
-    r < .105
-  )
-    return "power";
+    mission.id === 'sand2'
+    &&
+    type === 'sand'
+  ){
 
+    missionValue++;
 
-  if(
-    r < .165
-  )
-    return "rusty";
+  }
 
-
-  if(
-    r < .255
-  )
-    return "sand";
 
 
   if(
-    r < .36
-  )
-    return "aby";
+    mission.id === 'rare3'
+    &&
+    [
+      'sand',
+      'rusty',
+      'unknown'
+    ].includes(type)
+  ){
+
+    missionValue++;
+
+  }
+
 
 
   if(
-    r < .52
-  )
-    return "black";
+    mission.id === 'combo8'
+  ){
+
+    missionValue =
+      Math.max(
+        missionValue,
+        combo
+      );
+
+  }
 
 
-  return "normal";
+
+  if(
+    mission.id === 'catch18'
+  ){
+
+    missionValue =
+      caughtThisGame;
+
+  }
+
+
+
+  if(
+    mission.id === 'boss'
+  ){
+
+    missionValue =
+      bossDefeated;
+
+  }
+
+
+
+  if(
+    !mission.endCheck
+    &&
+    missionValue
+    >=
+    mission.target
+  ){
+
+    missionDone =
+      true;
+
+
+    score +=
+      mission.reward;
+
+
+    scoreEl.textContent =
+      score;
+
+
+    state.missions++;
+
+
+    saveState();
+
+
+    toast(
+      `🎯 任务完成 +${mission.reward}`
+    );
+
+  }
+
+
+  updateMissionUI();
+
+}
+
+
+
+function chooseMission(){
+
+  mission =
+    missions[
+      Math.floor(
+        Math.random()
+        *
+        missions.length
+      )
+    ];
+
+
+  missionValue =
+    0;
+
+
+  missionDone =
+    false;
+
+
+  updateMissionUI();
 
 }
 
@@ -1462,14 +2113,14 @@ function chooseType(){
 function clearTargets(){
 
   active.forEach(
-    t => {
+    el => {
 
       cancelAnimationFrame(
-        t._raf
+        el._raf
       );
 
 
-      t.remove();
+      el.remove();
 
     }
   );
@@ -1481,50 +2132,155 @@ function clearTargets(){
 
 
 
-function makeFloat(
-  x,
-  y,
-  text
-){
+function chooseType(){
 
-  const f =
-    document.createElement(
-      "div"
-    );
+  const r =
+    Math.random();
 
 
-  f.className =
-    "float";
+
+  if(
+    currentEvent === 'rare'
+  ){
+
+    if(
+      r < .05
+    )
+      return 'unknown';
 
 
-  f.textContent =
-    text;
+    if(
+      r < .18
+    )
+      return 'rusty';
 
 
-  f.style.left =
-    x + "px";
+    if(
+      r < .36
+    )
+      return 'sand';
 
 
-  f.style.top =
-    y + "px";
+    if(
+      r < .48
+    )
+      return 'aby';
 
 
-  arena.appendChild(
-    f
-  );
+    if(
+      r < .60
+    )
+      return 'black';
 
 
-  setTimeout(
-    () => f.remove(),
-    720
-  );
+    if(
+      r < .64
+    )
+      return 'robot';
+
+
+    return 'normal';
+
+  }
+
+
+
+  if(
+    currentEvent === 'robots'
+  ){
+
+    if(
+      r < .18
+    )
+      return 'robot';
+
+
+    if(
+      r < .23
+    )
+      return 'dog';
+
+
+    if(
+      r < .26
+    )
+      return 'unknown';
+
+
+    if(
+      r < .34
+    )
+      return 'rusty';
+
+
+    if(
+      r < .44
+    )
+      return 'sand';
+
+
+    return 'normal';
+
+  }
+
+
+
+  if(
+    r < .018
+  )
+    return 'unknown';
+
+
+  if(
+    r < .06
+  )
+    return 'robot';
+
+
+  if(
+    r < .09
+  )
+    return 'dog';
+
+
+  if(
+    r < .13
+  )
+    return 'heart';
+
+
+  if(
+    r < .20
+  )
+    return 'rusty';
+
+
+  if(
+    r < .31
+  )
+    return 'sand';
+
+
+  if(
+    r < .43
+  )
+    return 'aby';
+
+
+  if(
+    r < .58
+  )
+    return 'black';
+
+
+  return 'normal';
 
 }
 
 
 
 function spawn(
-  forcedType = null
+  typeOverride = null
 ){
 
   if(
@@ -1534,57 +2290,84 @@ function spawn(
 
 
   const type =
-    forcedType
+    typeOverride
     ||
     chooseType();
 
 
+
+  if(
+    type === 'boss'
+  ){
+
+    spawnBoss();
+
+    return;
+
+  }
+
+
+
   const info =
-    catalog[type];
+    cats[type];
 
 
   const el =
     document.createElement(
-      "div"
+      'div'
     );
 
 
   el.className =
-    "target"
+    'target'
     +
     (
       info.rare
-      ? " rare"
-      : ""
+      ?
+      ' rare'
+      :
+      ''
     )
     +
     (
-      info.robot
-      ? " robot"
-      : ""
+      info.legend
+      ?
+      ' legend'
+      :
+      ''
+    )
+    +
+    (
+      info.bad
+      ?
+      ' bad'
+      :
+      ''
+    )
+    +
+    (
+      info.fake
+      ?
+      ' fake'
+      :
+      ''
     )
     +
     (
       info.power
-      ? " power"
-      : ""
+      ?
+      ' power'
+      :
+      ''
     )
     +
     (
-      info.boss
-      ? " boss"
-      : ""
+      info.shy
+      ?
+      ' shy'
+      :
+      ''
     );
-
-
-  const hp =
-    info.boss
-    ? 3
-    : 0;
-
-
-  el.dataset.hp =
-    hp;
 
 
   el.innerHTML =
@@ -1594,21 +2377,28 @@ function spawn(
     </div>
 
     <div class="tag">
-      ${info.name}
+      ${
+        info.shy
+        ?
+        '先等等…'
+        :
+        info.name
+      }
     </div>
-
-    ${
-      info.boss
-      ?
-      `
-      <div class="hp">
-        HP 3/3
-      </div>
-      `
-      :
-      ""
-    }
     `;
+
+
+
+  el.dataset.type =
+    type;
+
+
+  el.dataset.ready =
+    info.shy
+    ?
+    '0'
+    :
+    '1';
 
 
 
@@ -1617,9 +2407,7 @@ function spawn(
 
 
   const margin =
-    info.boss
-    ? 72
-    : 56;
+    58;
 
 
 
@@ -1637,7 +2425,7 @@ function spawn(
 
 
   let y =
-    85
+    78
     +
     Math.random()
     *
@@ -1645,8 +2433,9 @@ function spawn(
       20,
       rect.height
       -
-      155
+      145
     );
+
 
 
   let angle =
@@ -1675,11 +2464,11 @@ function spawn(
 
 
   el.style.left =
-    x + "px";
+    x + 'px';
 
 
   el.style.top =
-    y + "px";
+    y + 'px';
 
 
   arena.appendChild(
@@ -1690,6 +2479,38 @@ function spawn(
   active.add(
     el
   );
+
+
+
+  if(
+    info.shy
+  ){
+
+    setTimeout(
+      () => {
+
+        if(
+          active.has(el)
+        ){
+
+          el.dataset.ready =
+            '1';
+
+
+          el
+            .querySelector(
+              '.tag'
+            )
+            .textContent =
+            '现在！';
+
+        }
+
+      },
+      1050
+    );
+
+  }
 
 
 
@@ -1726,87 +2547,105 @@ function spawn(
 
 
 
+    let speedFactor =
+      currentEvent === 'nap'
+      ?
+      .45
+      :
+      1;
+
+
+
     if(
-      now >= frozenUntil
+      now < freezeUntil
     ){
 
-      x +=
-        vx
-        *
-        dt;
-
-
-      y +=
-        vy
-        *
-        dt;
-
-
-
-      if(
-        x < margin
-        ||
-        x >
-        rect.width
-        -
-        margin
-      ){
-
-        vx *=
-          -1;
-
-
-        x =
-          Math.max(
-            margin,
-            Math.min(
-              rect.width
-              -
-              margin,
-              x
-            )
-          );
-
-      }
-
-
-
-      if(
-        y < 72
-        ||
-        y >
-        rect.height
-        -
-        72
-      ){
-
-        vy *=
-          -1;
-
-
-        y =
-          Math.max(
-            72,
-            Math.min(
-              rect.height
-              -
-              72,
-              y
-            )
-          );
-
-      }
-
-
-
-      el.style.left =
-        x + "px";
-
-
-      el.style.top =
-        y + "px";
+      speedFactor =
+        0;
 
     }
+
+
+
+    x +=
+      vx
+      *
+      dt
+      *
+      speedFactor;
+
+
+    y +=
+      vy
+      *
+      dt
+      *
+      speedFactor;
+
+
+
+    if(
+      x < margin
+      ||
+      x >
+      rect.width
+      -
+      margin
+    ){
+
+      vx *=
+        -1;
+
+
+      x =
+        Math.max(
+          margin,
+          Math.min(
+            rect.width
+            -
+            margin,
+            x
+          )
+        );
+
+    }
+
+
+
+    if(
+      y < 72
+      ||
+      y >
+      rect.height
+      -
+      72
+    ){
+
+      vy *=
+        -1;
+
+
+      y =
+        Math.max(
+          72,
+          Math.min(
+            rect.height
+            -
+            72,
+            y
+          )
+        );
+
+    }
+
+
+
+    el.style.left =
+      x + 'px';
+
+
+    el.style.top =
+      y + 'px';
 
 
 
@@ -1824,39 +2663,13 @@ function spawn(
 
 
       el.style.opacity =
-        "0";
+        '0';
 
 
       setTimeout(
         () => el.remove(),
         140
       );
-
-
-      if(
-        info.rare
-        &&
-        !info.robot
-        &&
-        !info.power
-      ){
-
-        toast(
-          `${info.name}溜走了 😾`
-        );
-
-      }
-
-
-      if(
-        info.boss
-      ){
-
-        toast(
-          "Boss 猫跑了！😶"
-        );
-
-      }
 
 
       return;
@@ -1882,7 +2695,7 @@ function spawn(
 
 
   el.addEventListener(
-    "pointerdown",
+    'pointerdown',
     e => {
 
       e.preventDefault();
@@ -1892,70 +2705,23 @@ function spawn(
         !running
         ||
         !active.has(el)
+        ||
+        el.dataset.hit
       )
         return;
 
 
 
-      const now =
-        performance.now();
-
-
-
       if(
-        info.boss
+        info.shy
+        &&
+        el.dataset.ready
+        !==
+        '1'
       ){
 
-        let hpNow =
-          Number(
-            el.dataset.hp
-          )
-          -
-          1;
-
-
-        el.dataset.hp =
-          hpNow;
-
-
-        el
-          .querySelector(
-            ".hp"
-          )
-          .textContent =
-          `HP ${hpNow}/3`;
-
-
-        makeFloat(
-          x,
-          y,
-          "-1 HP"
-        );
-
-
-        el.style.animation =
-          "bump .15s ease";
-
-
-        setTimeout(
-          () =>
-            el.style.animation =
-              "",
-          160
-        );
-
-
-        vibrate(
-          30
-        );
-
-
-
-        if(
-          hpNow > 0
-        )
-          return;
-
+        el.dataset.hit =
+          '1';
 
 
         active.delete(
@@ -1968,59 +2734,13 @@ function spawn(
         );
 
 
-
-        combo =
-          (
-            now
-            -
-            lastHitAt
-            <=
-            1800
-          )
-          ?
-          combo + 1
-          :
-          1;
-
-
-        lastHitAt =
-          now;
-
-
-
-        const gain =
-          info.points
-          *
-          comboMultiplier();
-
-
-
-        score +=
-          gain;
-
-
-        scoreEl.textContent =
-          score;
-
-
-        updateComboUI();
-
-
-
-        makeFloat(
-          x,
-          y,
-          `Boss +${gain}`
-        );
-
-
         toast(
-          "👑 Boss 猫投降了！+15 基础分"
+          '阿比西尼亚被你吓跑了 😾'
         );
 
 
         el.style.animation =
-          "hit .2s ease-in forwards";
+          'hit .2s ease-in forwards';
 
 
         setTimeout(
@@ -2029,21 +2749,17 @@ function spawn(
         );
 
 
+        resetCombo();
+
+
         return;
 
       }
 
 
 
-      if(
-        el.dataset.hit
-      )
-        return;
-
-
-
       el.dataset.hit =
-        "1";
+        '1';
 
 
       active.delete(
@@ -2057,23 +2773,28 @@ function spawn(
 
 
 
+      const now =
+        performance.now();
+
+
+
       if(
         info.power
       ){
 
-        frozenUntil =
-          now + 3000;
+        freezeUntil =
+          now + 3200;
 
 
         toast(
-          "💗 摸摸券：全场冻结 3 秒"
+          '💗 摸摸券：全场冻结 3.2 秒'
         );
 
 
         makeFloat(
           x,
           y,
-          "冻结！"
+          '冻结！'
         );
 
 
@@ -2086,18 +2807,27 @@ function spawn(
 
 
       else if(
-        info.robot
+        info.bad
+        ||
+        info.fake
       ){
 
         score +=
           info.points;
 
 
+        mistakes++;
+
+
+        scoreEl.textContent =
+          score;
+
+
         resetCombo();
 
 
         arena.classList.remove(
-          "shake"
+          'shake'
         );
 
 
@@ -2105,25 +2835,34 @@ function spawn(
 
 
         arena.classList.add(
-          "shake"
+          'shake'
         );
 
 
         toast(
-          "又点机器人 🙄"
+          info.bad
+          ?
+          '你拍了扫地机器人 🙄'
+          :
+          '这是一只狗！！🐕'
         );
 
 
         makeFloat(
           x,
           y,
-          "-4"
+          String(
+            info.points
+          )
         );
 
 
         vibrate(
-          70
+          65
         );
+
+
+        updateMissionUI();
 
       }
 
@@ -2137,7 +2876,7 @@ function spawn(
             -
             lastHitAt
             <=
-            1800
+            2200
           )
           ?
           combo + 1
@@ -2150,93 +2889,188 @@ function spawn(
 
 
 
-        const gain =
-          info.points
-          *
-          comboMultiplier();
+        bestComboThisGame =
+          Math.max(
+            bestComboThisGame,
+            combo
+          );
+
+
+        state.bestCombo =
+          Math.max(
+            state.bestCombo,
+            combo
+          );
 
 
 
         score +=
-          gain;
+          info.points;
+
+
+        caughtThisGame++;
+
+
+        state.totalCaught++;
+
+
+        scoreEl.textContent =
+          score;
 
 
         updateComboUI();
 
 
-        updateCollection(
+        comboBonus();
+
+
+
+        if(
           info.collect
-        );
+        ){
+
+          state.collection[
+            info.collect
+          ] =
+          (
+            state.collection[
+              info.collect
+            ]
+            ||
+            0
+          )
+          +
+          1;
+
+
+          saveState();
+
+        }
+
+
+
+        if(
+          type === 'rusty'
+          ||
+          type === 'sand'
+          ||
+          type === 'unknown'
+        ){
+
+          rareThisGame++;
+
+        }
+
+
+
+        if(
+          type === 'unknown'
+        ){
+
+          setRarest(
+            '未知豹纹米米',
+            4
+          );
+
+
+          toast(
+            '✨ 发现未知猫科目击记录……'
+          );
+
+        }
+
+
+
+        else if(
+          type === 'rusty'
+        ){
+
+          setRarest(
+            '锈斑豹猫',
+            3
+          );
+
+
+          toast(
+            '🐆 锈斑豹猫到手'
+          );
+
+        }
+
+
+
+        else if(
+          type === 'sand'
+        ){
+
+          setRarest(
+            '沙丘猫',
+            3
+          );
+
+
+          toast(
+            '🏜️ 沙丘猫到手'
+          );
+
+        }
+
+
+
+        else if(
+          type === 'aby'
+        ){
+
+          setRarest(
+            '阿比西尼亚',
+            2
+          );
+
+        }
+
+
+
+        else if(
+          type === 'black'
+        ){
+
+          setRarest(
+            '黑咪',
+            2
+          );
+
+        }
+
 
 
         makeFloat(
           x,
           y,
-          `+${gain}`
+          `+${info.points}`
         );
 
 
         vibrate(
           info.rare
-          ? 35
-          : 15
+          ||
+          info.legend
+          ?
+          35
+          :
+          15
         );
 
 
-
-        if(
-          type === "rusty"
-        ){
-
-          toast(
-            "锈斑豹猫到手 😶😋"
-          );
-
-        }
-
-
-        else if(
-          type === "sand"
-        ){
-
-          toast(
-            "沙丘猫到手 🏜️🐈"
-          );
-
-        }
-
-
-        else if(
-          combo === 10
-        ){
-
-          toast(
-            "🔥 猫猫暴走：只加数量，不加速度"
-          );
-
-        }
-
-
-        else if(
-          combo === 15
-        ){
-
-          toast(
-            "🔥🔥 4x！慢慢抓也能高分"
-          );
-
-        }
+        checkMission(
+          type
+        );
 
       }
 
 
 
-      scoreEl.textContent =
-        score;
-
-
       el.style.animation =
-        "hit .2s ease-in forwards";
+        'hit .2s ease-in forwards';
 
 
       setTimeout(
@@ -2251,15 +3085,547 @@ function spawn(
 
 
 
-function startSpawnLoop(){
+function spawnBoss(){
 
-  clearInterval(
+  if(
+    !running
+  )
+    return;
+
+
+
+  const info =
+    bosses[
+      Math.floor(
+        Math.random()
+        *
+        bosses.length
+      )
+    ];
+
+
+  const el =
+    document.createElement(
+      'div'
+    );
+
+
+  el.className =
+    'target boss';
+
+
+  el.dataset.hp =
+    info.hp;
+
+
+  el.innerHTML =
+    `
+    <div class="emoji">
+      ${info.emoji}
+    </div>
+
+    <div class="tag">
+      ${info.name}
+    </div>
+
+    <div class="hp">
+      HP ${info.hp}/${info.hp}
+    </div>
+    `;
+
+
+
+  const rect =
+    arena.getBoundingClientRect();
+
+
+  const margin =
+    74;
+
+
+
+  let x =
+    margin
+    +
+    Math.random()
+    *
+    Math.max(
+      20,
+      rect.width
+      -
+      margin * 2
+    );
+
+
+  let y =
+    88
+    +
+    Math.random()
+    *
+    Math.max(
+      20,
+      rect.height
+      -
+      165
+    );
+
+
+
+  let angle =
+    Math.random()
+    *
+    Math.PI
+    *
+    2;
+
+
+  let vx =
+    Math.cos(
+      angle
+    )
+    *
+    info.speed;
+
+
+  let vy =
+    Math.sin(
+      angle
+    )
+    *
+    info.speed;
+
+
+
+  el.style.left =
+    x + 'px';
+
+
+  el.style.top =
+    y + 'px';
+
+
+  arena.appendChild(
+    el
+  );
+
+
+  active.add(
+    el
+  );
+
+
+
+  const born =
+    performance.now();
+
+
+  let last =
+    born;
+
+
+
+  function move(
+    now
+  ){
+
+    if(
+      !running
+      ||
+      !active.has(el)
+    )
+      return;
+
+
+
+    const dt =
+      Math.min(
+        32,
+        now - last
+      );
+
+
+    last =
+      now;
+
+
+
+    let factor =
+      currentEvent === 'nap'
+      ?
+      .45
+      :
+      1;
+
+
+
+    if(
+      now < freezeUntil
+    ){
+
+      factor =
+        0;
+
+    }
+
+
+
+    x +=
+      vx
+      *
+      dt
+      *
+      factor;
+
+
+    y +=
+      vy
+      *
+      dt
+      *
+      factor;
+
+
+
+    if(
+      x < margin
+      ||
+      x >
+      rect.width
+      -
+      margin
+    ){
+
+      vx *=
+        -1;
+
+
+      x =
+        Math.max(
+          margin,
+          Math.min(
+            rect.width
+            -
+            margin,
+            x
+          )
+        );
+
+    }
+
+
+
+    if(
+      y < 74
+      ||
+      y >
+      rect.height
+      -
+      74
+    ){
+
+      vy *=
+        -1;
+
+
+      y =
+        Math.max(
+          74,
+          Math.min(
+            rect.height
+            -
+            74,
+            y
+          )
+        );
+
+    }
+
+
+
+    el.style.left =
+      x + 'px';
+
+
+    el.style.top =
+      y + 'px';
+
+
+
+    if(
+      now
+      -
+      born
+      >
+      8000
+    ){
+
+      active.delete(
+        el
+      );
+
+
+      el.remove();
+
+
+      toast(
+        `${info.name}撤退了 😶`
+      );
+
+
+      return;
+
+    }
+
+
+
+    el._raf =
+      requestAnimationFrame(
+        move
+      );
+
+  }
+
+
+
+  el._raf =
+    requestAnimationFrame(
+      move
+    );
+
+
+
+  el.addEventListener(
+    'pointerdown',
+    e => {
+
+      e.preventDefault();
+
+
+      if(
+        !running
+        ||
+        !active.has(el)
+      )
+        return;
+
+
+
+      let hp =
+        Number(
+          el.dataset.hp
+        )
+        -
+        1;
+
+
+      el.dataset.hp =
+        hp;
+
+
+      el
+        .querySelector(
+          '.hp'
+        )
+        .textContent =
+        `HP ${hp}/${info.hp}`;
+
+
+      makeFloat(
+        x,
+        y,
+        '-1 HP'
+      );
+
+
+      vibrate(
+        30
+      );
+
+
+      el.style.animation =
+        'bump .15s ease';
+
+
+      setTimeout(
+        () =>
+          el.style.animation =
+          '',
+        160
+      );
+
+
+
+      if(
+        hp > 0
+      )
+        return;
+
+
+
+      active.delete(
+        el
+      );
+
+
+      cancelAnimationFrame(
+        el._raf
+      );
+
+
+      bossDefeated++;
+
+
+      state.bosses++;
+
+
+
+      const now =
+        performance.now();
+
+
+
+      combo =
+        (
+          now
+          -
+          lastHitAt
+          <=
+          2200
+        )
+        ?
+        combo + 1
+        :
+        1;
+
+
+      lastHitAt =
+        now;
+
+
+
+      bestComboThisGame =
+        Math.max(
+          bestComboThisGame,
+          combo
+        );
+
+
+      state.bestCombo =
+        Math.max(
+          state.bestCombo,
+          combo
+        );
+
+
+
+      score +=
+        info.points;
+
+
+      caughtThisGame++;
+
+
+      state.totalCaught++;
+
+
+      scoreEl.textContent =
+        score;
+
+
+      updateComboUI();
+
+
+      comboBonus();
+
+
+      setRarest(
+        info.name,
+        4
+      );
+
+
+      saveState();
+
+
+      checkMission(
+        'boss'
+      );
+
+
+      toast(
+        `👑 ${info.name}投降了！+${info.points}`
+      );
+
+
+      makeFloat(
+        x,
+        y,
+        `+${info.points}`
+      );
+
+
+      el.style.animation =
+        'hit .2s ease-in forwards';
+
+
+      setTimeout(
+        () => el.remove(),
+        210
+      );
+
+    }
+  );
+
+}
+
+
+
+function scheduleSpawn(){
+
+  clearTimeout(
     spawnTimer
   );
 
 
+  if(
+    !running
+  )
+    return;
+
+
+
+  let delay =
+    760;
+
+
+
+  if(
+    currentEvent === 'party'
+  ){
+
+    delay =
+      560;
+
+  }
+
+
+
+  if(
+    timeLeft <= 8
+  ){
+
+    delay =
+      Math.min(
+        delay,
+        620
+      );
+
+  }
+
+
+
   spawnTimer =
-    setInterval(
+    setTimeout(
       () => {
 
         spawn();
@@ -2267,189 +3633,119 @@ function startSpawnLoop(){
 
 
         if(
-          timeLeft <= 7
-        ){
-
-          if(
-            Math.random()
-            <
-            .65
-          ){
-
-            setTimeout(
-              spawn,
-              220
-            );
-
-          }
-
-        }
-
-
-
-        else if(
-          combo >= 10
-        ){
-
-          if(
-            Math.random()
-            <
-            .35
-          ){
-
-            setTimeout(
-              spawn,
-              260
-            );
-
-          }
-
-        }
-
-
-
-        else if(
+          currentEvent === 'party'
+          &&
           Math.random()
           <
-          .18
+          .45
         ){
 
           setTimeout(
-            spawn,
-            300
+            () => spawn(),
+            230
           );
 
         }
 
-      },
 
-      timeLeft <= 7
-      ? 520
-      : 720
+
+        if(
+          currentEvent === 'rare'
+          &&
+          Math.random()
+          <
+          .32
+        ){
+
+          setTimeout(
+            () => spawn(),
+            260
+          );
+
+        }
+
+
+
+        scheduleSpawn();
+
+      },
+      delay
     );
 
 }
 
 
 
-function endGame(){
+function triggerFinalEvent(){
 
-  running =
-    false;
-
-
-  clearInterval(
-    timer
-  );
-
-
-  clearInterval(
-    spawnTimer
-  );
+  const events = [
+    'party',
+    'rare',
+    'nap',
+    'robots'
+  ];
 
 
-  clearTargets();
-
-
-  arena.classList.remove(
-    "fever"
-  );
-
-
-  resetCombo();
+  currentEvent =
+    events[
+      Math.floor(
+        Math.random()
+        *
+        events.length
+      )
+    ];
 
 
 
   if(
-    score > highScore
+    currentEvent === 'party'
   ){
 
-    highScore =
-      score;
-
-
-    localStorage.setItem(
-      "catCatcherV3HighScore",
-      String(
-        highScore
-      )
+    showEvent(
+      '🎉 猫猫聚会：数量增加'
     );
-
-
-    highScoreEl.textContent =
-      highScore;
 
   }
 
 
 
-  let title =
-    "猫猫路人";
-
-
   if(
-    score >= 40
-  )
-    title =
-      "咪咪诱捕专家";
+    currentEvent === 'rare'
+  ){
 
-
-  if(
-    score >= 75
-  )
-    title =
-      "沙丘猫追踪员";
-
-
-  if(
-    score >= 110
-  )
-    title =
-      "锈斑豹猫收藏家";
-
-
-  if(
-    score >= 150
-  )
-    title =
-      "猫科动物通缉犯";
-
-
-  if(
-    score >= 200
-  )
-    title =
-      "咪咪界最终 Boss";
-
-
-
-  panelTitle.textContent =
-    `${score} 分 · ${title}`;
-
-
-
-  panelDesc.innerHTML =
-    `最高分：${highScore}。<br>`
-    +
-    (
-      caught.size >= 4
-
-      ?
-      "图鉴全亮。你已经开始熟练作案了。😾"
-
-      :
-
-      `本局点亮 ${caught.size}/4 个图鉴。`
+    showEvent(
+      '✨ 稀有猫出没：注意观察'
     );
 
+  }
 
 
-  startBtn.textContent =
-    "再来一把";
+
+  if(
+    currentEvent === 'nap'
+  ){
+
+    showEvent(
+      '😴 午睡时间：全场变慢'
+    );
+
+  }
 
 
-  overlay.style.display =
-    "grid";
+
+  if(
+    currentEvent === 'robots'
+  ){
+
+    showEvent(
+      '🤖 扫地机器人入侵：别乱点'
+    );
+
+  }
+
+
+
+  scheduleSpawn();
 
 }
 
@@ -2461,6 +3757,10 @@ function startGame(){
     0;
 
 
+  timeLeft =
+    40;
+
+
   combo =
     0;
 
@@ -2469,52 +3769,66 @@ function startGame(){
     0;
 
 
-  frozenUntil =
+  caughtThisGame =
     0;
 
 
-  timeLeft =
-    40;
+  rareThisGame =
+    0;
+
+
+  mistakes =
+    0;
+
+
+  bossDefeated =
+    0;
+
+
+  currentEvent =
+    'normal';
+
+
+  freezeUntil =
+    0;
 
 
   bossSpawned =
     false;
 
 
-  caught.clear();
+  bestComboThisGame =
+    0;
 
 
+  rarestThisGame =
+    '普通';
 
-  document
-    .querySelectorAll(
-      ".badge"
-    )
-    .forEach(
-      b =>
-        b.classList.remove(
-          "got"
-        )
-    );
+
+  rarestRank =
+    0;
 
 
 
   scoreEl.textContent =
-    score;
+    0;
 
 
   timeEl.textContent =
-    timeLeft;
+    40;
 
 
   updateComboUI();
 
 
-
-  overlay.style.display =
-    "none";
+  chooseMission();
 
 
   clearTargets();
+
+
+  overlay.style.display =
+    'none';
 
 
   running =
@@ -2526,12 +3840,12 @@ function startGame(){
 
 
   setTimeout(
-    spawn,
-    300
+    () => spawn(),
+    340
   );
 
 
-  startSpawnLoop();
+  scheduleSpawn();
 
 
 
@@ -2554,7 +3868,7 @@ function startGame(){
           -
           lastHitAt
           >
-          1900
+          2400
         ){
 
           resetCombo();
@@ -2564,7 +3878,7 @@ function startGame(){
 
 
         if(
-          timeLeft === 14
+          timeLeft === 22
           &&
           !bossSpawned
         ){
@@ -2574,12 +3888,12 @@ function startGame(){
 
 
           spawn(
-            "boss"
+            'boss'
           );
 
 
-          toast(
-            "👑 Boss 猫出现！要点 3 次"
+          showEvent(
+            '👑 Boss 猫出现！'
           );
 
         }
@@ -2587,15 +3901,10 @@ function startGame(){
 
 
         if(
-          timeLeft === 7
+          timeLeft === 8
         ){
 
-          toast(
-            "最后 7 秒：猫猫潮！数量增加，速度不变"
-          );
-
-
-          startSpawnLoop();
+          triggerFinalEvent();
 
         }
 
@@ -2617,10 +3926,566 @@ function startGame(){
 
 
 
-startBtn.addEventListener(
-  "click",
-  startGame
-);
+function endGame(){
+
+  if(
+    !running
+  )
+    return;
+
+
+  running =
+    false;
+
+
+  clearInterval(
+    timer
+  );
+
+
+  clearTimeout(
+    spawnTimer
+  );
+
+
+  clearTargets();
+
+
+  arena.classList.remove(
+    'fever'
+  );
+
+
+
+  if(
+    mission
+    &&
+    mission.id === 'clean'
+    &&
+    !missionDone
+    &&
+    mistakes === 0
+  ){
+
+    missionDone =
+      true;
+
+
+    missionValue =
+      1;
+
+
+    score +=
+      mission.reward;
+
+
+    state.missions++;
+
+
+    toast(
+      `🎯 任务完成 +${mission.reward}`
+    );
+
+  }
+
+
+
+  resetCombo();
+
+
+  scoreEl.textContent =
+    score;
+
+
+  state.games++;
+
+
+  state.highScore =
+    Math.max(
+      state.highScore,
+      score
+    );
+
+
+  highScoreEl.textContent =
+    state.highScore;
+
+
+  saveState();
+
+
+  updateMissionUI();
+
+
+  showEnd();
+
+}
+
+
+
+function titleForScore(
+  s
+){
+
+  if(
+    s >= 170
+  )
+    return '猫猫研究所所长';
+
+
+  if(
+    s >= 135
+  )
+    return '传说目击记录员';
+
+
+  if(
+    s >= 105
+  )
+    return '锈斑豹猫研究员';
+
+
+  if(
+    s >= 75
+  )
+    return '沙丘猫追踪员';
+
+
+  if(
+    s >= 45
+  )
+    return '咪咪诱捕专家';
+
+
+  return '猫猫实习生';
+
+}
+
+
+
+function showMainMenu(){
+
+  scoreEl.textContent =
+    0;
+
+
+  timeEl.textContent =
+    40;
+
+
+  mission =
+    null;
+
+
+  updateMissionUI();
+
+
+
+  panel.innerHTML =
+    `
+    <div class="hero">
+      🔬🐈
+    </div>
+
+    <h1>
+      猫猫研究所
+    </h1>
+
+    <p>
+      V4 不再靠无限倍率和乱窜折磨你。
+      每局有随机任务、随机事件、不同 Boss，
+      还有会永久保存的猫咪图鉴。
+    </p>
+
+    <div class="grid2">
+
+      <div class="infoCard">
+        🎯 每局随机任务
+        <br>
+        完成固定加分
+      </div>
+
+      <div class="infoCard">
+        🐈 慢速移动
+        <br>
+        靠判断，不靠手速
+      </div>
+
+      <div class="infoCard">
+        👑 随机 Boss
+        <br>
+        不同血量与奖励
+      </div>
+
+      <div class="infoCard">
+        ✨ 隐藏米米
+        <br>
+        极低概率目击
+      </div>
+
+    </div>
+
+    <div class="menuBtns">
+
+      <button
+        class="btn"
+        id="playBtn">
+        开始行动
+      </button>
+
+      <button
+        class="btn secondary"
+        id="bookBtn">
+        猫咪图鉴
+      </button>
+
+      <button
+        class="btn ghost"
+        id="recordBtn">
+        研究纪录
+      </button>
+
+    </div>
+    `;
+
+
+
+  overlay.style.display =
+    'grid';
+
+
+  $('playBtn').onclick =
+    startGame;
+
+
+  $('bookBtn').onclick =
+    showCatbook;
+
+
+  $('recordBtn').onclick =
+    showRecords;
+
+}
+
+
+
+function showCatbook(){
+
+  const meta = [
+
+    [
+      'black',
+      '🐈‍⬛',
+      '黑咪',
+      '少见'
+    ],
+
+    [
+      'aby',
+      '🐈',
+      '阿比西尼亚',
+      '少见'
+    ],
+
+    [
+      'sand',
+      '🏜️🐈',
+      '沙丘猫',
+      '稀有'
+    ],
+
+    [
+      'rusty',
+      '🐆',
+      '锈斑豹猫',
+      '稀有'
+    ],
+
+    [
+      'unknown',
+      '🐆✨',
+      '未知豹纹米米',
+      '传说'
+    ]
+
+  ];
+
+
+
+  const cards =
+    meta
+      .map(
+        (
+          [
+            key,
+            emoji,
+            name,
+            rarity
+          ]
+        ) => {
+
+          const n =
+            state.collection[
+              key
+            ]
+            ||
+            0;
+
+
+          const locked =
+            n === 0;
+
+
+
+          return `
+          <div class="catcard ${locked ? 'locked' : ''}">
+
+            <div class="catface">
+              ${locked ? '❔' : emoji}
+            </div>
+
+            <div>
+
+              <div class="catname">
+                ${locked ? '？？？' : name}
+              </div>
+
+              <div class="catmeta">
+                ${
+                  locked
+                  ?
+                  '尚未留下有效目击记录'
+                  :
+                  rarity + ' · 已登记'
+                }
+              </div>
+
+            </div>
+
+            <div class="count">
+              ${
+                locked
+                ?
+                '未解锁'
+                :
+                `×${n}`
+              }
+            </div>
+
+          </div>
+          `;
+
+        }
+      )
+      .join('');
+
+
+
+  panel.innerHTML =
+    `
+    <div class="hero">
+      📖
+    </div>
+
+    <h1>
+      猫咪图鉴
+    </h1>
+
+    <p>
+      抓到之后会永久登记。
+      隐藏米米不是每局都会出现。😶
+    </p>
+
+    <div class="catbook">
+      ${cards}
+    </div>
+
+    <button
+      class="btn secondary"
+      id="backBtn">
+      返回研究所
+    </button>
+    `;
+
+
+
+  overlay.style.display =
+    'grid';
+
+
+  $('backBtn').onclick =
+    showMainMenu;
+
+}
+
+
+
+function showRecords(){
+
+  panel.innerHTML =
+    `
+    <div class="hero">
+      📊
+    </div>
+
+    <h1>
+      研究纪录
+    </h1>
+
+    <p>
+      这次数据终于不会每局都消失了。
+    </p>
+
+    <div class="records">
+
+      <div class="rec">
+        <strong>${state.highScore}</strong>
+        <span>历史最高分</span>
+      </div>
+
+      <div class="rec">
+        <strong>${state.games}</strong>
+        <span>完成局数</span>
+      </div>
+
+      <div class="rec">
+        <strong>${state.totalCaught}</strong>
+        <span>累计抓猫</span>
+      </div>
+
+      <div class="rec">
+        <strong>${state.bestCombo}</strong>
+        <span>最高连击</span>
+      </div>
+
+      <div class="rec">
+        <strong>${state.bosses}</strong>
+        <span>Boss 击败</span>
+      </div>
+
+      <div class="rec">
+        <strong>${state.missions}</strong>
+        <span>任务完成</span>
+      </div>
+
+    </div>
+
+    <button
+      class="btn secondary"
+      id="backBtn">
+      返回研究所
+    </button>
+    `;
+
+
+
+  overlay.style.display =
+    'grid';
+
+
+  $('backBtn').onclick =
+    showMainMenu;
+
+}
+
+
+
+function showEnd(){
+
+  const missionLine =
+    missionDone
+    ?
+    `任务完成：${mission.text}`
+    :
+    `任务未完成：${mission.text}`;
+
+
+
+  panel.innerHTML =
+    `
+    <div class="hero">
+      🐈‍⬛
+    </div>
+
+    <h1>
+      ${score} 分 · ${titleForScore(score)}
+    </h1>
+
+    <p>
+      ${missionLine}
+      <br>
+      本局最稀有目击：${rarestThisGame}
+    </p>
+
+    <div class="summary">
+
+      <div class="sum">
+        <b>${caughtThisGame}</b>
+        <span>抓到猫咪</span>
+      </div>
+
+      <div class="sum">
+        <b>${bestComboThisGame}</b>
+        <span>最高连击</span>
+      </div>
+
+      <div class="sum">
+        <b>${bossDefeated}</b>
+        <span>Boss 击败</span>
+      </div>
+
+      <div class="sum">
+        <b>${mistakes}</b>
+        <span>误点次数</span>
+      </div>
+
+    </div>
+
+    <div class="menuBtns">
+
+      <button
+        class="btn"
+        id="againBtn">
+        再来一把
+      </button>
+
+      <button
+        class="btn secondary"
+        id="bookBtn">
+        查看图鉴
+      </button>
+
+      <button
+        class="btn ghost"
+        id="homeBtn">
+        返回研究所
+      </button>
+
+    </div>
+    `;
+
+
+
+  overlay.style.display =
+    'grid';
+
+
+  $('againBtn').onclick =
+    startGame;
+
+
+  $('bookBtn').onclick =
+    showCatbook;
+
+
+  $('homeBtn').onclick =
+    showMainMenu;
+
+}
+
+
+
+showMainMenu();
 
 
 })();
