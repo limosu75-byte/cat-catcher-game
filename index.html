@@ -3,4494 +3,781 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>咪咪捕捉计划 V4 · 猫猫研究所</title>
-
+<title>咪咪捕捉计划 V4.1 · 猫猫研究所</title>
 <style>
 :root{
-  --bg1:#fff7ef;
-  --bg2:#ffe7d8;
-  --ink:#251d19;
-  --muted:#7a6b63;
-  --accent:#ff7b59;
-  --accent2:#ffb26b;
-  --glass:rgba(255,255,255,.82);
-  --line:rgba(255,255,255,.92);
+  --bg1:#fff8f1;--bg2:#ffe8d9;--ink:#251d19;--muted:#7c6d65;
+  --accent:#ff7b59;--accent2:#ffb36b;--glass:rgba(255,255,255,.82);
 }
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,
-body{
-  margin:0;
-  height:100%;
-
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "PingFang SC",
-    sans-serif;
-
-  color:var(--ink);
-}
-
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:var(--ink)}
 body{
   overflow:hidden;
-
   background:
-    radial-gradient(
-      circle at 18% 8%,
-      rgba(255,255,255,.96),
-      transparent 25%
-    ),
-
-    radial-gradient(
-      circle at 90% 8%,
-      rgba(255,255,255,.82),
-      transparent 18%
-    ),
-
-    linear-gradient(
-      160deg,
-      var(--bg1),
-      var(--bg2)
-    );
+    radial-gradient(circle at 18% 8%,rgba(255,255,255,.96),transparent 25%),
+    radial-gradient(circle at 90% 8%,rgba(255,255,255,.82),transparent 18%),
+    linear-gradient(160deg,var(--bg1),var(--bg2));
 }
-
-button{
-  font:inherit;
-}
-
+button{font:inherit}
 #app{
-  height:100%;
-
-  display:flex;
-  flex-direction:column;
-
-  gap:8px;
-
-  padding:
-    max(env(safe-area-inset-top),10px)
-    12px
-    max(env(safe-area-inset-bottom),8px);
+  height:100%;display:flex;flex-direction:column;gap:8px;
+  padding:max(env(safe-area-inset-top),10px) 12px max(env(safe-area-inset-bottom),8px)
 }
-
-header{
-  display:grid;
-
-  grid-template-columns:
-    1fr auto;
-
-  gap:10px;
-
-  align-items:center;
-}
-
-.title{
-  font-size:21px;
-  font-weight:950;
-  letter-spacing:.1px;
-}
-
-.sub{
-  font-size:12px;
-  color:var(--muted);
-  margin-top:2px;
-}
-
-.stats{
-  display:grid;
-
-  grid-template-columns:
-    auto auto;
-
-  gap:6px;
-}
-
+header{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center}
+.title{font-size:21px;font-weight:950}.sub{font-size:12px;color:var(--muted);margin-top:2px}
+.stats{display:grid;grid-template-columns:auto auto;gap:6px}
 .pill{
-  min-width:74px;
-
-  padding:
-    8px 10px;
-
-  text-align:center;
-
-  font-weight:900;
-
-  background:
-    var(--glass);
-
-  border:
-    1px solid var(--line);
-
-  border-radius:
-    18px;
-
-  box-shadow:
-    0 8px 24px rgba(110,67,42,.08);
-
-  backdrop-filter:
-    blur(10px);
+  min-width:74px;padding:8px 10px;text-align:center;font-weight:900;background:var(--glass);
+  border:1px solid rgba(255,255,255,.95);border-radius:18px;box-shadow:0 8px 24px rgba(110,67,42,.08);
+  backdrop-filter:blur(10px)
 }
-
-.pill small{
-  display:block;
-
-  font-size:10px;
-
-  color:
-    var(--muted);
-
-  font-weight:
-    700;
-
-  margin-bottom:
-    1px;
+.pill small{display:block;font-size:10px;color:var(--muted);font-weight:700;margin-bottom:1px}
+.toprow{display:flex;gap:8px;align-items:center;min-height:36px}
+.combo,.mood{
+  position:relative;overflow:hidden;padding:8px 10px;border-radius:16px;background:rgba(255,255,255,.6);
+  border:1px solid rgba(255,255,255,.84);font-size:12px;font-weight:850
 }
-
-.toprow{
-  display:flex;
-
-  gap:8px;
-
-  align-items:center;
-
-  min-height:
-    36px;
-}
-
-.combo{
-  flex:1;
-
-  position:relative;
-
-  overflow:hidden;
-
-  padding:
-    8px 10px;
-
-  border-radius:
-    16px;
-
-  background:
-    rgba(255,255,255,.58);
-
-  border:
-    1px solid rgba(255,255,255,.82);
-
-  font-size:
-    12px;
-
-  font-weight:
-    850;
-}
-
+.combo{flex:1}.mood{white-space:nowrap;min-width:98px;text-align:center}
 .combo .fill{
-  position:absolute;
-
-  inset:
-    0 auto 0 0;
-
-  width:
-    0%;
-
-  background:
-    linear-gradient(
-      90deg,
-      rgba(255,123,89,.16),
-      rgba(255,187,107,.28)
-    );
-
-  transition:
-    width .12s linear;
+  position:absolute;inset:0 auto 0 0;width:0%;
+  background:linear-gradient(90deg,rgba(255,123,89,.16),rgba(255,187,107,.28));transition:width .12s linear
 }
-
-.combo span{
-  position:relative;
-
-  z-index:
-    1;
-}
-
-.record{
-  font-size:
-    12px;
-
-  color:
-    var(--muted);
-
-  font-weight:
-    850;
-
-  white-space:
-    nowrap;
-}
-
+.combo span{position:relative;z-index:1}
 #mission{
-  display:flex;
-
-  align-items:center;
-
-  gap:8px;
-
-  min-height:
-    42px;
-
-  padding:
-    8px 10px;
-
-  border-radius:
-    16px;
-
-  background:
-    rgba(255,255,255,.62);
-
-  border:
-    1px solid rgba(255,255,255,.82);
-
-  font-size:
-    12px;
-
-  font-weight:
-    800;
+  display:flex;align-items:center;gap:8px;min-height:42px;padding:8px 10px;border-radius:16px;
+  background:rgba(255,255,255,.62);border:1px solid rgba(255,255,255,.82);font-size:12px;font-weight:800
 }
-
-#mission .icon{
-  font-size:
-    18px;
-}
-
-#mission .text{
-  flex:1;
-}
-
-#mission .progress{
-  color:
-    var(--accent);
-
-  font-weight:
-    950;
-
-  white-space:
-    nowrap;
-}
-
+#mission .icon{font-size:18px}#mission .text{flex:1}#mission .progress{color:var(--accent);font-weight:950;white-space:nowrap}
 #arena{
-  position:relative;
-
-  flex:1;
-
-  min-height:0;
-
-  overflow:hidden;
-
-  border-radius:
-    28px;
-
-  border:
-    1px solid rgba(255,255,255,.94);
-
-  box-shadow:
-    0 18px 55px rgba(103,61,36,.13);
-
+  position:relative;flex:1;min-height:0;overflow:hidden;border-radius:28px;border:1px solid rgba(255,255,255,.94);
+  box-shadow:0 18px 55px rgba(103,61,36,.13);
   background:
-    linear-gradient(
-      rgba(255,255,255,.28),
-      rgba(255,255,255,.12)
-    ),
-
-    repeating-linear-gradient(
-      90deg,
-      rgba(255,255,255,.15) 0 1px,
-      transparent 1px 46px
-    ),
-
-    repeating-linear-gradient(
-      0deg,
-      rgba(255,255,255,.11) 0 1px,
-      transparent 1px 46px
-    );
+    linear-gradient(rgba(255,255,255,.28),rgba(255,255,255,.12)),
+    repeating-linear-gradient(90deg,rgba(255,255,255,.15) 0 1px,transparent 1px 46px),
+    repeating-linear-gradient(0deg,rgba(255,255,255,.11) 0 1px,transparent 1px 46px)
 }
-
-#arena.fever{
-  animation:
-    feverPulse .8s ease-in-out infinite alternate;
-}
-
+#arena.fever{animation:feverPulse .8s ease-in-out infinite alternate}
 @keyframes feverPulse{
-
-  from{
-    box-shadow:
-      0 18px 55px rgba(103,61,36,.13);
-  }
-
-  to{
-    box-shadow:
-      0 18px 70px rgba(255,122,89,.28),
-      inset 0 0 0 2px rgba(255,157,86,.18);
-  }
-
+  from{box-shadow:0 18px 55px rgba(103,61,36,.13)}
+  to{box-shadow:0 18px 70px rgba(255,122,89,.28),inset 0 0 0 2px rgba(255,157,86,.18)}
 }
-
 .target{
-  position:absolute;
-
-  width:78px;
-  height:78px;
-
-  border-radius:
-    24px;
-
-  display:grid;
-
-  place-items:center;
-
-  transform:
-    translate(-50%,-50%)
-    scale(.46);
-
-  opacity:0;
-
-  user-select:none;
-
-  cursor:pointer;
-
-  border:
-    1px solid rgba(255,255,255,.95);
-
-  background:
-    rgba(255,255,255,.9);
-
-  box-shadow:
-    0 12px 28px rgba(81,48,31,.16);
-
-  animation:
-    pop .17s ease-out forwards;
-
-  will-change:
-    transform,
-    left,
-    top;
+  position:absolute;width:78px;height:78px;border-radius:24px;display:grid;place-items:center;
+  transform:translate(-50%,-50%) scale(.46);opacity:0;user-select:none;cursor:pointer;
+  border:1px solid rgba(255,255,255,.95);background:rgba(255,255,255,.9);
+  box-shadow:0 12px 28px rgba(81,48,31,.16);animation:pop .17s ease-out forwards;
+  will-change:transform,left,top
 }
-
-.target .emoji{
-  font-size:
-    38px;
-
-  line-height:
-    1;
-}
-
+.target .emoji{font-size:38px;line-height:1}
 .target .tag{
-  position:absolute;
-
-  bottom:-9px;
-
-  left:50%;
-
-  transform:
-    translateX(-50%);
-
-  font-size:
-    10px;
-
-  font-weight:
-    900;
-
-  background:
-    rgba(42,33,29,.86);
-
-  color:#fff;
-
-  padding:
-    3px 7px;
-
-  border-radius:
-    999px;
-
-  white-space:
-    nowrap;
+  position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:900;
+  background:rgba(42,33,29,.86);color:#fff;padding:3px 7px;border-radius:999px;white-space:nowrap
 }
-
 .target.rare{
-  width:86px;
-  height:86px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #fff9e5,
-      #ffdc92
-    );
-
-  box-shadow:
-    0 0 0 3px rgba(255,197,78,.24),
-    0 12px 30px rgba(148,93,24,.20);
+  width:86px;height:86px;background:linear-gradient(145deg,#fff9e5,#ffdc92);
+  box-shadow:0 0 0 3px rgba(255,197,78,.24),0 12px 30px rgba(148,93,24,.20)
 }
-
 .target.legend{
-  width:92px;
-  height:92px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #fff4d5,
-      #ffc86d
-    );
-
-  box-shadow:
-    0 0 0 4px rgba(255,183,44,.25),
-    0 14px 34px rgba(121,72,23,.22);
+  width:92px;height:92px;background:linear-gradient(145deg,#fff4d5,#ffc86d);
+  box-shadow:0 0 0 4px rgba(255,183,44,.25),0 14px 34px rgba(121,72,23,.22)
 }
-
-.target.legend .emoji{
-  font-size:
-    44px;
+.target.special{
+  width:92px;height:92px;
+  background:linear-gradient(145deg,#fff,#ffe8b4);
+  box-shadow:0 0 0 4px rgba(255,215,109,.35),0 0 28px rgba(255,190,70,.34),0 14px 34px rgba(121,72,23,.18)
 }
-
-.target.bad{
-  background:
-    linear-gradient(
-      145deg,
-      #eef4ff,
-      #dce8ff
-    );
-}
-
-.target.fake{
-  background:
-    linear-gradient(
-      145deg,
-      #f6f6f6,
-      #e5e5e5
-    );
-}
-
-.target.power{
-  background:
-    linear-gradient(
-      145deg,
-      #fff0f7,
-      #ffd7ea
-    );
-}
-
+.target.bad{background:linear-gradient(145deg,#eef4ff,#dce8ff)}
+.target.fake{background:linear-gradient(145deg,#f6f6f6,#e5e5e5)}
+.target.power{background:linear-gradient(145deg,#fff0f7,#ffd7ea)}
 .target.boss{
-  width:108px;
-  height:108px;
-
-  border-radius:
-    30px;
-
-  background:
-    linear-gradient(
-      145deg,
-      #fff2c7,
-      #ffcc67
-    );
-
-  box-shadow:
-    0 0 0 4px rgba(255,184,45,.28),
-    0 16px 38px rgba(121,72,23,.23);
+  width:108px;height:108px;border-radius:30px;background:linear-gradient(145deg,#fff2c7,#ffcc67);
+  box-shadow:0 0 0 4px rgba(255,184,45,.28),0 16px 38px rgba(121,72,23,.23)
 }
-
-.target.boss .emoji{
-  font-size:
-    50px;
-}
-
-.target.shy .tag{
-  background:
-    rgba(85,68,58,.9);
-}
-
+.target.boss .emoji{font-size:50px}
 .hp{
-  position:absolute;
-
-  top:-11px;
-
-  left:50%;
-
-  transform:
-    translateX(-50%);
-
-  font-size:
-    11px;
-
-  font-weight:
-    950;
-
-  background:
-    #2a211d;
-
-  color:#fff;
-
-  padding:
-    4px 8px;
-
-  border-radius:
-    999px;
-
-  white-space:
-    nowrap;
+  position:absolute;top:-11px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:950;
+  background:#2a211d;color:#fff;padding:4px 8px;border-radius:999px;white-space:nowrap
 }
-
-@keyframes pop{
-
-  to{
-    transform:
-      translate(-50%,-50%)
-      scale(1);
-
-    opacity:1;
-  }
-
-}
-
+@keyframes pop{to{transform:translate(-50%,-50%) scale(1);opacity:1}}
 @keyframes hit{
-
-  45%{
-    transform:
-      translate(-50%,-50%)
-      scale(1.17)
-      rotate(-6deg);
-  }
-
-  100%{
-    transform:
-      translate(-50%,-50%)
-      scale(.1);
-
-    opacity:0;
-  }
-
+  45%{transform:translate(-50%,-50%) scale(1.17) rotate(-6deg)}
+  100%{transform:translate(-50%,-50%) scale(.1);opacity:0}
 }
-
-@keyframes bump{
-
-  50%{
-    transform:
-      translate(-50%,-50%)
-      scale(1.08);
-  }
-
-}
-
+@keyframes bump{50%{transform:translate(-50%,-50%) scale(1.08)}}
 .float{
-  position:absolute;
-
-  transform:
-    translate(-50%,-50%);
-
-  font-size:
-    17px;
-
-  font-weight:
-    950;
-
-  pointer-events:none;
-
-  z-index:4;
-
-  animation:
-    floatUp .7s ease-out forwards;
-
-  text-shadow:
-    0 2px 0 rgba(255,255,255,.95);
+  position:absolute;transform:translate(-50%,-50%);font-size:17px;font-weight:950;pointer-events:none;z-index:4;
+  animation:floatUp .7s ease-out forwards;text-shadow:0 2px 0 rgba(255,255,255,.95)
 }
-
-@keyframes floatUp{
-
-  to{
-    transform:
-      translate(-50%,-115px)
-      scale(1.08);
-
-    opacity:0;
-  }
-
+@keyframes floatUp{to{transform:translate(-50%,-115px) scale(1.08);opacity:0}}
+#toast,#eventBanner{
+  position:absolute;z-index:7;left:50%;transform:translateX(-50%);max-width:90%;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;border-radius:999px;font-size:12px;font-weight:900;opacity:0;transition:.18s
 }
-
-#toast{
-  position:absolute;
-
-  z-index:7;
-
-  left:50%;
-
-  top:15px;
-
-  transform:
-    translateX(-50%);
-
-  max-width:90%;
-
-  overflow:hidden;
-
-  text-overflow:ellipsis;
-
-  white-space:nowrap;
-
-  background:
-    rgba(37,29,25,.88);
-
-  color:white;
-
-  padding:
-    9px 13px;
-
-  border-radius:
-    999px;
-
-  font-size:
-    12px;
-
-  font-weight:
-    900;
-
-  opacity:0;
-
-  transition:.18s;
-}
-
-#toast.show{
-  opacity:1;
-}
-
-#eventBanner{
-  position:absolute;
-
-  z-index:6;
-
-  left:50%;
-
-  top:58px;
-
-  transform:
-    translateX(-50%)
-    translateY(-10px);
-
-  opacity:0;
-
-  transition:.2s;
-
-  background:
-    rgba(255,245,218,.94);
-
-  border:
-    1px solid rgba(255,213,124,.95);
-
-  box-shadow:
-    0 10px 28px rgba(139,91,28,.12);
-
-  padding:
-    8px 12px;
-
-  border-radius:
-    999px;
-
-  font-size:
-    12px;
-
-  font-weight:
-    950;
-
-  white-space:
-    nowrap;
-}
-
-#eventBanner.show{
-  opacity:1;
-
-  transform:
-    translateX(-50%)
-    translateY(0);
-}
-
+#toast{top:15px;background:rgba(37,29,25,.88);color:#fff;padding:9px 13px}
+#eventBanner{top:58px;background:rgba(255,245,218,.94);border:1px solid rgba(255,213,124,.95);padding:8px 12px}
+#toast.show,#eventBanner.show{opacity:1}
 #overlay{
-  position:absolute;
-
-  inset:0;
-
-  display:grid;
-
-  place-items:center;
-
-  padding:20px;
-
-  z-index:10;
-
-  background:
-    linear-gradient(
-      rgba(255,247,239,.26),
-      rgba(255,235,219,.44)
-    );
-
-  backdrop-filter:
-    blur(5px);
+  position:absolute;inset:0;display:grid;place-items:center;padding:20px;z-index:10;
+  background:linear-gradient(rgba(255,247,239,.26),rgba(255,235,219,.44));backdrop-filter:blur(5px)
 }
-
 .panel{
-  width:
-    min(95%,450px);
-
-  max-height:
-    92%;
-
-  overflow:auto;
-
-  text-align:center;
-
-  background:
-    rgba(255,255,255,.92);
-
-  border:
-    1px solid white;
-
-  border-radius:
-    30px;
-
-  padding:
-    24px 22px;
-
-  box-shadow:
-    0 20px 60px rgba(109,69,43,.17);
+  width:min(95%,450px);max-height:92%;overflow:auto;text-align:center;background:rgba(255,255,255,.92);
+  border:1px solid white;border-radius:30px;padding:24px 22px;box-shadow:0 20px 60px rgba(109,69,43,.17)
 }
-
-.hero{
-  font-size:
-    64px;
-
-  line-height:
-    1;
-}
-
-.panel h1{
-  font-size:
-    24px;
-
-  margin:
-    11px 0 6px;
-}
-
-.panel p{
-  font-size:
-    14px;
-
-  line-height:
-    1.6;
-
-  color:
-    var(--muted);
-
-  margin:
-    0 auto 14px;
-
-  max-width:
-    340px;
-}
-
-.menuBtns{
-  display:grid;
-
-  gap:9px;
-
-  margin-top:
-    16px;
-}
-
+.hero{font-size:64px;line-height:1}.panel h1{font-size:24px;margin:11px 0 6px}
+.panel p{font-size:14px;line-height:1.6;color:var(--muted);margin:0 auto 14px;max-width:340px}
+.menuBtns{display:grid;gap:9px;margin-top:16px}
 .btn{
-  border:0;
-
-  border-radius:
-    18px;
-
-  padding:
-    13px 20px;
-
-  font-size:
-    15px;
-
-  font-weight:
-    950;
-
-  color:white;
-
-  background:
-    linear-gradient(
-      135deg,
-      var(--accent),
-      var(--accent2)
-    );
-
-  box-shadow:
-    0 11px 25px rgba(255,122,89,.24);
+  border:0;border-radius:18px;padding:13px 20px;font-size:15px;font-weight:950;color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));box-shadow:0 11px 25px rgba(255,122,89,.24)
 }
-
-.btn.secondary{
-  color:
-    var(--ink);
-
-  background:
-    #fff4e9;
-
-  box-shadow:none;
-
-  border:
-    1px solid #ffe1c9;
+.btn.secondary{color:var(--ink);background:#fff4e9;box-shadow:none;border:1px solid #ffe1c9}
+.btn.ghost{color:var(--muted);background:transparent;box-shadow:none;border:1px solid #eadfd6}
+.grid2,.records,.summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 16px}
+.infoCard,.rec,.sum{
+  border-radius:16px;background:rgba(255,245,236,.78);padding:10px 11px;font-size:12px;line-height:1.45;font-weight:760
 }
-
-.btn.ghost{
-  color:
-    var(--muted);
-
-  background:
-    transparent;
-
-  box-shadow:none;
-
-  border:
-    1px solid #eadfd6;
-}
-
-.grid2{
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:8px;
-
-  margin:
-    12px 0 16px;
-
-  text-align:left;
-}
-
-.infoCard{
-  border-radius:
-    16px;
-
-  background:
-    rgba(255,245,236,.78);
-
-  padding:
-    10px 11px;
-
-  font-size:
-    12px;
-
-  line-height:
-    1.45;
-
-  font-weight:
-    760;
-}
-
-.catbook{
-  display:grid;
-
-  gap:9px;
-
-  text-align:left;
-
-  margin:
-    12px 0;
-}
-
+.rec strong,.sum b{display:block;font-size:19px}.rec span,.sum span{font-size:11px;color:var(--muted)}
+.catbook{display:grid;gap:9px;text-align:left;margin:12px 0}
 .catcard{
-  display:grid;
-
-  grid-template-columns:
-    50px 1fr auto;
-
-  align-items:center;
-
-  gap:10px;
-
-  padding:
-    10px 11px;
-
-  border-radius:
-    17px;
-
-  background:
-    #fff8f1;
-
-  border:
-    1px solid #ffe7d3;
+  display:grid;grid-template-columns:50px 1fr auto;align-items:center;gap:10px;padding:10px 11px;border-radius:17px;
+  background:#fff8f1;border:1px solid #ffe7d3
 }
-
-.catcard.locked{
-  opacity:.48;
-
-  filter:
-    grayscale(.35);
+.catcard.locked{opacity:.48;filter:grayscale(.35)}
+.catface{font-size:34px;text-align:center}.catname{font-weight:950;font-size:14px}
+.catmeta{font-size:11px;color:var(--muted);margin-top:2px}.count{font-size:12px;font-weight:950;color:var(--accent)}
+.achlist{display:grid;gap:8px;text-align:left;margin:12px 0}
+.ach{
+  display:flex;gap:10px;align-items:center;padding:10px 11px;border-radius:16px;background:#fff8f1;border:1px solid #ffe7d3
 }
-
-.catface{
-  font-size:
-    34px;
-
-  text-align:center;
-}
-
-.catname{
-  font-weight:
-    950;
-
-  font-size:
-    14px;
-}
-
-.catmeta{
-  font-size:
-    11px;
-
-  color:
-    var(--muted);
-
-  margin-top:
-    2px;
-}
-
-.count{
-  font-size:
-    12px;
-
-  font-weight:
-    950;
-
-  color:
-    var(--accent);
-}
-
-.records{
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:9px;
-
-  margin:
-    14px 0;
-}
-
-.rec{
-  background:
-    #fff8f1;
-
-  border:
-    1px solid #ffe7d3;
-
-  border-radius:
-    17px;
-
-  padding:
-    13px 10px;
-}
-
-.rec strong{
-  display:block;
-
-  font-size:
-    21px;
-}
-
-.rec span{
-  font-size:
-    11px;
-
-  color:
-    var(--muted);
-}
-
-.summary{
-  display:grid;
-
-  grid-template-columns:
-    1fr 1fr;
-
-  gap:8px;
-
-  margin:
-    13px 0;
-}
-
-.sum{
-  background:
-    #fff8f1;
-
-  border:
-    1px solid #ffe7d3;
-
-  border-radius:
-    16px;
-
-  padding:
-    10px;
-}
-
-.sum b{
-  display:block;
-
-  font-size:
-    17px;
-}
-
-.sum span{
-  font-size:
-    11px;
-
-  color:
-    var(--muted);
-}
-
-.shake{
-  animation:
-    shake .22s linear;
-}
-
-@keyframes shake{
-
-  25%{
-    transform:
-      translateX(-4px);
-  }
-
-  50%{
-    transform:
-      translateX(4px);
-  }
-
-  75%{
-    transform:
-      translateX(-3px);
-  }
-
-}
-
-footer{
-  text-align:center;
-
-  font-size:
-    11px;
-
-  color:
-    var(--muted);
-
-  padding-top:
-    1px;
-}
-
+.ach.locked{opacity:.48}.ach .icon{font-size:26px}.ach .txt{flex:1}.ach .name{font-weight:950;font-size:13px}
+.ach .desc{font-size:11px;color:var(--muted);margin-top:2px}
+.shake{animation:shake .22s linear}
+@keyframes shake{25%{transform:translateX(-4px)}50%{transform:translateX(4px)}75%{transform:translateX(-3px)}}
+footer{text-align:center;font-size:11px;color:var(--muted);padding-top:1px}
 @media (max-height:700px){
-
-  .panel{
-    padding:
-      18px 18px;
-  }
-
-  .hero{
-    font-size:
-      52px;
-  }
-
-  .title{
-    font-size:
-      19px;
-  }
-
-  .sub{
-    font-size:
-      11px;
-  }
-
-  #mission{
-    min-height:
-      36px;
-
-    padding:
-      6px 9px;
-  }
-
+  .panel{padding:18px}.hero{font-size:52px}.title{font-size:19px}.sub{font-size:11px}#mission{min-height:36px;padding:6px 9px}
 }
 </style>
 </head>
-
 <body>
-
 <div id="app">
-
 <header>
-
   <div>
-
-    <div class="title">
-      咪咪捕捉计划 V4 😶🔬🐈
-    </div>
-
-    <div class="sub">
-      猫猫研究所 · 这次靠观察，不靠高铁速度。
-    </div>
-
+    <div class="title">咪咪捕捉计划 V4.1 😶🔬🐈</div>
+    <div class="sub">猫猫研究所 · 更会搞事，但绝不变高铁。</div>
   </div>
-
   <div class="stats">
-
-    <div class="pill">
-      <small>分数</small>
-      <span id="score">0</span>
-    </div>
-
-    <div class="pill">
-      <small>时间</small>
-      <span id="time">40</span>s
-    </div>
-
+    <div class="pill"><small>分数</small><span id="score">0</span></div>
+    <div class="pill"><small>时间</small><span id="time">40</span>s</div>
   </div>
-
 </header>
 
-
 <div class="toprow">
-
-  <div class="combo">
-
-    <div
-      class="fill"
-      id="comboFill">
-    </div>
-
-    <span id="comboText">
-      Combo ×0
-    </span>
-
-  </div>
-
-  <div class="record">
-    最高
-    <span id="highScore">0</span>
-  </div>
-
+  <div class="combo"><div class="fill" id="comboFill"></div><span id="comboText">Combo ×0</span></div>
+  <div class="mood" id="moodText">😶 正常</div>
 </div>
-
 
 <div id="mission">
-
-  <div class="icon">
-    🎯
-  </div>
-
-  <div
-    class="text"
-    id="missionText">
-    等待任务
-  </div>
-
-  <div
-    class="progress"
-    id="missionProgress">
-    —
-  </div>
-
+  <div class="icon">🎯</div>
+  <div class="text" id="missionText">等待任务</div>
+  <div class="progress" id="missionProgress">—</div>
 </div>
-
 
 <main id="arena">
-
   <div id="toast"></div>
-
   <div id="eventBanner"></div>
-
-  <div id="overlay">
-
-    <div
-      class="panel"
-      id="panel">
-    </div>
-
-  </div>
-
+  <div id="overlay"><div class="panel" id="panel"></div></div>
 </main>
 
-
-<footer>
-  慢速移动 · 随机任务 · 长期图鉴 ·
-  随机事件 · Boss · 仍然没有猫受到伤害
-</footer>
-
+<footer>慢速移动 · 猫猫心情 · 连环任务 · 特殊个体 · 隐藏成就 · 仍然没有猫受到伤害</footer>
 </div>
 
-
 <script>
-
 (() => {
+const $=id=>document.getElementById(id);
+const arena=$('arena'),scoreEl=$('score'),timeEl=$('time'),comboText=$('comboText'),comboFill=$('comboFill');
+const moodText=$('moodText'),toastEl=$('toast'),eventBanner=$('eventBanner'),overlay=$('overlay'),panel=$('panel');
+const missionText=$('missionText'),missionProgress=$('missionProgress');
 
-const $ =
-  id =>
-    document.getElementById(
-      id
-    );
-
-
-const arena =
-  $('arena');
-
-
-const scoreEl =
-  $('score');
-
-
-const timeEl =
-  $('time');
-
-
-const highScoreEl =
-  $('highScore');
-
-
-const comboText =
-  $('comboText');
-
-
-const comboFill =
-  $('comboFill');
-
-
-const toastEl =
-  $('toast');
-
-
-const eventBanner =
-  $('eventBanner');
-
-
-const overlay =
-  $('overlay');
-
-
-const panel =
-  $('panel');
-
-
-const missionText =
-  $('missionText');
-
-
-const missionProgress =
-  $('missionProgress');
-
-
-
-const STORAGE_KEY =
-  'catLabV4State';
-
-
-
-const defaultState = {
-
-  highScore:0,
-
-  games:0,
-
-  totalCaught:0,
-
-  bestCombo:0,
-
-  bosses:0,
-
-  missions:0,
-
-  collection:{
-    black:0,
-    aby:0,
-    sand:0,
-    rusty:0,
-    unknown:0
-  }
-
+const STORAGE_KEY='catLabV41State';
+const defaultState={
+  highScore:0,games:0,totalCaught:0,bestCombo:0,bosses:0,missions:0,
+  collection:{black:0,aby:0,sand:0,rusty:0,unknown:0},
+  specials:{whiteSand:0,goldBlack:0,tinyRusty:0},
+  achievements:{unknown:false,clean:false,boss:false,combo15:false,special:false,perfectMission:false}
 };
 
-
-
-let state =
-  loadState();
-
-
-highScoreEl.textContent =
-  state.highScore;
-
-
-
-const cats = {
-
-  normal:{
-    emoji:'🐈',
-    name:'普通咪咪',
-    points:1,
-    speed:.07,
-    life:4200,
-    rarity:'普通'
-  },
-
-
-  black:{
-    emoji:'🐈‍⬛',
-    name:'黑咪',
-    points:2,
-    speed:.085,
-    life:4000,
-    collect:'black',
-    rarity:'少见'
-  },
-
-
-  aby:{
-    emoji:'🐈',
-    name:'阿比西尼亚',
-    points:3,
-    speed:.09,
-    life:4200,
-    collect:'aby',
-    rarity:'少见',
-    shy:true
-  },
-
-
-  sand:{
-    emoji:'🏜️🐈',
-    name:'沙丘猫',
-    points:4,
-    speed:.11,
-    life:3600,
-    collect:'sand',
-    rarity:'稀有',
-    rare:true
-  },
-
-
-  rusty:{
-    emoji:'🐆',
-    name:'锈斑豹猫',
-    points:6,
-    speed:.13,
-    life:3300,
-    collect:'rusty',
-    rarity:'稀有',
-    rare:true
-  },
-
-
-  unknown:{
-    emoji:'🐆✨',
-    name:'未知豹纹米米',
-    points:10,
-    speed:.10,
-    life:3900,
-    collect:'unknown',
-    rarity:'传说',
-    legend:true
-  },
-
-
-  robot:{
-    emoji:'🤖',
-    name:'扫地机器人',
-    points:-4,
-    speed:.075,
-    life:3900,
-    bad:true
-  },
-
-
-  dog:{
-    emoji:'🐕',
-    name:'伪装失败的狗',
-    points:-5,
-    speed:.08,
-    life:3800,
-    fake:true
-  },
-
-
-  heart:{
-    emoji:'💗',
-    name:'摸摸券',
-    points:0,
-    speed:.06,
-    life:3200,
-    power:true
-  }
-
-};
-
-
-
-const bosses = [
-
-  {
-    emoji:'👑🐈‍⬛',
-    name:'黑咪王',
-    hp:3,
-    points:12,
-    speed:.055
-  },
-
-  {
-    emoji:'👑🏜️🐈',
-    name:'巨型沙丘猫',
-    hp:2,
-    points:14,
-    speed:.045
-  },
-
-  {
-    emoji:'👑🐆',
-    name:'暴躁豹纹王',
-    hp:3,
-    points:16,
-    speed:.065
-  }
-
-];
-
-
-
-const missions = [
-
-  {
-    id:'sand2',
-    text:'抓到 2 只沙丘猫',
-    target:2,
-    reward:10
-  },
-
-  {
-    id:'rare3',
-    text:'抓到 3 只稀有猫',
-    target:3,
-    reward:10
-  },
-
-  {
-    id:'combo8',
-    text:'达到 8 连击',
-    target:8,
-    reward:10
-  },
-
-  {
-    id:'catch18',
-    text:'本局抓到 18 只猫',
-    target:18,
-    reward:10
-  },
-
-  {
-    id:'boss',
-    text:'击败本局 Boss',
-    target:1,
-    reward:12
-  },
-
-  {
-    id:'clean',
-    text:'整局不要点错机器人或狗',
-    target:1,
-    reward:12,
-    endCheck:true
-  }
-
-];
-
-
-
-let score =
-  0;
-
-
-let timeLeft =
-  40;
-
-
-let running =
-  false;
-
-
-let timer =
-  null;
-
-
-let spawnTimer =
-  null;
-
-
-let active =
-  new Set();
-
-
-let combo =
-  0;
-
-
-let lastHitAt =
-  0;
-
-
-let caughtThisGame =
-  0;
-
-
-let rareThisGame =
-  0;
-
-
-let mistakes =
-  0;
-
-
-let bossDefeated =
-  0;
-
-
-let mission =
-  null;
-
-
-let missionValue =
-  0;
-
-
-let missionDone =
-  false;
-
-
-let currentEvent =
-  'normal';
-
-
-let freezeUntil =
-  0;
-
-
-let bossSpawned =
-  false;
-
-
-let bestComboThisGame =
-  0;
-
-
-let rarestThisGame =
-  '普通';
-
-
-let rarestRank =
-  0;
-
-
-
+function cloneDefault(){return JSON.parse(JSON.stringify(defaultState))}
 function loadState(){
-
   try{
-
-    const saved =
-      JSON.parse(
-        localStorage.getItem(
-          STORAGE_KEY
-        )
-        ||
-        'null'
-      );
-
-
-    if(
-      !saved
-    ){
-
-      return structuredClone(
-        defaultState
-      );
-
-    }
-
-
+    const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
+    if(!saved)return cloneDefault();
     return {
-
-      ...structuredClone(
-        defaultState
-      ),
-
-      ...saved,
-
-      collection:{
-
-        ...defaultState.collection,
-
-        ...(
-          saved.collection
-          ||
-          {}
-        )
-
-      }
-
+      ...cloneDefault(),...saved,
+      collection:{...defaultState.collection,...(saved.collection||{})},
+      specials:{...defaultState.specials,...(saved.specials||{})},
+      achievements:{...defaultState.achievements,...(saved.achievements||{})}
     };
-
-  }
-
-  catch{
-
-    return structuredClone(
-      defaultState
-    );
-
-  }
-
+  }catch{return cloneDefault()}
 }
+function saveState(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
+let state=loadState();
 
+const cats={
+  normal:{emoji:'🐈',name:'普通咪咪',points:1,speed:.07,life:4300,rarity:'普通'},
+  black:{emoji:'🐈‍⬛',name:'黑咪',points:2,speed:.085,life:4100,collect:'black',rarity:'少见'},
+  aby:{emoji:'🐈',name:'阿比西尼亚',points:3,speed:.09,life:4300,collect:'aby',rarity:'少见',shy:true},
+  sand:{emoji:'🏜️🐈',name:'沙丘猫',points:4,speed:.11,life:3700,collect:'sand',rarity:'稀有',rare:true},
+  rusty:{emoji:'🐆',name:'锈斑豹猫',points:6,speed:.13,life:3400,collect:'rusty',rarity:'稀有',rare:true},
+  unknown:{emoji:'🐆✨',name:'未知豹纹米米',points:10,speed:.10,life:4000,collect:'unknown',rarity:'传说',legend:true},
+  robot:{emoji:'🤖',name:'扫地机器人',points:-4,speed:.075,life:3900,bad:true},
+  dog:{emoji:'🐕',name:'伪装失败的狗',points:-5,speed:.08,life:3900,fake:true},
+  heart:{emoji:'💗',name:'摸摸券',points:0,speed:.06,life:3200,power:true}
+};
 
+const specials={
+  whiteSand:{base:'sand',emoji:'🤍🏜️🐈',name:'白化沙丘猫',points:8,specialKey:'whiteSand'},
+  goldBlack:{base:'black',emoji:'👁️🐈‍⬛',name:'金眼黑咪',points:7,specialKey:'goldBlack'},
+  tinyRusty:{base:'rusty',emoji:'🐆✨',name:'超小锈斑豹猫',points:10,specialKey:'tinyRusty'}
+};
 
-function saveState(){
+const bosses=[
+  {emoji:'👑🐈‍⬛',name:'黑咪王',hp:3,points:12,speed:.055},
+  {emoji:'👑🏜️🐈',name:'巨型沙丘猫',hp:2,points:14,speed:.045},
+  {emoji:'👑🐆',name:'暴躁豹纹王',hp:3,points:16,speed:.065}
+];
 
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(
-      state
-    )
-  );
+const missionPool=[
+  {id:'sand2',text:'抓到 2 只沙丘猫',target:2,reward:10},
+  {id:'rare3',text:'抓到 3 只稀有猫',target:3,reward:10},
+  {id:'combo8',text:'达到 8 连击',target:8,reward:10},
+  {id:'catch18',text:'本局抓到 18 只猫',target:18,reward:10},
+  {id:'boss',text:'击败本局 Boss',target:1,reward:12},
+  {id:'clean',text:'整局不要点错机器人或狗',target:1,reward:12,endCheck:true},
+  {id:'chain',text:'连环：黑咪 → 沙丘猫 → 稀有猫',target:3,reward:14,chain:true}
+];
 
+let score=0,timeLeft=40,running=false,timer=null,spawnTimer=null,active=new Set();
+let combo=0,lastHitAt=0,caughtThisGame=0,rareThisGame=0,mistakes=0,bossDefeated=0;
+let mission=null,missionValue=0,missionDone=false,chainStep=0,currentEvent='normal',freezeUntil=0,bossSpawned=false;
+let bestComboThisGame=0,rarestThisGame='普通',rarestRank=0,harmony=0,specialCaughtThisGame=0;
+
+function vibrate(ms=20){if(navigator.vibrate)navigator.vibrate(ms)}
+function toast(text){
+  toastEl.textContent=text;toastEl.classList.add('show');clearTimeout(toastEl._t);
+  toastEl._t=setTimeout(()=>toastEl.classList.remove('show'),900)
 }
-
-
-
-function vibrate(
-  ms = 20
-){
-
-  if(
-    navigator.vibrate
-  ){
-
-    navigator.vibrate(
-      ms
-    );
-
-  }
-
+function showEvent(text){
+  eventBanner.textContent=text;eventBanner.classList.add('show');clearTimeout(eventBanner._t);
+  eventBanner._t=setTimeout(()=>eventBanner.classList.remove('show'),1800)
 }
-
-
-
-function toast(
-  text
-){
-
-  toastEl.textContent =
-    text;
-
-
-  toastEl.classList.add(
-    'show'
-  );
-
-
-  clearTimeout(
-    toastEl._t
-  );
-
-
-  toastEl._t =
-    setTimeout(
-      () => {
-
-        toastEl.classList.remove(
-          'show'
-        );
-
-      },
-      850
-    );
-
+function makeFloat(x,y,text){
+  const f=document.createElement('div');f.className='float';f.textContent=text;f.style.left=x+'px';f.style.top=y+'px';
+  arena.appendChild(f);setTimeout(()=>f.remove(),720)
 }
+function setRarest(label,rank){if(rank>rarestRank){rarestRank=rank;rarestThisGame=label}}
 
-
-
-function showEvent(
-  text
-){
-
-  eventBanner.textContent =
-    text;
-
-
-  eventBanner.classList.add(
-    'show'
-  );
-
-
-  clearTimeout(
-    eventBanner._t
-  );
-
-
-  eventBanner._t =
-    setTimeout(
-      () => {
-
-        eventBanner.classList.remove(
-          'show'
-        );
-
-      },
-      1800
-    );
-
+function moodInfo(){
+  if(harmony>=8)return {label:'🥰 和谐',rareBoost:.025,speed:.94};
+  if(harmony<=-5)return {label:'🚨 事故现场',rareBoost:-.005,speed:1};
+  if(harmony<=-1)return {label:'😾 混乱',rareBoost:0,speed:.98};
+  return {label:'😶 正常',rareBoost:.01,speed:.97};
 }
-
-
-
-function setRarest(
-  label,
-  rank
-){
-
-  if(
-    rank > rarestRank
-  ){
-
-    rarestRank =
-      rank;
-
-
-    rarestThisGame =
-      label;
-
-  }
-
-}
-
-
-
-function makeFloat(
-  x,
-  y,
-  text
-){
-
-  const f =
-    document.createElement(
-      'div'
-    );
-
-
-  f.className =
-    'float';
-
-
-  f.textContent =
-    text;
-
-
-  f.style.left =
-    x + 'px';
-
-
-  f.style.top =
-    y + 'px';
-
-
-  arena.appendChild(
-    f
-  );
-
-
-  setTimeout(
-    () => f.remove(),
-    720
-  );
-
-}
-
-
-
-function resetCombo(){
-
-  combo =
-    0;
-
-
-  updateComboUI();
-
-}
-
-
+function updateMoodUI(){moodText.textContent=moodInfo().label}
 
 function updateComboUI(){
-
-  comboText.textContent =
-    `Combo ×${combo}`;
-
-
-  comboFill.style.width =
-    Math.min(
-      100,
-      combo * 6.7
-    )
-    +
-    '%';
-
-
-  arena.classList.toggle(
-    'fever',
-    combo >= 10
-  );
-
+  comboText.textContent=`Combo ×${combo}`;
+  comboFill.style.width=Math.min(100,combo*6.7)+'%';
+  arena.classList.toggle('fever',combo>=10)
 }
-
-
-
+function resetCombo(){combo=0;updateComboUI()}
 function comboBonus(){
-
-  if(
-    combo > 0
-    &&
-    combo % 5 === 0
-  ){
-
-    const bonus =
-      combo === 5
-      ?
-      2
-      :
-      combo === 10
-      ?
-      4
-      :
-      combo === 15
-      ?
-      6
-      :
-      8;
-
-
-    score +=
-      bonus;
-
-
-    scoreEl.textContent =
-      score;
-
-
-    toast(
-      `✨ ${combo} 连击奖励 +${bonus}`
-    );
-
-
-    return bonus;
-
+  if(combo>0&&combo%5===0){
+    const bonus=combo===5?2:combo===10?4:combo===15?6:8;
+    score+=bonus;scoreEl.textContent=score;toast(`✨ ${combo} 连击奖励 +${bonus}`)
   }
-
-
-  return 0;
-
 }
 
-
+function unlockAchievement(key,name){
+  if(state.achievements[key])return;
+  state.achievements[key]=true;saveState();toast(`🏅 解锁成就：${name}`)
+}
 
 function updateMissionUI(){
-
-  if(
-    !mission
-  ){
-
-    missionText.textContent =
-      '等待任务';
-
-
-    missionProgress.textContent =
-      '—';
-
-
-    return;
-
+  if(!mission){missionText.textContent='等待任务';missionProgress.textContent='—';return}
+  missionText.textContent=missionDone?`✅ ${mission.text}`:mission.text;
+  if(mission.id==='clean'){
+    missionProgress.textContent=missionDone?`+${mission.reward}`:(mistakes===0?'保持中':'失败');
+  }else if(mission.chain){
+    const labels=['黑咪','沙丘猫','稀有猫'];
+    missionProgress.textContent=missionDone?`+${mission.reward}`:`${chainStep}/3 · ${labels[Math.min(chainStep,2)]}`;
+  }else{
+    missionProgress.textContent=missionDone?`+${mission.reward}`:`${Math.min(missionValue,mission.target)}/${mission.target}`
   }
-
-
-  missionText.textContent =
-    missionDone
-    ?
-    `✅ ${mission.text}`
-    :
-    mission.text;
-
-
-
-  if(
-    mission.id === 'clean'
-  ){
-
-    missionProgress.textContent =
-      missionDone
-      ?
-      `+${mission.reward}`
-      :
-      (
-        mistakes === 0
-        ?
-        '保持中'
-        :
-        '失败'
-      );
-
-  }
-
-  else{
-
-    missionProgress.textContent =
-      missionDone
-      ?
-      `+${mission.reward}`
-      :
-      `${Math.min(
-        missionValue,
-        mission.target
-      )}/${mission.target}`;
-
-  }
-
 }
 
-
-
-function checkMission(
-  type
-){
-
-  if(
-    !mission
-    ||
-    missionDone
-  )
-    return;
-
-
-
-  if(
-    mission.id === 'sand2'
-    &&
-    type === 'sand'
-  ){
-
-    missionValue++;
-
-  }
-
-
-
-  if(
-    mission.id === 'rare3'
-    &&
-    [
-      'sand',
-      'rusty',
-      'unknown'
-    ].includes(type)
-  ){
-
-    missionValue++;
-
-  }
-
-
-
-  if(
-    mission.id === 'combo8'
-  ){
-
-    missionValue =
-      Math.max(
-        missionValue,
-        combo
-      );
-
-  }
-
-
-
-  if(
-    mission.id === 'catch18'
-  ){
-
-    missionValue =
-      caughtThisGame;
-
-  }
-
-
-
-  if(
-    mission.id === 'boss'
-  ){
-
-    missionValue =
-      bossDefeated;
-
-  }
-
-
-
-  if(
-    !mission.endCheck
-    &&
-    missionValue
-    >=
-    mission.target
-  ){
-
-    missionDone =
-      true;
-
-
-    score +=
-      mission.reward;
-
-
-    scoreEl.textContent =
-      score;
-
-
-    state.missions++;
-
-
-    saveState();
-
-
-    toast(
-      `🎯 任务完成 +${mission.reward}`
-    );
-
-  }
-
-
-  updateMissionUI();
-
+function finishMission(){
+  if(missionDone)return;
+  missionDone=true;score+=mission.reward;scoreEl.textContent=score;state.missions++;saveState();
+  toast(`🎯 任务完成 +${mission.reward}`);updateMissionUI()
 }
 
+function checkMission(type){
+  if(!mission||missionDone)return;
 
+  if(mission.id==='sand2'&&type==='sand')missionValue++;
+  if(mission.id==='rare3'&&['sand','rusty','unknown'].includes(type))missionValue++;
+  if(mission.id==='combo8')missionValue=Math.max(missionValue,combo);
+  if(mission.id==='catch18')missionValue=caughtThisGame;
+  if(mission.id==='boss')missionValue=bossDefeated;
+
+  if(mission.chain){
+    const wanted=[
+      t=>t==='black',
+      t=>t==='sand',
+      t=>['sand','rusty','unknown'].includes(t)
+    ];
+    if(wanted[chainStep]&&wanted[chainStep](type)){
+      chainStep++;
+      if(chainStep>=3)finishMission();
+      else toast(`🔗 连环任务 ${chainStep}/3`);
+    }
+    updateMissionUI();return;
+  }
+
+  if(!mission.endCheck&&missionValue>=mission.target)finishMission();
+  updateMissionUI()
+}
 
 function chooseMission(){
-
-  mission =
-    missions[
-      Math.floor(
-        Math.random()
-        *
-        missions.length
-      )
-    ];
-
-
-  missionValue =
-    0;
-
-
-  missionDone =
-    false;
-
-
-  updateMissionUI();
-
+  mission=missionPool[Math.floor(Math.random()*missionPool.length)];
+  missionValue=0;missionDone=false;chainStep=0;updateMissionUI()
 }
-
-
 
 function clearTargets(){
-
-  active.forEach(
-    el => {
-
-      cancelAnimationFrame(
-        el._raf
-      );
-
-
-      el.remove();
-
-    }
-  );
-
-
-  active.clear();
-
+  active.forEach(el=>{cancelAnimationFrame(el._raf);el.remove()});active.clear()
 }
 
-
+function maybeSpecial(baseType){
+  if(!['sand','black','rusty'].includes(baseType))return null;
+  let chance=.018;
+  if(harmony>=8)chance=.035;
+  if(currentEvent==='rare')chance+=.025;
+  if(Math.random()>=chance)return null;
+  if(baseType==='sand')return specials.whiteSand;
+  if(baseType==='black')return specials.goldBlack;
+  return specials.tinyRusty
+}
 
 function chooseType(){
+  const boost=moodInfo().rareBoost;
+  const r=Math.random();
 
-  const r =
-    Math.random();
-
-
-
-  if(
-    currentEvent === 'rare'
-  ){
-
-    if(
-      r < .05
-    )
-      return 'unknown';
-
-
-    if(
-      r < .18
-    )
-      return 'rusty';
-
-
-    if(
-      r < .36
-    )
-      return 'sand';
-
-
-    if(
-      r < .48
-    )
-      return 'aby';
-
-
-    if(
-      r < .60
-    )
-      return 'black';
-
-
-    if(
-      r < .64
-    )
-      return 'robot';
-
-
-    return 'normal';
-
+  if(currentEvent==='rare'){
+    if(r<.05+boost)return'unknown';
+    if(r<.20+boost)return'rusty';
+    if(r<.38+boost)return'sand';
+    if(r<.50)return'aby';
+    if(r<.62)return'black';
+    if(r<.66)return'robot';
+    return'normal'
   }
 
-
-
-  if(
-    currentEvent === 'robots'
-  ){
-
-    if(
-      r < .18
-    )
-      return 'robot';
-
-
-    if(
-      r < .23
-    )
-      return 'dog';
-
-
-    if(
-      r < .26
-    )
-      return 'unknown';
-
-
-    if(
-      r < .34
-    )
-      return 'rusty';
-
-
-    if(
-      r < .44
-    )
-      return 'sand';
-
-
-    return 'normal';
-
+  if(currentEvent==='robots'){
+    if(r<.18)return'robot';
+    if(r<.23)return'dog';
+    if(r<.25+boost)return'unknown';
+    if(r<.33+boost)return'rusty';
+    if(r<.43+boost)return'sand';
+    return'normal'
   }
 
-
-
-  if(
-    r < .018
-  )
-    return 'unknown';
-
-
-  if(
-    r < .06
-  )
-    return 'robot';
-
-
-  if(
-    r < .09
-  )
-    return 'dog';
-
-
-  if(
-    r < .13
-  )
-    return 'heart';
-
-
-  if(
-    r < .20
-  )
-    return 'rusty';
-
-
-  if(
-    r < .31
-  )
-    return 'sand';
-
-
-  if(
-    r < .43
-  )
-    return 'aby';
-
-
-  if(
-    r < .58
-  )
-    return 'black';
-
-
-  return 'normal';
-
+  if(r<.018+boost)return'unknown';
+  if(r<.06)return'robot';
+  if(r<.09)return'dog';
+  if(r<.13)return'heart';
+  if(r<.20+boost)return'rusty';
+  if(r<.31+boost)return'sand';
+  if(r<.43)return'aby';
+  if(r<.58)return'black';
+  return'normal'
 }
 
+function spawn(typeOverride=null, hiddenLabel=false){
+  if(!running)return;
+  const type=typeOverride||chooseType();
+  if(type==='boss'){spawnBoss();return}
 
-
-function spawn(
-  typeOverride = null
-){
-
-  if(
-    !running
-  )
-    return;
-
-
-  const type =
-    typeOverride
-    ||
-    chooseType();
-
-
-
-  if(
-    type === 'boss'
-  ){
-
-    spawnBoss();
-
-    return;
-
+  const base=cats[type];
+  let info={...base};
+  const sp=maybeSpecial(type);
+  if(sp){
+    info={...base,...sp,special:true,legend:true,life:base.life+600};
   }
 
+  const el=document.createElement('div');
+  el.className='target'
+    +(info.rare?' rare':'')
+    +(info.legend?' legend':'')
+    +(info.special?' special':'')
+    +(info.bad?' bad':'')
+    +(info.fake?' fake':'')
+    +(info.power?' power':'')
+    +(info.shy?' shy':'');
 
+  const shownName=hiddenLabel?'':(info.shy?'先等等…':info.name);
+  el.innerHTML=`<div class="emoji">${info.emoji}</div><div class="tag" style="${hiddenLabel?'display:none':''}">${shownName}</div>`;
 
-  const info =
-    cats[type];
+  el.dataset.type=type;
+  el.dataset.ready=info.shy?'0':'1';
+  const rect=arena.getBoundingClientRect(),margin=58;
+  let x=margin+Math.random()*Math.max(20,rect.width-margin*2);
+  let y=78+Math.random()*Math.max(20,rect.height-145);
+  let angle=Math.random()*Math.PI*2;
+  let vx=Math.cos(angle)*info.speed,vy=Math.sin(angle)*info.speed;
 
+  el.style.left=x+'px';el.style.top=y+'px';arena.appendChild(el);active.add(el);
 
-  const el =
-    document.createElement(
-      'div'
-    );
-
-
-  el.className =
-    'target'
-    +
-    (
-      info.rare
-      ?
-      ' rare'
-      :
-      ''
-    )
-    +
-    (
-      info.legend
-      ?
-      ' legend'
-      :
-      ''
-    )
-    +
-    (
-      info.bad
-      ?
-      ' bad'
-      :
-      ''
-    )
-    +
-    (
-      info.fake
-      ?
-      ' fake'
-      :
-      ''
-    )
-    +
-    (
-      info.power
-      ?
-      ' power'
-      :
-      ''
-    )
-    +
-    (
-      info.shy
-      ?
-      ' shy'
-      :
-      ''
-    );
-
-
-  el.innerHTML =
-    `
-    <div class="emoji">
-      ${info.emoji}
-    </div>
-
-    <div class="tag">
-      ${
-        info.shy
-        ?
-        '先等等…'
-        :
-        info.name
+  if(info.shy){
+    setTimeout(()=>{
+      if(active.has(el)){
+        el.dataset.ready='1';
+        const tag=el.querySelector('.tag');
+        if(tag&&!hiddenLabel)tag.textContent='现在！'
       }
-    </div>
-    `;
-
-
-
-  el.dataset.type =
-    type;
-
-
-  el.dataset.ready =
-    info.shy
-    ?
-    '0'
-    :
-    '1';
-
-
-
-  const rect =
-    arena.getBoundingClientRect();
-
-
-  const margin =
-    58;
-
-
-
-  let x =
-    margin
-    +
-    Math.random()
-    *
-    Math.max(
-      20,
-      rect.width
-      -
-      margin * 2
-    );
-
-
-  let y =
-    78
-    +
-    Math.random()
-    *
-    Math.max(
-      20,
-      rect.height
-      -
-      145
-    );
-
-
-
-  let angle =
-    Math.random()
-    *
-    Math.PI
-    *
-    2;
-
-
-  let vx =
-    Math.cos(
-      angle
-    )
-    *
-    info.speed;
-
-
-  let vy =
-    Math.sin(
-      angle
-    )
-    *
-    info.speed;
-
-
-
-  el.style.left =
-    x + 'px';
-
-
-  el.style.top =
-    y + 'px';
-
-
-  arena.appendChild(
-    el
-  );
-
-
-  active.add(
-    el
-  );
-
-
-
-  if(
-    info.shy
-  ){
-
-    setTimeout(
-      () => {
-
-        if(
-          active.has(el)
-        ){
-
-          el.dataset.ready =
-            '1';
-
-
-          el
-            .querySelector(
-              '.tag'
-            )
-            .textContent =
-            '现在！';
-
-        }
-
-      },
-      1050
-    );
-
+    },1050)
   }
 
+  const born=performance.now();let last=born;
+  function move(now){
+    if(!running||!active.has(el))return;
+    const dt=Math.min(32,now-last);last=now;
+    let factor=currentEvent==='nap'?.45:moodInfo().speed;
+    if(now<freezeUntil)factor=0;
+    x+=vx*dt*factor;y+=vy*dt*factor;
+    if(x<margin||x>rect.width-margin){vx*=-1;x=Math.max(margin,Math.min(rect.width-margin,x))}
+    if(y<72||y>rect.height-72){vy*=-1;y=Math.max(72,Math.min(rect.height-72,y))}
+    el.style.left=x+'px';el.style.top=y+'px';
 
-
-  const born =
-    performance.now();
-
-
-  let last =
-    born;
-
-
-
-  function move(
-    now
-  ){
-
-    if(
-      !running
-      ||
-      !active.has(el)
-    )
-      return;
-
-
-    const dt =
-      Math.min(
-        32,
-        now - last
-      );
-
-
-    last =
-      now;
-
-
-
-    let speedFactor =
-      currentEvent === 'nap'
-      ?
-      .45
-      :
-      1;
-
-
-
-    if(
-      now < freezeUntil
-    ){
-
-      speedFactor =
-        0;
-
+    if(now-born>=info.life){
+      active.delete(el);el.style.opacity='0';setTimeout(()=>el.remove(),140);return
     }
-
-
-
-    x +=
-      vx
-      *
-      dt
-      *
-      speedFactor;
-
-
-    y +=
-      vy
-      *
-      dt
-      *
-      speedFactor;
-
-
-
-    if(
-      x < margin
-      ||
-      x >
-      rect.width
-      -
-      margin
-    ){
-
-      vx *=
-        -1;
-
-
-      x =
-        Math.max(
-          margin,
-          Math.min(
-            rect.width
-            -
-            margin,
-            x
-          )
-        );
-
-    }
-
-
-
-    if(
-      y < 72
-      ||
-      y >
-      rect.height
-      -
-      72
-    ){
-
-      vy *=
-        -1;
-
-
-      y =
-        Math.max(
-          72,
-          Math.min(
-            rect.height
-            -
-            72,
-            y
-          )
-        );
-
-    }
-
-
-
-    el.style.left =
-      x + 'px';
-
-
-    el.style.top =
-      y + 'px';
-
-
-
-    if(
-      now
-      -
-      born
-      >=
-      info.life
-    ){
-
-      active.delete(
-        el
-      );
-
-
-      el.style.opacity =
-        '0';
-
-
-      setTimeout(
-        () => el.remove(),
-        140
-      );
-
-
-      return;
-
-    }
-
-
-
-    el._raf =
-      requestAnimationFrame(
-        move
-      );
-
+    el._raf=requestAnimationFrame(move)
   }
-
-
-
-  el._raf =
-    requestAnimationFrame(
-      move
-    );
-
-
-
-  el.addEventListener(
-    'pointerdown',
-    e => {
-
-      e.preventDefault();
-
-
-      if(
-        !running
-        ||
-        !active.has(el)
-        ||
-        el.dataset.hit
-      )
-        return;
-
-
-
-      if(
-        info.shy
-        &&
-        el.dataset.ready
-        !==
-        '1'
-      ){
-
-        el.dataset.hit =
-          '1';
-
-
-        active.delete(
-          el
-        );
-
-
-        cancelAnimationFrame(
-          el._raf
-        );
-
-
-        toast(
-          '阿比西尼亚被你吓跑了 😾'
-        );
-
-
-        el.style.animation =
-          'hit .2s ease-in forwards';
-
-
-        setTimeout(
-          () => el.remove(),
-          210
-        );
-
-
-        resetCombo();
-
-
-        return;
-
-      }
-
-
-
-      el.dataset.hit =
-        '1';
-
-
-      active.delete(
-        el
-      );
-
-
-      cancelAnimationFrame(
-        el._raf
-      );
-
-
-
-      const now =
-        performance.now();
-
-
-
-      if(
-        info.power
-      ){
-
-        freezeUntil =
-          now + 3200;
-
-
-        toast(
-          '💗 摸摸券：全场冻结 3.2 秒'
-        );
-
-
-        makeFloat(
-          x,
-          y,
-          '冻结！'
-        );
-
-
-        vibrate(
-          35
-        );
-
-      }
-
-
-
-      else if(
-        info.bad
-        ||
-        info.fake
-      ){
-
-        score +=
-          info.points;
-
-
-        mistakes++;
-
-
-        scoreEl.textContent =
-          score;
-
-
-        resetCombo();
-
-
-        arena.classList.remove(
-          'shake'
-        );
-
-
-        void arena.offsetWidth;
-
-
-        arena.classList.add(
-          'shake'
-        );
-
-
-        toast(
-          info.bad
-          ?
-          '你拍了扫地机器人 🙄'
-          :
-          '这是一只狗！！🐕'
-        );
-
-
-        makeFloat(
-          x,
-          y,
-          String(
-            info.points
-          )
-        );
-
-
-        vibrate(
-          65
-        );
-
-
-        updateMissionUI();
-
-      }
-
-
-
-      else{
-
-        combo =
-          (
-            now
-            -
-            lastHitAt
-            <=
-            2200
-          )
-          ?
-          combo + 1
-          :
-          1;
-
-
-        lastHitAt =
-          now;
-
-
-
-        bestComboThisGame =
-          Math.max(
-            bestComboThisGame,
-            combo
-          );
-
-
-        state.bestCombo =
-          Math.max(
-            state.bestCombo,
-            combo
-          );
-
-
-
-        score +=
-          info.points;
-
-
-        caughtThisGame++;
-
-
-        state.totalCaught++;
-
-
-        scoreEl.textContent =
-          score;
-
-
-        updateComboUI();
-
-
-        comboBonus();
-
-
-
-        if(
-          info.collect
-        ){
-
-          state.collection[
-            info.collect
-          ] =
-          (
-            state.collection[
-              info.collect
-            ]
-            ||
-            0
-          )
-          +
-          1;
-
-
-          saveState();
-
-        }
-
-
-
-        if(
-          type === 'rusty'
-          ||
-          type === 'sand'
-          ||
-          type === 'unknown'
-        ){
-
-          rareThisGame++;
-
-        }
-
-
-
-        if(
-          type === 'unknown'
-        ){
-
-          setRarest(
-            '未知豹纹米米',
-            4
-          );
-
-
-          toast(
-            '✨ 发现未知猫科目击记录……'
-          );
-
-        }
-
-
-
-        else if(
-          type === 'rusty'
-        ){
-
-          setRarest(
-            '锈斑豹猫',
-            3
-          );
-
-
-          toast(
-            '🐆 锈斑豹猫到手'
-          );
-
-        }
-
-
-
-        else if(
-          type === 'sand'
-        ){
-
-          setRarest(
-            '沙丘猫',
-            3
-          );
-
-
-          toast(
-            '🏜️ 沙丘猫到手'
-          );
-
-        }
-
-
-
-        else if(
-          type === 'aby'
-        ){
-
-          setRarest(
-            '阿比西尼亚',
-            2
-          );
-
-        }
-
-
-
-        else if(
-          type === 'black'
-        ){
-
-          setRarest(
-            '黑咪',
-            2
-          );
-
-        }
-
-
-
-        makeFloat(
-          x,
-          y,
-          `+${info.points}`
-        );
-
-
-        vibrate(
-          info.rare
-          ||
-          info.legend
-          ?
-          35
-          :
-          15
-        );
-
-
-        checkMission(
-          type
-        );
-
-      }
-
-
-
-      el.style.animation =
-        'hit .2s ease-in forwards';
-
-
-      setTimeout(
-        () => el.remove(),
-        210
-      );
-
+  el._raf=requestAnimationFrame(move);
+
+  el.addEventListener('pointerdown',e=>{
+    e.preventDefault();
+    if(!running||!active.has(el)||el.dataset.hit)return;
+
+    if(info.shy&&el.dataset.ready!=='1'){
+      el.dataset.hit='1';active.delete(el);cancelAnimationFrame(el._raf);resetCombo();
+      harmony-=1;updateMoodUI();toast('阿比西尼亚被你吓跑了 😾');
+      el.style.animation='hit .2s ease-in forwards';setTimeout(()=>el.remove(),210);return
     }
-  );
 
+    el.dataset.hit='1';active.delete(el);cancelAnimationFrame(el._raf);
+    const now=performance.now();
+
+    if(info.power){
+      freezeUntil=now+3200;toast('💗 摸摸券：全场冻结 3.2 秒');makeFloat(x,y,'冻结！');vibrate(35)
+    }else if(info.bad||info.fake){
+      score+=info.points;mistakes++;harmony-=3;scoreEl.textContent=score;resetCombo();updateMoodUI();
+      arena.classList.remove('shake');void arena.offsetWidth;arena.classList.add('shake');
+      toast(info.bad?'你拍了扫地机器人 🙄':'这是一只狗！！🐕');
+      makeFloat(x,y,String(info.points));vibrate(65);updateMissionUI()
+    }else{
+      combo=(now-lastHitAt<=2200)?combo+1:1;lastHitAt=now;
+      bestComboThisGame=Math.max(bestComboThisGame,combo);
+      state.bestCombo=Math.max(state.bestCombo,combo);
+
+      score+=info.points;caughtThisGame++;state.totalCaught++;harmony=Math.min(10,harmony+1);
+      scoreEl.textContent=score;updateComboUI();updateMoodUI();comboBonus();
+
+      if(info.collect){
+        state.collection[info.collect]=(state.collection[info.collect]||0)+1;
+      }
+
+      if(info.special&&info.specialKey){
+        state.specials[info.specialKey]=(state.specials[info.specialKey]||0)+1;
+        specialCaughtThisGame++;
+        unlockAchievement('special','特殊个体目击');
+        setRarest(info.name,5);
+        toast(`✨ 特殊个体：${info.name}！`);
+      }else if(type==='unknown'){
+        rareThisGame++;setRarest('未知豹纹米米',4);unlockAchievement('unknown','未知猫科目击');
+        toast('✨ 发现未知猫科目击记录……');
+      }else if(type==='rusty'){
+        rareThisGame++;setRarest('锈斑豹猫',3);toast('🐆 锈斑豹猫到手');
+      }else if(type==='sand'){
+        rareThisGame++;setRarest('沙丘猫',3);toast('🏜️ 沙丘猫到手');
+      }else if(type==='aby'){
+        setRarest('阿比西尼亚',2);
+      }else if(type==='black'){
+        setRarest('黑咪',2);
+      }
+
+      if(hiddenLabel&&!info.special){
+        toast(`❔ 原来是：${info.name}`);
+      }
+      makeFloat(x,y,`+${info.points}`);vibrate(info.rare||info.legend?35:15);
+      if(combo>=15)unlockAchievement('combo15','十五连抓');
+      checkMission(type);saveState()
+    }
+
+    el.style.animation='hit .2s ease-in forwards';setTimeout(()=>el.remove(),210)
+  })
 }
-
-
 
 function spawnBoss(){
-
-  if(
-    !running
-  )
-    return;
-
-
-
-  const info =
-    bosses[
-      Math.floor(
-        Math.random()
-        *
-        bosses.length
-      )
-    ];
-
-
-  const el =
-    document.createElement(
-      'div'
-    );
-
-
-  el.className =
-    'target boss';
-
-
-  el.dataset.hp =
-    info.hp;
-
-
-  el.innerHTML =
-    `
-    <div class="emoji">
-      ${info.emoji}
-    </div>
-
-    <div class="tag">
-      ${info.name}
-    </div>
-
-    <div class="hp">
-      HP ${info.hp}/${info.hp}
-    </div>
-    `;
-
-
-
-  const rect =
-    arena.getBoundingClientRect();
-
-
-  const margin =
-    74;
-
-
-
-  let x =
-    margin
-    +
-    Math.random()
-    *
-    Math.max(
-      20,
-      rect.width
-      -
-      margin * 2
-    );
-
-
-  let y =
-    88
-    +
-    Math.random()
-    *
-    Math.max(
-      20,
-      rect.height
-      -
-      165
-    );
-
-
-
-  let angle =
-    Math.random()
-    *
-    Math.PI
-    *
-    2;
-
-
-  let vx =
-    Math.cos(
-      angle
-    )
-    *
-    info.speed;
-
-
-  let vy =
-    Math.sin(
-      angle
-    )
-    *
-    info.speed;
-
-
-
-  el.style.left =
-    x + 'px';
-
-
-  el.style.top =
-    y + 'px';
-
-
-  arena.appendChild(
-    el
-  );
-
-
-  active.add(
-    el
-  );
-
-
-
-  const born =
-    performance.now();
-
-
-  let last =
-    born;
-
-
-
-  function move(
-    now
-  ){
-
-    if(
-      !running
-      ||
-      !active.has(el)
-    )
-      return;
-
-
-
-    const dt =
-      Math.min(
-        32,
-        now - last
-      );
-
-
-    last =
-      now;
-
-
-
-    let factor =
-      currentEvent === 'nap'
-      ?
-      .45
-      :
-      1;
-
-
-
-    if(
-      now < freezeUntil
-    ){
-
-      factor =
-        0;
-
-    }
-
-
-
-    x +=
-      vx
-      *
-      dt
-      *
-      factor;
-
-
-    y +=
-      vy
-      *
-      dt
-      *
-      factor;
-
-
-
-    if(
-      x < margin
-      ||
-      x >
-      rect.width
-      -
-      margin
-    ){
-
-      vx *=
-        -1;
-
-
-      x =
-        Math.max(
-          margin,
-          Math.min(
-            rect.width
-            -
-            margin,
-            x
-          )
-        );
-
-    }
-
-
-
-    if(
-      y < 74
-      ||
-      y >
-      rect.height
-      -
-      74
-    ){
-
-      vy *=
-        -1;
-
-
-      y =
-        Math.max(
-          74,
-          Math.min(
-            rect.height
-            -
-            74,
-            y
-          )
-        );
-
-    }
-
-
-
-    el.style.left =
-      x + 'px';
-
-
-    el.style.top =
-      y + 'px';
-
-
-
-    if(
-      now
-      -
-      born
-      >
-      8000
-    ){
-
-      active.delete(
-        el
-      );
-
-
-      el.remove();
-
-
-      toast(
-        `${info.name}撤退了 😶`
-      );
-
-
-      return;
-
-    }
-
-
-
-    el._raf =
-      requestAnimationFrame(
-        move
-      );
-
+  if(!running)return;
+  const info=bosses[Math.floor(Math.random()*bosses.length)];
+  const el=document.createElement('div');
+  el.className='target boss';
+  el.dataset.hp=info.hp;
+  el.innerHTML=`<div class="emoji">${info.emoji}</div><div class="tag">${info.name}</div><div class="hp">HP ${info.hp}/${info.hp}</div>`;
+
+  const rect=arena.getBoundingClientRect(),margin=74;
+  let x=margin+Math.random()*Math.max(20,rect.width-margin*2);
+  let y=88+Math.random()*Math.max(20,rect.height-165);
+  let angle=Math.random()*Math.PI*2;
+  let vx=Math.cos(angle)*info.speed,vy=Math.sin(angle)*info.speed;
+  el.style.left=x+'px';el.style.top=y+'px';arena.appendChild(el);active.add(el);
+
+  const born=performance.now();let last=born;
+  function move(now){
+    if(!running||!active.has(el))return;
+    const dt=Math.min(32,now-last);last=now;
+    let factor=currentEvent==='nap'?.45:moodInfo().speed;
+    if(now<freezeUntil)factor=0;
+    x+=vx*dt*factor;y+=vy*dt*factor;
+    if(x<margin||x>rect.width-margin){vx*=-1;x=Math.max(margin,Math.min(rect.width-margin,x))}
+    if(y<74||y>rect.height-74){vy*=-1;y=Math.max(74,Math.min(rect.height-74,y))}
+    el.style.left=x+'px';el.style.top=y+'px';
+    if(now-born>8500){active.delete(el);el.remove();toast(`${info.name}撤退了 😶`);return}
+    el._raf=requestAnimationFrame(move)
   }
-
-
-
-  el._raf =
-    requestAnimationFrame(
-      move
-    );
-
-
-
-  el.addEventListener(
-    'pointerdown',
-    e => {
-
-      e.preventDefault();
-
-
-      if(
-        !running
-        ||
-        !active.has(el)
-      )
-        return;
-
-
-
-      let hp =
-        Number(
-          el.dataset.hp
-        )
-        -
-        1;
-
-
-      el.dataset.hp =
-        hp;
-
-
-      el
-        .querySelector(
-          '.hp'
-        )
-        .textContent =
-        `HP ${hp}/${info.hp}`;
-
-
-      makeFloat(
-        x,
-        y,
-        '-1 HP'
-      );
-
-
-      vibrate(
-        30
-      );
-
-
-      el.style.animation =
-        'bump .15s ease';
-
-
-      setTimeout(
-        () =>
-          el.style.animation =
-          '',
-        160
-      );
-
-
-
-      if(
-        hp > 0
-      )
-        return;
-
-
-
-      active.delete(
-        el
-      );
-
-
-      cancelAnimationFrame(
-        el._raf
-      );
-
-
-      bossDefeated++;
-
-
-      state.bosses++;
-
-
-
-      const now =
-        performance.now();
-
-
-
-      combo =
-        (
-          now
-          -
-          lastHitAt
-          <=
-          2200
-        )
-        ?
-        combo + 1
-        :
-        1;
-
-
-      lastHitAt =
-        now;
-
-
-
-      bestComboThisGame =
-        Math.max(
-          bestComboThisGame,
-          combo
-        );
-
-
-      state.bestCombo =
-        Math.max(
-          state.bestCombo,
-          combo
-        );
-
-
-
-      score +=
-        info.points;
-
-
-      caughtThisGame++;
-
-
-      state.totalCaught++;
-
-
-      scoreEl.textContent =
-        score;
-
-
-      updateComboUI();
-
-
-      comboBonus();
-
-
-      setRarest(
-        info.name,
-        4
-      );
-
-
-      saveState();
-
-
-      checkMission(
-        'boss'
-      );
-
-
-      toast(
-        `👑 ${info.name}投降了！+${info.points}`
-      );
-
-
-      makeFloat(
-        x,
-        y,
-        `+${info.points}`
-      );
-
-
-      el.style.animation =
-        'hit .2s ease-in forwards';
-
-
-      setTimeout(
-        () => el.remove(),
-        210
-      );
-
-    }
-  );
-
+  el._raf=requestAnimationFrame(move);
+
+  el.addEventListener('pointerdown',e=>{
+    e.preventDefault();
+    if(!running||!active.has(el))return;
+    let hp=Number(el.dataset.hp)-1;el.dataset.hp=hp;
+    el.querySelector('.hp').textContent=`HP ${hp}/${info.hp}`;
+    makeFloat(x,y,'-1 HP');vibrate(30);
+    el.style.animation='bump .15s ease';setTimeout(()=>el.style.animation='',160);
+    if(hp>0)return;
+
+    active.delete(el);cancelAnimationFrame(el._raf);bossDefeated++;state.bosses++;
+    const now=performance.now();
+    combo=(now-lastHitAt<=2200)?combo+1:1;lastHitAt=now;
+    bestComboThisGame=Math.max(bestComboThisGame,combo);state.bestCombo=Math.max(state.bestCombo,combo);
+    score+=info.points;caughtThisGame++;state.totalCaught++;harmony=Math.min(10,harmony+2);
+    scoreEl.textContent=score;updateComboUI();updateMoodUI();comboBonus();
+    setRarest(info.name,4);unlockAchievement('boss','Boss 讨伐成功');checkMission('boss');saveState();
+    toast(`👑 ${info.name}投降了！+${info.points}`);makeFloat(x,y,`+${info.points}`);
+    el.style.animation='hit .2s ease-in forwards';setTimeout(()=>el.remove(),210)
+  })
 }
-
-
 
 function scheduleSpawn(){
+  clearTimeout(spawnTimer);
+  if(!running)return;
+  let delay=780;
+  if(currentEvent==='party')delay=590;
+  if(timeLeft<=8)delay=Math.min(delay,640);
 
-  clearTimeout(
-    spawnTimer
-  );
-
-
-  if(
-    !running
-  )
-    return;
-
-
-
-  let delay =
-    760;
-
-
-
-  if(
-    currentEvent === 'party'
-  ){
-
-    delay =
-      560;
-
-  }
-
-
-
-  if(
-    timeLeft <= 8
-  ){
-
-    delay =
-      Math.min(
-        delay,
-        620
-      );
-
-  }
-
-
-
-  spawnTimer =
-    setTimeout(
-      () => {
-
-        spawn();
-
-
-
-        if(
-          currentEvent === 'party'
-          &&
-          Math.random()
-          <
-          .45
-        ){
-
-          setTimeout(
-            () => spawn(),
-            230
-          );
-
-        }
-
-
-
-        if(
-          currentEvent === 'rare'
-          &&
-          Math.random()
-          <
-          .32
-        ){
-
-          setTimeout(
-            () => spawn(),
-            260
-          );
-
-        }
-
-
-
-        scheduleSpawn();
-
-      },
-      delay
-    );
-
+  spawnTimer=setTimeout(()=>{
+    spawn();
+    if(currentEvent==='party'&&Math.random()<.42)setTimeout(()=>spawn(),250);
+    if(currentEvent==='rare'&&Math.random()<.30)setTimeout(()=>spawn(),280);
+    scheduleSpawn()
+  },delay)
 }
 
-
+function triggerMidEvent(){
+  const events=['harmony','mischief','mystery'];
+  const ev=events[Math.floor(Math.random()*events.length)];
+  if(ev==='harmony'){
+    harmony=Math.min(10,harmony+4);updateMoodUI();showEvent('🌿 猫猫心情稳定：研究所更和谐了')
+  }
+  if(ev==='mischief'){
+    showEvent('😾 淘气时间：机器人和狗出现率略升');
+    currentEvent='robots';setTimeout(()=>{if(running&&timeLeft>8)currentEvent='normal'},5000)
+  }
+  if(ev==='mystery'){
+    showEvent('❔ 无标签个体出现……');
+    setTimeout(()=>spawn(Math.random()<.5?'black':'sand',true),350)
+  }
+}
 
 function triggerFinalEvent(){
-
-  const events = [
-    'party',
-    'rare',
-    'nap',
-    'robots'
-  ];
-
-
-  currentEvent =
-    events[
-      Math.floor(
-        Math.random()
-        *
-        events.length
-      )
-    ];
-
-
-
-  if(
-    currentEvent === 'party'
-  ){
-
-    showEvent(
-      '🎉 猫猫聚会：数量增加'
-    );
-
-  }
-
-
-
-  if(
-    currentEvent === 'rare'
-  ){
-
-    showEvent(
-      '✨ 稀有猫出没：注意观察'
-    );
-
-  }
-
-
-
-  if(
-    currentEvent === 'nap'
-  ){
-
-    showEvent(
-      '😴 午睡时间：全场变慢'
-    );
-
-  }
-
-
-
-  if(
-    currentEvent === 'robots'
-  ){
-
-    showEvent(
-      '🤖 扫地机器人入侵：别乱点'
-    );
-
-  }
-
-
-
-  scheduleSpawn();
-
+  const events=['party','rare','nap','robots'];
+  currentEvent=events[Math.floor(Math.random()*events.length)];
+  if(currentEvent==='party')showEvent('🎉 猫猫聚会：数量增加');
+  if(currentEvent==='rare')showEvent('✨ 稀有猫气味残留：稀有率提高');
+  if(currentEvent==='nap')showEvent('😴 午睡时间：全场变慢');
+  if(currentEvent==='robots')showEvent('🤖 机器人故障：别乱点');
+  scheduleSpawn()
 }
-
-
 
 function startGame(){
-
-  score =
-    0;
-
-
-  timeLeft =
-    40;
-
-
-  combo =
-    0;
-
-
-  lastHitAt =
-    0;
-
-
-  caughtThisGame =
-    0;
-
-
-  rareThisGame =
-    0;
-
-
-  mistakes =
-    0;
-
-
-  bossDefeated =
-    0;
-
-
-  currentEvent =
-    'normal';
-
-
-  freezeUntil =
-    0;
-
-
-  bossSpawned =
-    false;
-
-
-  bestComboThisGame =
-    0;
-
-
-  rarestThisGame =
-    '普通';
-
-
-  rarestRank =
-    0;
-
-
-
-  scoreEl.textContent =
-    0;
-
-
-  timeEl.textContent =
-    40;
-
-
-  updateComboUI();
-
-
-  chooseMission();
-
-
-  clearTargets();
-
-
-  overlay.style.display =
-    'none';
-
-
-  running =
-    true;
-
-
-
-  spawn();
-
-
-  setTimeout(
-    () => spawn(),
-    340
-  );
-
-
-  scheduleSpawn();
-
-
-
-  timer =
-    setInterval(
-      () => {
-
-        timeLeft--;
-
-
-        timeEl.textContent =
-          timeLeft;
-
-
-
-        if(
-          combo > 0
-          &&
-          performance.now()
-          -
-          lastHitAt
-          >
-          2400
-        ){
-
-          resetCombo();
-
-        }
-
-
-
-        if(
-          timeLeft === 22
-          &&
-          !bossSpawned
-        ){
-
-          bossSpawned =
-            true;
-
-
-          spawn(
-            'boss'
-          );
-
-
-          showEvent(
-            '👑 Boss 猫出现！'
-          );
-
-        }
-
-
-
-        if(
-          timeLeft === 8
-        ){
-
-          triggerFinalEvent();
-
-        }
-
-
-
-        if(
-          timeLeft <= 0
-        ){
-
-          endGame();
-
-        }
-
-      },
-      1000
-    );
-
+  score=0;timeLeft=40;combo=0;lastHitAt=0;caughtThisGame=0;rareThisGame=0;mistakes=0;bossDefeated=0;
+  currentEvent='normal';freezeUntil=0;bossSpawned=false;bestComboThisGame=0;rarestThisGame='普通';rarestRank=0;
+  harmony=0;specialCaughtThisGame=0;
+  scoreEl.textContent=0;timeEl.textContent=40;updateComboUI();updateMoodUI();chooseMission();clearTargets();
+  overlay.style.display='none';running=true;spawn();setTimeout(()=>spawn(),360);scheduleSpawn();
+
+  timer=setInterval(()=>{
+    timeLeft--;timeEl.textContent=timeLeft;
+    if(combo>0&&performance.now()-lastHitAt>2400)resetCombo();
+    if(timeLeft===30)triggerMidEvent();
+    if(timeLeft===22&&!bossSpawned){
+      bossSpawned=true;spawn('boss');showEvent('👑 Boss 猫出现！')
+    }
+    if(timeLeft===8)triggerFinalEvent();
+    if(timeLeft<=0)endGame()
+  },1000)
 }
-
-
 
 function endGame(){
+  if(!running)return;
+  running=false;clearInterval(timer);clearTimeout(spawnTimer);clearTargets();arena.classList.remove('fever');
 
-  if(
-    !running
-  )
-    return;
-
-
-  running =
-    false;
-
-
-  clearInterval(
-    timer
-  );
-
-
-  clearTimeout(
-    spawnTimer
-  );
-
-
-  clearTargets();
-
-
-  arena.classList.remove(
-    'fever'
-  );
-
-
-
-  if(
-    mission
-    &&
-    mission.id === 'clean'
-    &&
-    !missionDone
-    &&
-    mistakes === 0
-  ){
-
-    missionDone =
-      true;
-
-
-    missionValue =
-      1;
-
-
-    score +=
-      mission.reward;
-
-
-    state.missions++;
-
-
-    toast(
-      `🎯 任务完成 +${mission.reward}`
-    );
-
+  if(mission&&mission.id==='clean'&&!missionDone&&mistakes===0){
+    missionDone=true;missionValue=1;score+=mission.reward;state.missions++;unlockAchievement('perfectMission','零事故任务')
   }
+  if(mistakes===0)unlockAchievement('clean','零误点通关');
 
-
-
-  resetCombo();
-
-
-  scoreEl.textContent =
-    score;
-
-
-  state.games++;
-
-
-  state.highScore =
-    Math.max(
-      state.highScore,
-      score
-    );
-
-
-  highScoreEl.textContent =
-    state.highScore;
-
-
-  saveState();
-
-
-  updateMissionUI();
-
-
-  showEnd();
-
+  resetCombo();scoreEl.textContent=score;state.games++;state.highScore=Math.max(state.highScore,score);saveState();
+  updateMissionUI();showEnd()
 }
 
-
-
-function titleForScore(
-  s
-){
-
-  if(
-    s >= 170
-  )
-    return '猫猫研究所所长';
-
-
-  if(
-    s >= 135
-  )
-    return '传说目击记录员';
-
-
-  if(
-    s >= 105
-  )
-    return '锈斑豹猫研究员';
-
-
-  if(
-    s >= 75
-  )
-    return '沙丘猫追踪员';
-
-
-  if(
-    s >= 45
-  )
-    return '咪咪诱捕专家';
-
-
-  return '猫猫实习生';
-
+function titleForScore(s){
+  if(s>=170)return'猫猫研究所所长';
+  if(s>=135)return'传说目击记录员';
+  if(s>=105)return'锈斑豹猫研究员';
+  if(s>=75)return'沙丘猫追踪员';
+  if(s>=45)return'咪咪诱捕专家';
+  return'猫猫实习生'
 }
-
-
 
 function showMainMenu(){
-
-  scoreEl.textContent =
-    0;
-
-
-  timeEl.textContent =
-    40;
-
-
-  mission =
-    null;
-
-
-  updateMissionUI();
-
-
-
-  panel.innerHTML =
-    `
-    <div class="hero">
-      🔬🐈
-    </div>
-
-    <h1>
-      猫猫研究所
-    </h1>
-
-    <p>
-      V4 不再靠无限倍率和乱窜折磨你。
-      每局有随机任务、随机事件、不同 Boss，
-      还有会永久保存的猫咪图鉴。
-    </p>
-
+  scoreEl.textContent=0;timeEl.textContent=40;mission=null;updateMissionUI();harmony=0;updateMoodUI();
+  panel.innerHTML=`
+    <div class="hero">🔬🐈</div>
+    <h1>猫猫研究所 V4.1</h1>
+    <p>特殊个体、隐藏成就、猫猫心情、连环任务都加进来了。速度还是慢的，放心。😶</p>
     <div class="grid2">
-
-      <div class="infoCard">
-        🎯 每局随机任务
-        <br>
-        完成固定加分
-      </div>
-
-      <div class="infoCard">
-        🐈 慢速移动
-        <br>
-        靠判断，不靠手速
-      </div>
-
-      <div class="infoCard">
-        👑 随机 Boss
-        <br>
-        不同血量与奖励
-      </div>
-
-      <div class="infoCard">
-        ✨ 隐藏米米
-        <br>
-        极低概率目击
-      </div>
-
+      <div class="infoCard">🥰 猫猫心情<br>零误点会更和谐</div>
+      <div class="infoCard">✨ 特殊个体<br>白化 / 金眼 / 超小</div>
+      <div class="infoCard">🔗 连环任务<br>按顺序抓指定猫</div>
+      <div class="infoCard">🏅 隐藏成就<br>永久保存</div>
     </div>
-
     <div class="menuBtns">
-
-      <button
-        class="btn"
-        id="playBtn">
-        开始行动
-      </button>
-
-      <button
-        class="btn secondary"
-        id="bookBtn">
-        猫咪图鉴
-      </button>
-
-      <button
-        class="btn ghost"
-        id="recordBtn">
-        研究纪录
-      </button>
-
+      <button class="btn" id="playBtn">开始行动</button>
+      <button class="btn secondary" id="bookBtn">猫咪图鉴</button>
+      <button class="btn secondary" id="achBtn">隐藏成就</button>
+      <button class="btn ghost" id="recordBtn">研究纪录</button>
     </div>
-    `;
-
-
-
-  overlay.style.display =
-    'grid';
-
-
-  $('playBtn').onclick =
-    startGame;
-
-
-  $('bookBtn').onclick =
-    showCatbook;
-
-
-  $('recordBtn').onclick =
-    showRecords;
-
+  `;
+  overlay.style.display='grid';
+  $('playBtn').onclick=startGame;$('bookBtn').onclick=showCatbook;$('achBtn').onclick=showAchievements;$('recordBtn').onclick=showRecords
 }
-
-
 
 function showCatbook(){
-
-  const meta = [
-
-    [
-      'black',
-      '🐈‍⬛',
-      '黑咪',
-      '少见'
-    ],
-
-    [
-      'aby',
-      '🐈',
-      '阿比西尼亚',
-      '少见'
-    ],
-
-    [
-      'sand',
-      '🏜️🐈',
-      '沙丘猫',
-      '稀有'
-    ],
-
-    [
-      'rusty',
-      '🐆',
-      '锈斑豹猫',
-      '稀有'
-    ],
-
-    [
-      'unknown',
-      '🐆✨',
-      '未知豹纹米米',
-      '传说'
-    ]
-
+  const meta=[
+    ['black','🐈‍⬛','黑咪','少见'],
+    ['aby','🐈','阿比西尼亚','少见'],
+    ['sand','🏜️🐈','沙丘猫','稀有'],
+    ['rusty','🐆','锈斑豹猫','稀有'],
+    ['unknown','🐆✨','未知豹纹米米','传说']
   ];
+  const cards=meta.map(([key,emoji,name,rarity])=>{
+    const n=state.collection[key]||0,locked=n===0;
+    return `<div class="catcard ${locked?'locked':''}">
+      <div class="catface">${locked?'❔':emoji}</div>
+      <div><div class="catname">${locked?'？？？':name}</div><div class="catmeta">${locked?'尚未留下有效目击记录':rarity+' · 已登记'}</div></div>
+      <div class="count">${locked?'未解锁':'×'+n}</div>
+    </div>`
+  }).join('');
 
-
-
-  const cards =
-    meta
-      .map(
-        (
-          [
-            key,
-            emoji,
-            name,
-            rarity
-          ]
-        ) => {
-
-          const n =
-            state.collection[
-              key
-            ]
-            ||
-            0;
-
-
-          const locked =
-            n === 0;
-
-
-
-          return `
-          <div class="catcard ${locked ? 'locked' : ''}">
-
-            <div class="catface">
-              ${locked ? '❔' : emoji}
-            </div>
-
-            <div>
-
-              <div class="catname">
-                ${locked ? '？？？' : name}
-              </div>
-
-              <div class="catmeta">
-                ${
-                  locked
-                  ?
-                  '尚未留下有效目击记录'
-                  :
-                  rarity + ' · 已登记'
-                }
-              </div>
-
-            </div>
-
-            <div class="count">
-              ${
-                locked
-                ?
-                '未解锁'
-                :
-                `×${n}`
-              }
-            </div>
-
-          </div>
-          `;
-
-        }
-      )
-      .join('');
-
-
-
-  panel.innerHTML =
-    `
-    <div class="hero">
-      📖
+  const specialCount=(state.specials.whiteSand||0)+(state.specials.goldBlack||0)+(state.specials.tinyRusty||0);
+  panel.innerHTML=`
+    <div class="hero">📖</div><h1>猫咪图鉴</h1>
+    <p>长期保存。特殊个体会另外登记徽章。</p>
+    <div class="catbook">${cards}</div>
+    <div class="infoCard">✨ 特殊个体登记：${specialCount} 次<br>
+      🤍 白化沙丘猫 ×${state.specials.whiteSand||0} · 👁️ 金眼黑咪 ×${state.specials.goldBlack||0} · 🐆 超小锈斑 ×${state.specials.tinyRusty||0}
     </div>
-
-    <h1>
-      猫咪图鉴
-    </h1>
-
-    <p>
-      抓到之后会永久登记。
-      隐藏米米不是每局都会出现。😶
-    </p>
-
-    <div class="catbook">
-      ${cards}
-    </div>
-
-    <button
-      class="btn secondary"
-      id="backBtn">
-      返回研究所
-    </button>
-    `;
-
-
-
-  overlay.style.display =
-    'grid';
-
-
-  $('backBtn').onclick =
-    showMainMenu;
-
+    <button class="btn secondary" id="backBtn" style="margin-top:12px">返回研究所</button>
+  `;
+  overlay.style.display='grid';$('backBtn').onclick=showMainMenu
 }
 
+function showAchievements(){
+  const defs=[
+    ['unknown','🐆✨','未知猫科目击','抓到未知豹纹米米'],
+    ['clean','🧼','零误点通关','整局没有误点机器人或狗'],
+    ['boss','👑','Boss 讨伐成功','击败任意 Boss'],
+    ['combo15','🔥','十五连抓','达到 15 连击'],
+    ['special','✨','特殊个体目击','抓到任意特殊个体'],
+    ['perfectMission','🎯','零事故任务','完成“整局不误点”任务']
+  ];
+  const items=defs.map(([key,icon,name,desc])=>`
+    <div class="ach ${state.achievements[key]?'':'locked'}">
+      <div class="icon">${state.achievements[key]?icon:'🔒'}</div>
+      <div class="txt"><div class="name">${state.achievements[key]?name:'？？？'}</div><div class="desc">${state.achievements[key]?desc:'尚未解锁'}</div></div>
+    </div>
+  `).join('');
 
+  panel.innerHTML=`<div class="hero">🏅</div><h1>隐藏成就</h1><p>解锁以后会永久保留。</p><div class="achlist">${items}</div>
+  <button class="btn secondary" id="backBtn">返回研究所</button>`;
+  overlay.style.display='grid';$('backBtn').onclick=showMainMenu
+}
 
 function showRecords(){
-
-  panel.innerHTML =
-    `
-    <div class="hero">
-      📊
-    </div>
-
-    <h1>
-      研究纪录
-    </h1>
-
-    <p>
-      这次数据终于不会每局都消失了。
-    </p>
-
+  panel.innerHTML=`
+    <div class="hero">📊</div><h1>研究纪录</h1><p>你的长期作案记录。😾</p>
     <div class="records">
-
-      <div class="rec">
-        <strong>${state.highScore}</strong>
-        <span>历史最高分</span>
-      </div>
-
-      <div class="rec">
-        <strong>${state.games}</strong>
-        <span>完成局数</span>
-      </div>
-
-      <div class="rec">
-        <strong>${state.totalCaught}</strong>
-        <span>累计抓猫</span>
-      </div>
-
-      <div class="rec">
-        <strong>${state.bestCombo}</strong>
-        <span>最高连击</span>
-      </div>
-
-      <div class="rec">
-        <strong>${state.bosses}</strong>
-        <span>Boss 击败</span>
-      </div>
-
-      <div class="rec">
-        <strong>${state.missions}</strong>
-        <span>任务完成</span>
-      </div>
-
+      <div class="rec"><strong>${state.highScore}</strong><span>历史最高分</span></div>
+      <div class="rec"><strong>${state.games}</strong><span>完成局数</span></div>
+      <div class="rec"><strong>${state.totalCaught}</strong><span>累计抓猫</span></div>
+      <div class="rec"><strong>${state.bestCombo}</strong><span>最高连击</span></div>
+      <div class="rec"><strong>${state.bosses}</strong><span>Boss 击败</span></div>
+      <div class="rec"><strong>${state.missions}</strong><span>任务完成</span></div>
     </div>
-
-    <button
-      class="btn secondary"
-      id="backBtn">
-      返回研究所
-    </button>
-    `;
-
-
-
-  overlay.style.display =
-    'grid';
-
-
-  $('backBtn').onclick =
-    showMainMenu;
-
+    <button class="btn secondary" id="backBtn">返回研究所</button>
+  `;
+  overlay.style.display='grid';$('backBtn').onclick=showMainMenu
 }
-
-
 
 function showEnd(){
-
-  const missionLine =
-    missionDone
-    ?
-    `任务完成：${mission.text}`
-    :
-    `任务未完成：${mission.text}`;
-
-
-
-  panel.innerHTML =
-    `
-    <div class="hero">
-      🐈‍⬛
-    </div>
-
-    <h1>
-      ${score} 分 · ${titleForScore(score)}
-    </h1>
-
-    <p>
-      ${missionLine}
-      <br>
-      本局最稀有目击：${rarestThisGame}
-    </p>
-
+  const missionLine=missionDone?`任务完成：${mission.text}`:`任务未完成：${mission.text}`;
+  panel.innerHTML=`
+    <div class="hero">🐈‍⬛</div>
+    <h1>${score} 分 · ${titleForScore(score)}</h1>
+    <p>${missionLine}<br>本局最稀有目击：${rarestThisGame}</p>
     <div class="summary">
-
-      <div class="sum">
-        <b>${caughtThisGame}</b>
-        <span>抓到猫咪</span>
-      </div>
-
-      <div class="sum">
-        <b>${bestComboThisGame}</b>
-        <span>最高连击</span>
-      </div>
-
-      <div class="sum">
-        <b>${bossDefeated}</b>
-        <span>Boss 击败</span>
-      </div>
-
-      <div class="sum">
-        <b>${mistakes}</b>
-        <span>误点次数</span>
-      </div>
-
+      <div class="sum"><b>${caughtThisGame}</b><span>抓到猫咪</span></div>
+      <div class="sum"><b>${bestComboThisGame}</b><span>最高连击</span></div>
+      <div class="sum"><b>${bossDefeated}</b><span>Boss 击败</span></div>
+      <div class="sum"><b>${mistakes}</b><span>误点次数</span></div>
     </div>
-
+    <div class="infoCard">✨ 本局特殊个体：${specialCaughtThisGame} · 🥰 最终心情：${moodInfo().label}</div>
     <div class="menuBtns">
-
-      <button
-        class="btn"
-        id="againBtn">
-        再来一把
-      </button>
-
-      <button
-        class="btn secondary"
-        id="bookBtn">
-        查看图鉴
-      </button>
-
-      <button
-        class="btn ghost"
-        id="homeBtn">
-        返回研究所
-      </button>
-
+      <button class="btn" id="againBtn">再来一把</button>
+      <button class="btn secondary" id="bookBtn">查看图鉴</button>
+      <button class="btn ghost" id="homeBtn">返回研究所</button>
     </div>
-    `;
-
-
-
-  overlay.style.display =
-    'grid';
-
-
-  $('againBtn').onclick =
-    startGame;
-
-
-  $('bookBtn').onclick =
-    showCatbook;
-
-
-  $('homeBtn').onclick =
-    showMainMenu;
-
+  `;
+  overlay.style.display='grid';
+  $('againBtn').onclick=startGame;$('bookBtn').onclick=showCatbook;$('homeBtn').onclick=showMainMenu
 }
 
-
-
 showMainMenu();
-
-
 })();
-
 </script>
-
 </body>
 </html>
