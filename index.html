@@ -4,769 +4,198 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Ariki's Game Room</title>
-
 <style>
+
 :root{
-  --bg1:#fff8f1;
-  --bg2:#ffe7d9;
-  --ink:#241c18;
-  --muted:#7a6a62;
-  --accent:#ff7b59;
-  --accent2:#ffb26a;
-  --card:rgba(255,255,255,.86);
+  --bg1:#fff8f1;--bg2:#ffe7d9;--ink:#241c18;--muted:#7a6a62;
+  --accent:#ff7b59;--accent2:#ffb26a;--card:rgba(255,255,255,.86);
 }
-
-*{
-  box-sizing:border-box;
-  -webkit-tap-highlight-color:transparent;
-}
-
-html,body{
-  margin:0;
-  min-height:100%;
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    "PingFang SC",
-    sans-serif;
-  color:var(--ink);
-}
-
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;min-height:100%;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC",sans-serif;color:var(--ink)}
 body{
-  min-height:100vh;
   background:
-    radial-gradient(
-      circle at 18% 0%,
-      rgba(255,255,255,.95),
-      transparent 24%
-    ),
-    linear-gradient(
-      160deg,
-      var(--bg1),
-      var(--bg2)
-    );
+    radial-gradient(circle at 18% 0%,rgba(255,255,255,.95),transparent 24%),
+    linear-gradient(160deg,var(--bg1),var(--bg2));
 }
-
-button,a{
-  font:inherit;
-}
-
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-.shell{
-  max-width:760px;
-  margin:auto;
-  padding:
-    max(env(safe-area-inset-top),16px)
-    16px
-    max(env(safe-area-inset-bottom),24px);
-}
-
-.badge{
-  padding:7px 11px;
-  border-radius:999px;
-  background:rgba(255,255,255,.7);
-  font-size:12px;
-  font-weight:900;
-}
-
+button,a{font:inherit}
+a{text-decoration:none;color:inherit}
+.shell{max-width:760px;margin:auto;padding:max(env(safe-area-inset-top),16px) 16px max(env(safe-area-inset-bottom),24px)}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.back{font-weight:900;color:var(--muted);font-size:14px}
+.badge{padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.7);font-size:12px;font-weight:900}
 .card{
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.94);
-  border-radius:26px;
-  box-shadow:
-    0 18px 50px rgba(105,61,36,.12);
-  backdrop-filter:blur(10px);
+  background:var(--card);border:1px solid rgba(255,255,255,.94);border-radius:26px;
+  box-shadow:0 18px 50px rgba(105,61,36,.12);backdrop-filter:blur(10px)
 }
-
-.hero{
-  padding:22px 20px 8px;
+.btn{
+  border:0;border-radius:18px;padding:13px 18px;font-weight:950;color:#fff;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  box-shadow:0 10px 24px rgba(255,123,89,.22)
 }
+.btn.secondary{background:#fff4e9;color:var(--ink);box-shadow:none;border:1px solid #ffe0c7}
+.muted{color:var(--muted)}
 
-.hero h1{
-  font-size:30px;
-  margin:0 0 8px;
-  font-weight:1000;
-  letter-spacing:-.5px;
-}
-
-.hero p{
-  margin:0;
-  color:var(--muted);
-  line-height:1.55;
-  font-size:14px;
-}
-
-.stats{
-  display:grid;
-  grid-template-columns:
-    repeat(3,1fr);
-  gap:9px;
-  margin:16px 0 20px;
-}
-
-.stat{
-  background:
-    rgba(255,255,255,.72);
-  border:
-    1px solid rgba(255,255,255,.9);
-  border-radius:20px;
-  padding:12px;
-  text-align:center;
-}
-
-.stat b{
-  display:block;
-  font-size:22px;
-}
-
-.stat span{
-  font-size:11px;
-  color:var(--muted);
-}
-
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin:18px 3px 10px;
-}
-
-.section-title h2{
-  font-size:17px;
-  margin:0;
-}
-
-.section-title span{
-  font-size:11px;
-  color:var(--muted);
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:
-    repeat(2,1fr);
-  gap:12px;
-}
-
-.game{
-  padding:15px;
-  min-height:190px;
-  display:flex;
-  flex-direction:column;
-  position:relative;
-  overflow:hidden;
-}
-
-.game .emoji{
-  font-size:42px;
-  line-height:1;
-  margin-bottom:10px;
-}
-
-.game h3{
-  margin:0 0 6px;
-  font-size:17px;
-}
-
-.game p{
-  margin:0;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.45;
-  flex:1;
-}
-
-.tags{
-  display:flex;
-  gap:5px;
-  flex-wrap:wrap;
-  margin:10px 0;
-}
-
-.tag{
-  font-size:10px;
-  font-weight:900;
-  padding:4px 7px;
-  border-radius:999px;
-  background:#fff4e9;
-  color:#8a5f45;
-}
-
-.play{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-size:12px;
-  font-weight:900;
-  margin-top:8px;
-}
-
-.play strong{
-  font-size:14px;
-  color:var(--accent);
-}
-
-.wide{
-  grid-column:1/-1;
-  min-height:150px;
-  display:grid;
-  grid-template-columns:
-    auto 1fr;
-  gap:14px;
-  align-items:center;
-}
-
-.wide .emoji{
-  margin:0;
-  font-size:54px;
-}
-
-.latest{
-  padding:15px;
-  margin-top:12px;
-}
-
-.latest b{
-  font-size:13px;
-}
-
-.latest div{
-  margin-top:4px;
-  font-size:12px;
-  color:var(--muted);
-}
-
-footer{
-  text-align:center;
-  color:var(--muted);
-  font-size:11px;
-  padding:24px 0 4px;
-}
-
-@media(max-width:520px){
-  .grid{
-    grid-template-columns:
-      1fr 1fr;
-  }
-
-  .hero h1{
-    font-size:27px;
-  }
-}
+body{min-height:100vh}
+.hero{padding:22px 20px 8px}
+.hero h1{font-size:30px;margin:0 0 8px;font-weight:1000;letter-spacing:-.5px}
+.hero p{margin:0;color:var(--muted);line-height:1.55;font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:16px 0 20px}
+.stat{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);border-radius:20px;padding:12px;text-align:center}
+.stat b{display:block;font-size:22px}.stat span{font-size:11px;color:var(--muted)}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:18px 3px 10px}
+.section-title h2{font-size:17px;margin:0}.section-title span{font-size:11px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.game{padding:15px;min-height:190px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.game .emoji{font-size:42px;line-height:1;margin-bottom:10px}
+.game h3{margin:0 0 6px;font-size:17px}
+.game p{margin:0;color:var(--muted);font-size:12px;line-height:1.45;flex:1}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0}
+.tag{font-size:10px;font-weight:900;padding:4px 7px;border-radius:999px;background:#fff4e9;color:#8a5f45}
+.play{display:flex;justify-content:space-between;align-items:center;font-size:12px;font-weight:900;margin-top:8px}
+.play strong{font-size:14px;color:var(--accent)}
+.wide{grid-column:1/-1;min-height:150px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+.wide .emoji{margin:0;font-size:54px}
+.latest{padding:15px;margin-top:12px}
+.latest b{font-size:13px}.latest div{margin-top:4px;font-size:12px;color:var(--muted)}
+footer{text-align:center;color:var(--muted);font-size:11px;padding:24px 0 4px}
+@media(max-width:520px){.grid{grid-template-columns:1fr 1fr}.hero h1{font-size:27px}}
 </style>
 </head>
-
 <body>
-
 <div class="shell">
-
   <div class="hero">
-
-    <div
-      class="badge"
-      style="
-        display:inline-block;
-        margin-bottom:10px;
-      "
-    >
-      🎮 摸鱼研究所
-    </div>
-
-    <h1>
-      Ariki's Game Room 😶
-    </h1>
-
-    <p>
-      一个会越长越大的小游戏站。
-      猫猫、反应力、记忆力，
-      还有专门坑人用的东西。
-    </p>
-
+    <div class="badge" style="display:inline-block;margin-bottom:10px">🎮 摸鱼研究所</div>
+    <h1>Ariki's Game Room 😶</h1>
+    <p>一个会越长越大的小游戏站。猫猫、反应力、记忆力，还有专门坑人用的东西。</p>
   </div>
-
 
   <div class="stats">
-
-    <div class="stat">
-      <b>4</b>
-      <span>已收录游戏</span>
-    </div>
-
-    <div class="stat">
-      <b id="bestCat">—</b>
-      <span>咪咪最高分</span>
-    </div>
-
-    <div class="stat">
-      <b id="recordCount">0</b>
-      <span>已有游戏记录</span>
-    </div>
-
+    <div class="stat"><b>5</b><span>已收录游戏</span></div>
+    <div class="stat"><b id="bestCat">—</b><span>咪咪最高分</span></div>
+    <div class="stat"><b id="recordCount">0</b><span>已有游戏记录</span></div>
   </div>
 
-
-  <div class="section-title">
-
-    <h2>
-      🐈 猫猫系列
-    </h2>
-
-    <span>
-      长期项目
-    </span>
-
-  </div>
-
-
+  <div class="section-title"><h2>🐈 猫猫系列</h2><span>长期项目</span></div>
   <div class="grid">
-
-    <a
-      class="game card wide"
-      href="cat-lab.html"
-      data-game="咪咪捕捉计划"
-    >
-
-      <div class="emoji">
-        🐈‍⬛🔬
-      </div>
-
+    <a class="game card wide" href="cat-lab.html" data-game="咪咪捕捉计划">
+      <div class="emoji">🐈‍⬛🔬</div>
       <div>
-
-        <h3>
-          咪咪捕捉计划 V4.1
-        </h3>
-
-        <p>
-          随机任务、Boss、猫猫心情、
-          隐藏成就和特殊个体。
-          你目前最熟悉的作案现场。
-        </p>
-
-        <div class="tags">
-
-          <span class="tag">
-            收集
-          </span>
-
-          <span class="tag">
-            反应
-          </span>
-
-          <span class="tag">
-            长期图鉴
-          </span>
-
-        </div>
-
-        <div class="play">
-
-          <span id="catRecord">
-            还没有记录
-          </span>
-
-          <strong>
-            进入 →
-          </strong>
-
-        </div>
-
+        <h3>咪咪捕捉计划 V4.1</h3>
+        <p>随机任务、Boss、猫猫心情、隐藏成就和特殊个体。你目前最熟悉的作案现场。</p>
+        <div class="tags"><span class="tag">收集</span><span class="tag">反应</span><span class="tag">长期图鉴</span></div>
+        <div class="play"><span id="catRecord">还没有记录</span><strong>进入 →</strong></div>
       </div>
-
     </a>
-
   </div>
 
-
-  <div class="section-title">
-
-    <h2>
-      ⚡ 反应力
-    </h2>
-
-    <span>
-      短局
-    </span>
-
-  </div>
-
-
+  <div class="section-title"><h2>⚡ 反应力</h2><span>短局</span></div>
   <div class="grid">
-
-    <a
-      class="game card"
-      href="reaction.html"
-      data-game="0.3秒"
-    >
-
-      <div class="emoji">
-        ⚡
-      </div>
-
-      <h3>
-        0.3 秒
-      </h3>
-
-      <p>
-        等屏幕变色再点。
-        偷跑直接判你作弊。😾
-      </p>
-
-      <div class="tags">
-
-        <span class="tag">
-          反应速度
-        </span>
-
-        <span class="tag">
-          单局 5 次
-        </span>
-
-      </div>
-
-      <div class="play">
-
-        <span id="reactionRecord">
-          暂无纪录
-        </span>
-
-        <strong>
-          开测 →
-        </strong>
-
-      </div>
-
+    <a class="game card" href="reaction.html" data-game="0.3秒">
+      <div class="emoji">⚡</div><h3>0.3 秒</h3>
+      <p>等屏幕变色再点。偷跑直接判你作弊。😾</p>
+      <div class="tags"><span class="tag">反应速度</span><span class="tag">单局 5 次</span></div>
+      <div class="play"><span id="reactionRecord">暂无纪录</span><strong>开测 →</strong></div>
     </a>
 
-
-    <a
-      class="game card"
-      href="memory.html"
-      data-game="猫猫翻牌"
-    >
-
-      <div class="emoji">
-        🧠
-      </div>
-
-      <h3>
-        猫猫翻牌
-      </h3>
-
-      <p>
-        16 张牌，8 对猫科图案。
-        少走一步都算你赢。
-      </p>
-
-      <div class="tags">
-
-        <span class="tag">
-          记忆
-        </span>
-
-        <span class="tag">
-          配对
-        </span>
-
-      </div>
-
-      <div class="play">
-
-        <span id="memoryRecord">
-          暂无纪录
-        </span>
-
-        <strong>
-          翻牌 →
-        </strong>
-
-      </div>
-
+    <a class="game card" href="memory.html" data-game="猫猫翻牌">
+      <div class="emoji">🧠</div><h3>猫猫翻牌</h3>
+      <p>16 张牌，8 对猫科图案。少走一步都算你赢。</p>
+      <div class="tags"><span class="tag">记忆</span><span class="tag">配对</span></div>
+      <div class="play"><span id="memoryRecord">暂无纪录</span><strong>翻牌 →</strong></div>
     </a>
-
   </div>
 
-
-  <div class="section-title">
-
-    <h2>
-      😈 坑人小游戏
-    </h2>
-
-    <span>
-      不保证讲理
-    </span>
-
-  </div>
-
-
+  <div class="section-title"><h2>👀 观察力</h2><span>新游戏</span></div>
   <div class="grid">
-
-    <a
-      class="game card wide"
-      href="dont-click.html"
-      data-game="千万别按"
-    >
-
-      <div class="emoji">
-        🔴
-      </div>
-
+    <a class="game card wide" href="intruder.html" data-game="谁混进来了">
+      <div class="emoji">🐈👀</div>
       <div>
-
-        <h3>
-          千万别按
-        </h3>
-
-        <p>
-          页面明确告诉你不要按。
-          你如果非要按，
-          后果会越来越奇怪。
-        </p>
-
-        <div class="tags">
-
-          <span class="tag">
-            手欠测试
-          </span>
-
-          <span class="tag">
-            随机事件
-          </span>
-
-          <span class="tag">
-            没有道理
-          </span>
-
-        </div>
-
-        <div class="play">
-
-          <span id="dontRecord">
-            看看你能按几次
-          </span>
-
-          <strong>
-            别进去 →
-          </strong>
-
-        </div>
-
+        <h3>谁混进来了</h3>
+        <p>猫群里混进狗、机器人和奇怪生物。有时还会突然盖住画面考你记忆。</p>
+        <div class="tags"><span class="tag">观察力</span><span class="tag">记忆</span><span class="tag">10 回合</span></div>
+        <div class="play"><span id="intruderRecord">暂无纪录</span><strong>调查 →</strong></div>
       </div>
-
     </a>
-
   </div>
 
+  <div class="section-title"><h2>😈 坑人小游戏</h2><span>不保证讲理</span></div>
+  <div class="grid">
+    <a class="game card wide" href="dont-click.html" data-game="千万别按">
+      <div class="emoji">🔴</div>
+      <div>
+        <h3>千万别按</h3>
+        <p>页面明确告诉你不要按。你如果非要按，后果会越来越奇怪。</p>
+        <div class="tags"><span class="tag">手欠测试</span><span class="tag">随机事件</span><span class="tag">没有道理</span></div>
+        <div class="play"><span id="dontRecord">看看你能按几次</span><strong>别进去 →</strong></div>
+      </div>
+    </a>
+  </div>
 
   <div class="latest card">
-
-    <b>
-      🕹️ 最近玩过
-    </b>
-
-    <div id="latestText">
-      还没有记录。
-      挑一个开始作案吧。
-    </div>
-
+    <b>🕹️ 最近玩过</b>
+    <div id="latestText">还没有记录。挑一个开始作案吧。</div>
   </div>
 
-
-  <footer>
-    纯 HTML / CSS / JS · GitHub Pages ·
-    以后继续往里塞游戏 😶
-  </footer>
-
+  <footer>纯 HTML / CSS / JS · GitHub Pages · 以后继续往里塞游戏 😶</footer>
 </div>
 
-
 <script>
+const safeParse=k=>{try{return JSON.parse(localStorage.getItem(k)||'null')}catch{return null}};
 
-const safeParse =
-  k => {
+const cat=safeParse('catLabV41State');
+const reaction=safeParse('reactionGameV1');
+const memory=safeParse('memoryGameV1');
+const dont=safeParse('dontClickV1');
+const intruder=safeParse('intruderGameV1');
 
-    try{
+let records=0;
 
-      return JSON.parse(
-        localStorage.getItem(k)
-        ||
-        'null'
-      );
-
-    }
-
-    catch{
-
-      return null;
-
-    }
-
-  };
-
-
-const cat =
-  safeParse(
-    'catLabV41State'
-  );
-
-
-const reaction =
-  safeParse(
-    'reactionGameV1'
-  );
-
-
-const memory =
-  safeParse(
-    'memoryGameV1'
-  );
-
-
-const dont =
-  safeParse(
-    'dontClickV1'
-  );
-
-
-let records =
-  0;
-
-
-if(
-  cat
-){
-
+if(cat){
   records++;
-
-  document
-    .getElementById(
-      'bestCat'
-    )
-    .textContent =
-    cat.highScore
-    ||
-    0;
-
-
-  document
-    .getElementById(
-      'catRecord'
-    )
-    .textContent =
-    `最高 ${cat.highScore || 0} 分`;
-
+  document.getElementById('bestCat').textContent=cat.highScore||0;
+  document.getElementById('catRecord').textContent=`最高 ${cat.highScore||0} 分`;
 }
 
-
-if(
-  reaction
-){
-
+if(reaction){
   records++;
-
-  document
-    .getElementById(
-      'reactionRecord'
-    )
-    .textContent =
-    reaction.best
-    ?
-    `最快 ${reaction.best} ms`
-    :
-    '暂无纪录';
-
+  document.getElementById('reactionRecord').textContent=
+    reaction.best?`最快 ${reaction.best} ms`:'暂无纪录';
 }
 
-
-if(
-  memory
-){
-
+if(memory){
   records++;
-
-  document
-    .getElementById(
-      'memoryRecord'
-    )
-    .textContent =
-    memory.bestMoves
-    ?
-    `最佳 ${memory.bestMoves} 步`
-    :
-    '暂无纪录';
-
+  document.getElementById('memoryRecord').textContent=
+    memory.bestMoves?`最佳 ${memory.bestMoves} 步`:'暂无纪录';
 }
 
-
-if(
-  dont
-){
-
+if(dont){
   records++;
-
-  document
-    .getElementById(
-      'dontRecord'
-    )
-    .textContent =
-    `最多按了 ${dont.max || 0} 次`;
-
+  document.getElementById('dontRecord').textContent=
+    `最多按了 ${dont.max||0} 次`;
 }
 
+if(intruder){
+  records++;
+  document.getElementById('intruderRecord').textContent=
+    intruder.best?`最高 ${intruder.best} 分`:'暂无纪录';
+}
+
+document.getElementById('recordCount').textContent=records;
+
+const last=localStorage.getItem('arikiLastGame');
+
+if(last){
+  document.getElementById('latestText').textContent=last;
+}
 
 document
-  .getElementById(
-    'recordCount'
-  )
-  .textContent =
-  records;
-
-
-const last =
-  localStorage.getItem(
-    'arikiLastGame'
-  );
-
-
-if(
-  last
-){
-
-  document
-    .getElementById(
-      'latestText'
-    )
-    .textContent =
-    last;
-
-}
-
-
-document
-  .querySelectorAll(
-    '[data-game]'
-  )
-  .forEach(
-    a =>
-      a.addEventListener(
-        'click',
-        () => {
-
-          localStorage.setItem(
-            'arikiLastGame',
-            `${a.dataset.game} · 刚刚打开`
-          );
-
-        }
-      )
-  );
-
+  .querySelectorAll('[data-game]')
+  .forEach(a=>a.addEventListener('click',()=>{
+    localStorage.setItem(
+      'arikiLastGame',
+      `${a.dataset.game} · 刚刚打开`
+    );
+  }));
 </script>
-
 </body>
 </html>
